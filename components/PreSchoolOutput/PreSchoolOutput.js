@@ -11,17 +11,18 @@ function PreSchoolOutput({ totalCases, fallbackText }) {
 
   const [searchQuery, setSearchQuery] = useState('');
   const preSchool = useSelector(selectPreSchool); // Accessing expenses state from Redux store
-  // const preSchoolCases = useSelector((state) => state.preSchoolCases.preSchoolCases); // Accessing cases state from Redux store
   const filteredPreSchool = preSchool? (preSchool.filter(
       (item) =>
           item.preSchool?.toLowerCase().includes(searchQuery.toLowerCase()) ||
           (item.address && item.address.toLowerCase().includes(searchQuery.toLowerCase()))
   )):[];
-  console.log("////////////////////filteredPreSchool.length ",filteredPreSchool)
 
-  let content = <Text style={styles.infoText}>{fallbackText}</Text>;
+  let content = "";
   if (filteredPreSchool.length > 0) {
     content = <PreSchoolList preSchoolDetails={filteredPreSchool} />;
+  }else{
+    console.log("hutto")
+    content = <Text style={styles.infoText}>{fallbackText}</Text>;
   }
   function dropdownChangedHandler(inputIdentifier, enteredValue) {
     // setInputs((curInputs) => {
@@ -69,7 +70,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   infoText: {
-    color: 'white',
+    color: 'black',
     fontSize: 16,
     textAlign: 'center',
     marginTop: 32,

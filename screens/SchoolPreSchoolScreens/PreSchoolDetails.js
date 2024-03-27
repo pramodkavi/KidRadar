@@ -13,12 +13,12 @@ import {setPreSchool} from "../../slices/PreSchoolSlice";
 function PreSchoolDetails() {
     const dispatch = useDispatch(); // Redux hook to dispatch actions
     const navigation = useNavigation();
-    const preSchoolCasesCount = useSelector((state) => state.preSchoolCasesCount.preSchoolCasesCount);
 
     useEffect(() => {
         async function getPreSchool() {
             try {
                 const fetchPreSchoolDetails = await fetchPreSchools();
+                console.log("/////////////////////fetchPreSchoolDetails",fetchPreSchoolDetails)
                 dispatch(setPreSchool(fetchPreSchoolDetails));
             } catch (error) {
                 console.error('Could not fetch preschool details:', error);
@@ -32,7 +32,7 @@ function PreSchoolDetails() {
         <>
             <PreSchoolOutput
                 totalCases="Total"
-                fallbackText="No registered child cases found!"
+                fallbackText="No registered PreSchool found!"
             />
             <TouchableOpacity style={styles.addBtn}>
                 <IconButton
@@ -44,16 +44,6 @@ function PreSchoolDetails() {
                     }}
                 />
             </TouchableOpacity>
-            {/* <TouchableOpacity style={styles.addBtn1}>
-                <IconButton
-                    icon="add"
-                    size={32}
-                    color={GlobalStyles.colors.primary800}
-                    onPress={() => {
-                        navigation.navigate('ManagePreSchoolCasesCount');
-                    }}
-                />
-            </TouchableOpacity> */}
         </>
     );
 }

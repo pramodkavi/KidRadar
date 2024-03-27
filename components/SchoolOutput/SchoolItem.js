@@ -4,11 +4,11 @@ import { useNavigation } from '@react-navigation/native';
 import { GlobalStyles } from '../../constants/styles';
 import { getFormattedDate } from '../../util/date';
 
-function SchoolItem({ id, name, date }) {
+function SchoolItem({ id, school, description, division }) {
   const navigation = useNavigation();
   // const label = caseType.label;
   function casePressHandler() {
-    navigation.navigate('ManagePreSchoolCases', {
+    navigation.navigate('ManageSchoolDetails', {
       expenseId: id
     });
   }
@@ -21,13 +21,13 @@ function SchoolItem({ id, name, date }) {
       <View style={styles.caseItem}>
         <View>
           <Text style={[styles.textBase, styles.description]}>
-          St Joseph's College
+            {school}
           </Text>
-          <Text style={styles.textBase}>Supporting line text lorem ipsum dolor sit</Text>
+          <Text style={styles.textBase}>{description}</Text>
         </View>
-        {/*<View style={styles.amountContainer}>*/}
-        {/*  <Text style={styles.amount}>{name}</Text>*/}
-        {/*</View>*/}
+        <View style={styles.amountContainer}>
+          <Text style={styles.amount}>{division.label}</Text>
+        </View>
       </View>
     </Pressable>
   );
@@ -42,16 +42,16 @@ const styles = StyleSheet.create({
   caseItem: {
     padding: 12,
     marginVertical: 8,
-    // backgroundColor: GlobalStyles.colors.primary500,
+    backgroundColor: GlobalStyles.colors.primary500,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    borderBottomWidth: 1,
+    // borderBottomWidth: 1,
     borderRadius: 6,
-    // elevation: 3,
-    // shadowColor: GlobalStyles.colors.gray500,
-    // shadowRadius: 4,
-    // shadowOffset: { width: 1, height: 0 },
-    // shadowOpacity: 0.4,
+    elevation: 3,
+    shadowColor: GlobalStyles.colors.gray500,
+    shadowRadius: 4,
+    shadowOffset: { width: 1, height: 0 },
+    shadowOpacity: 0.4,
   },
   textBase: {
     color: "#5B585E",

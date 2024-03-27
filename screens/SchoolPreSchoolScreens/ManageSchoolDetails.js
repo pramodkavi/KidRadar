@@ -1,19 +1,20 @@
 import { useLayoutEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux'; // Importing Redux hooks
-import {deleteCase, storeCases, storePreSchoolCases, updateCase} from '../../util/http';
+import {deleteCase, storeCases, storePreSchoolCases, storeSchool, updateCase} from '../../util/http';
 import { deleteCase as deleteCaseAction, addCase as addCaseAction, updateCase as updateCaseAction } from '../../slices/CaseSlice';
 import LoadingOverlay from "../../components/UI/LoadingOverlay";
 import ErrorOverlay from "../../components/UI/ErrorOverlay";
 import IconButton from '../../components/UI/IconButton';
-import SchoolForm from "../../components/ManageSchoolDetails/SchoolForm"; // Importing Redux actions
+import SchoolForm from "../../components/ManageSchoolDetails/SchoolForm";
+import {addSchool} from "../../slices/SchoolSlice"; // Importing Redux actions
 
 function ManageSchoolDetails({ route, navigation }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState();
 
   const dispatch = useDispatch(); // Redux hook to dispatch actions
-  const cases = useSelector(state => state.preSchoolCases.preSchoolCases); // Accessing expenses state from Redux store
+  const cases = useSelector(state => state.schools.schools); // Accessing expenses state from Redux store
 
   const editedCaseId = route.params?.expenseId;
   const isEditing = !!editedCaseId;
@@ -24,7 +25,7 @@ function ManageSchoolDetails({ route, navigation }) {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      title: isEditing ? 'Edit Preschool Case' : 'Create Preschool Case',
+      title: isEditing ? 'Edit School Case' : 'Create School Case',
     });
   }, [navigation, isEditing]);
 
@@ -44,15 +45,15 @@ function ManageSchoolDetails({ route, navigation }) {
     navigation.goBack();
   }
 
-  async function confirmHandler(caseData) {
+  async function confirmHandler(schoolData) {
     setIsSubmitting(true);
     try {
       if (isEditing) {
-        dispatch(updateCaseAction({ id: editedCaseId, data: caseData })); // Dispatching updateCase action
-        await updateCase(editedCaseId, caseData);
+        dispatch(updateCaseAction({ id: editedCaseId, data: schoolData })); // Dispatching updateCase action
+        await updateCase(editedCaseId, schoolData);
       } else {
-        const id = await storePreSchoolCases(caseData);
-        // dispatch(addCaseAction({ ...caseData, id: id })); // Dispatching addCase action
+        const id = await storeSchool(schoolData);
+        dispatch(addSchool({ ...schoolData, id: id })); // Dispatching addCase action
       }
       navigation.goBack();
     } catch (error) {

@@ -68,7 +68,7 @@ function SchoolForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }) {
     });
   }
   function submitHandler() {
-    const caseData = {
+    const schoolData = {
       school: inputs.school.value,
       description: inputs.description.value,
       address: inputs.address.value,
@@ -78,11 +78,11 @@ function SchoolForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }) {
     };
 
     // const amountIsValid = !isNaN(caseData.name) && caseData.name > 0;
-    const schoolIsValid = caseData.school.trim().length > 0;
-    const descriptionIsValid = caseData.description.trim().length > 0;
-    const addressIsValid = caseData.address.trim().length > 0;
-    const contactNoIsValid = !isNaN(caseData.contactNo) && (caseData.contactNo ===10);
-    const dateIsValid = caseData.date.toString() !== 'Invalid Date';
+    const schoolIsValid = schoolData.school.trim().length > 0;
+    const descriptionIsValid = schoolData.description.trim().length > 0;
+    const addressIsValid = schoolData.address.trim().length > 0;
+    const contactNoIsValid = !isNaN(schoolData.contactNo) && (schoolData.contactNo ===10);
+    const dateIsValid = schoolData.date.toString() !== 'Invalid Date';
 
     if (!schoolIsValid || !descriptionIsValid || !addressIsValid || !dateIsValid  || contactNoIsValid) {
       setInputs((curInputs) => {
@@ -96,8 +96,8 @@ function SchoolForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }) {
       });
       return;
     }
-    console.log("//////////////////////caseData",caseData)
-    // onSubmit(caseData);
+    console.log("//////////////////////schoolData",schoolData)
+    onSubmit(schoolData);
   }
 
   const formIsInvalid =
@@ -110,7 +110,7 @@ function SchoolForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }) {
   return (
     <ScrollView>
       <View>
-        <Text style={styles.title}>Add PreSchool Details</Text>
+        <Text style={styles.title}>Add School Details</Text>
         {/*<View style={styles.container}>*/}
           <View style={styles.inputsRow}>
             <DropdownComponent

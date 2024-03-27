@@ -14,7 +14,7 @@ import LoadingOverlay from "../../components/UI/LoadingOverlay";
 import ErrorOverlay from "../../components/UI/ErrorOverlay";
 import IconButton from '../../components/UI/IconButton';
 import PreSchoolForm from "../../components/ManagePreSchoolDetails/PreSchoolForm";
-import {addPreSchool, selectPreSchool} from "../../slices/PreSchoolSlice"; // Importing Redux actions
+import {addPreSchool, selectPreSchool,deletepreSchool} from "../../slices/PreSchoolSlice"; // Importing Redux actions
 
 function ManagePreSchoolDetails({ route, navigation }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -32,15 +32,15 @@ function ManagePreSchoolDetails({ route, navigation }) {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      title: isEditing ? 'Edit School Details' : 'Add School Details',
+      title: isEditing ? 'Edit PreSchool Details' : 'Add PreSchool Details',
     });
   }, [navigation, isEditing]);
 
-  async function deleteCaseHandler(){
+  async function deleteDetailsHandler(){
     setIsSubmitting(true);
     try {
       await deletePreSchool(editedCaseId);
-      dispatch(deletePreSchool(editedCaseId)); // Dispatching deleteCase action
+      dispatch(deletepreSchool(editedCaseId)); // Dispatching deleteCase action
       navigation.goBack();
     } catch (error) {
       setError('Could not delete expense - please try again later!');
@@ -91,7 +91,7 @@ function ManagePreSchoolDetails({ route, navigation }) {
                   icon="trash"
                   color="red" // Adjust color here as needed
                   size={36}
-                  onPress={deleteCaseHandler}
+                  onPress={deleteDetailsHandler}
               />
             </View>
         )}

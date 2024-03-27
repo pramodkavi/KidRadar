@@ -3,41 +3,39 @@ import { useDispatch, useSelector } from 'react-redux'; // Importing Redux hooks
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import IconButton from '../../components/UI/IconButton';
 import { useNavigation } from '@react-navigation/native';
-import {fetchPreSchoolCases, fetchPreSchoolCasesCount} from '../../util/http';
+import {fetchPreSchoolCases, fetchPreSchoolCasesCount, fetchPreSchools, fetchSchools} from '../../util/http';
 import {selectPreSchoolCase, setPreSchoolCase} from '../../slices/PreSchoolCasesSlice'; // Importing Redux actions
 import { GlobalStyles } from '../../constants/styles';
-import PreSchoolCasesOutput from "../../components/PreSchoolCasesOutput/PreSchoolCasesOutput";
+import PreSchoolOutput from "../../components/PreSchoolOutput/PreSchoolOutput";
 import {setPreSchoolCasesCount} from "../../slices/PreSchoolCasesCountSlice";
-import PreSchoolOutput from '../../components/PreSchoolOutput/PreSchoolOutput';
+import {setPreSchool} from "../../slices/PreSchoolSlice";
+import SchoolOutput from "../../components/SchoolOutput/SchoolOutput";
+import {setSchools} from "../../slices/SchoolSlice";
 
-function PreSchoolDetails() {
+function SchoolDetails() {
     const dispatch = useDispatch(); // Redux hook to dispatch actions
     const navigation = useNavigation();
     const preSchoolCasesCount = useSelector((state) => state.preSchoolCasesCount.preSchoolCasesCount);
 
     useEffect(() => {
-        async function getCases() {
-            // try {
-            //     const preCasesFetch = await fetchPreSchoolCases();
-            //     dispatch(setPreSchoolCase(preCasesFetch)); // Dispatching setCase action
-
-            //     const preCasesCountFetch=await fetchPreSchoolCasesCount();
-            //     dispatch(setPreSchoolCasesCount(preCasesCountFetch)); // Dispatching setCase action
-
-
-            // } catch (error) {
-            //     console.error('Could not fetch expenses:', error);
-            // }
+        async function getPreSchool() {
+            try {
+                const fetchPreSchoolDetails = await fetchSchools();
+                console.log("/////////////////////fetchSchoolDetails",fetchPreSchoolDetails)
+                dispatch(setSchools(fetchPreSchoolDetails));
+            } catch (error) {
+                console.error('Could not fetch preschool details:', error);
+            }
         }
 
-        getCases();
+        getPreSchool();
     }, [dispatch]); // Added dispatch as a dependency
 
     return (
         <>
-            <PreSchoolOutput
+            <SchoolOutput
                 totalCases="Total"
-                fallbackText="No registered child cases found!"
+                fallbackText="No registered PreSchool found!"
             />
             <TouchableOpacity style={styles.addBtn}>
                 <IconButton
@@ -53,7 +51,7 @@ function PreSchoolDetails() {
     );
 }
 
-export default PreSchoolDetails;
+export default SchoolDetails;
 
 const styles = StyleSheet.create({
     addBtn: {

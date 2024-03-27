@@ -4,23 +4,24 @@ import { Searchbar } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import { GlobalStyles } from '../../constants/styles';
 import DropdownComponent from "../DropdownComponent";
-import SchoolList from './SchoolList';
+import {selectSchool} from "../../slices/SchoolSlice";
+import SchoolList from "./SchoolList";
 
 function SchoolOutput({ totalCases, fallbackText }) {
 
   const [searchQuery, setSearchQuery] = useState('');
-  const preSchoolCases = useSelector((state) => state.preSchoolCases.preSchoolCases); // Accessing cases state from Redux store
-  const preSchoolCasesCount = useSelector((state) => state.preSchoolCasesCount.preSchoolCasesCount);
-  console.log(".....................preSchoolCasesCount",preSchoolCasesCount);
-  const filteredCases = preSchoolCases.filter(
-      (item) =>
-          item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          (item.address && item.address.toLowerCase().includes(searchQuery.toLowerCase()))
-  );
+  const schools = useSelector(selectSchool); // Accessing expenses state from Redux store
 
-  let content = <Text style={styles.infoText}>{fallbackText}</Text>;
-  if (filteredCases.length > 0) {
-    content = <SchoolList preSchoolDetails={filteredCases} />;
+  const filterSchool = schools? (schools.filter(
+      (item) =>
+          item.school?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          (item.address && item.address.toLowerCase().includes(searchQuery.toLowerCase()))
+  )):[];
+  let content = "";
+  if (filterSchool.length > 0) {
+    content = <SchoolList preSchoolDetails={filterSchool} />;
+  }else{
+    content = <Text style={styles.infoText}>{fallbackText}</Text>;
   }
   function dropdownChangedHandler(inputIdentifier, enteredValue) {
     // setInputs((curInputs) => {
@@ -28,9 +29,6 @@ function SchoolOutput({ totalCases, fallbackText }) {
   }
   return (
       <View style={styles.container}>
-        {/* <View style={styles.textwrap}>
-          <Text style={styles.maintext}>Preschooler Insights</Text>
-        </View> */}
 
         <View style={styles.searchbar}>
           <Searchbar
@@ -68,7 +66,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   infoText: {
-    color: 'white',
+    color: 'black',
     fontSize: 16,
     textAlign: 'center',
     marginTop: 32,

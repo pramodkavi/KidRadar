@@ -14,7 +14,7 @@ const PreSchoolSlice = createSlice({
         setPreSchool(state, action) {
             state.preschool = action.payload.reverse();
         },
-        deletePreSchool(state, action) {
+        deletepreSchool(state, action) {
             state.preschool = state.preschool.filter((expense) => expense.id !== action.payload);
         },
         updatePreSchool(state, action) {
@@ -27,7 +27,7 @@ const PreSchoolSlice = createSlice({
     },
 });
 
-export const { addPreSchool,setPreSchool,deletePreSchool,updatePreSchool } = PreSchoolSlice.actions;
+export const { addPreSchool,setPreSchool,deletepreSchool,updatePreSchool } = PreSchoolSlice.actions;
 export const selectPreSchool = (state) => state.preschool.preschool;
 export const selectCaseById = (state,id) => state.preschool.preschool.filter(preschool=> preschool.id == id);
 
