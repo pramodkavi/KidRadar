@@ -11,7 +11,7 @@ function SchoolForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }) {
   const division = [
     { label: 'Katana', value: '1' },
     { label: 'Ja-Ela',value: '2'},
-    { label: 'Negambo',value: '3'},
+    { label: 'Negombo',value: '3'},
   ];
 
   const school = [
@@ -76,15 +76,15 @@ function SchoolForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }) {
       date: new Date(inputs.date.value),
       division: inputs.division.value,
     };
-
-    // const amountIsValid = !isNaN(caseData.name) && caseData.name > 0;
+    const currentDate = new Date();
     const schoolIsValid = schoolData.school.trim().length > 0;
     const descriptionIsValid = schoolData.description.trim().length > 0;
     const addressIsValid = schoolData.address.trim().length > 0;
     const contactNoIsValid = !isNaN(schoolData.contactNo) && (schoolData.contactNo ===10);
-    const dateIsValid = schoolData.date.toString() !== 'Invalid Date';
+    const dateIsValid = schoolData.date.toString() !== 'Invalid Date'&& schoolData.date <= currentDate;
+    const divisionIsValid = schoolData.division!="";
 
-    if (!schoolIsValid || !descriptionIsValid || !addressIsValid || !dateIsValid  || contactNoIsValid) {
+    if (!schoolIsValid || !descriptionIsValid || !addressIsValid || !dateIsValid  || contactNoIsValid || divisionIsValid) {
       setInputs((curInputs) => {
         return {
           school: { value: curInputs.school.value, isValid: schoolIsValid },
@@ -92,6 +92,7 @@ function SchoolForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }) {
           address: { value: curInputs.address.value, isValid: addressIsValid },
           contactNo: { value: curInputs.contactNo.value, isValid: contactNoIsValid },
           date: { value: curInputs.date.value, isValid: dateIsValid },
+          division: { value: curInputs.division.value , isValid: divisionIsValid},
         };
       });
       return;
@@ -105,7 +106,8 @@ function SchoolForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }) {
     !inputs.description.isValid ||
     !inputs.address.isValid ||
     !inputs.contactNo.isValid ||
-    !inputs.date.isValid;
+    !inputs.date.isValid||
+    !inputs.division.isValid;
 
   return (
     <ScrollView>
@@ -114,6 +116,7 @@ function SchoolForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }) {
         {/*<View style={styles.container}>*/}
           <View style={styles.inputsRow}>
             <DropdownComponent
+                invalid={!inputs.division.isValid}
                 label={"Division"}
                 data={division}
                 textInputConfig={{

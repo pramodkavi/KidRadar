@@ -11,7 +11,7 @@ function PreSchoolCasesForm({ submitButtonLabel, onCancel, onSubmit, defaultValu
   const division = [
     { label: 'Katana', value: '1' },
     { label: 'Ja-Ela',value: '2'},
-    { label: 'Negambo',value: '3'},
+    { label: 'Negombo',value: '3'},
   ];
 
   const school = [
@@ -88,8 +88,10 @@ function PreSchoolCasesForm({ submitButtonLabel, onCancel, onSubmit, defaultValu
     const addressIsValid = caseData.name.trim().length > 0;
     const contactNoIsValid = !isNaN(caseData.contactNo) && (caseData.contactNo ===10);
     const dateIsValid = caseData.date.toString() !== 'Invalid Date';
+    const divisionIsValid = caseData.division!="";
+    const preSchoolIsValid = caseData.preSchool!="";
 
-    if (!nameIsValid || !ageIsValid || !addressIsValid || !dateIsValid  || contactNoIsValid) {
+    if (!nameIsValid || !ageIsValid || !addressIsValid || !dateIsValid  || contactNoIsValid || divisionIsValid || preSchoolIsValid) {
       setInputs((curInputs) => {
         return {
           name: { value: curInputs.name.value, isValid: nameIsValid },
@@ -97,6 +99,8 @@ function PreSchoolCasesForm({ submitButtonLabel, onCancel, onSubmit, defaultValu
           address: { value: curInputs.address.value, isValid: addressIsValid },
           contactNo: { value: curInputs.contactNo.value, isValid: contactNoIsValid },
           date: { value: curInputs.date.value, isValid: dateIsValid },
+            division: { value: curInputs.division.value, isValid: divisionIsValid },
+            preSchool: { value: curInputs.preSchool.value, isValid: preSchoolIsValid },
         };
       });
       return;
@@ -110,15 +114,17 @@ function PreSchoolCasesForm({ submitButtonLabel, onCancel, onSubmit, defaultValu
     !inputs.age.isValid ||
     !inputs.address.isValid ||
     !inputs.contactNo.isValid ||
-    !inputs.date.isValid;
+    !inputs.date.isValid ||
+    !inputs.division.isValid ||
+    !inputs.preSchool.isValid;
 
   return (
     <ScrollView>
       <View>
         <Text style={styles.title}>Create Preschool Case</Text>
-        {/*<View style={styles.container}>*/}
           <View style={styles.inputsRow}>
             <DropdownComponent
+                invalid={!inputs.division.isValid}
                 label={"Division"}
                 data={division}
                 textInputConfig={{
@@ -127,6 +133,7 @@ function PreSchoolCasesForm({ submitButtonLabel, onCancel, onSubmit, defaultValu
                 }}
             />
             <DropdownComponent
+                invalid={!inputs.preSchool.isValid}
                 label={"Pre-School"}
                 data={school}
                 textInputConfig={{
@@ -134,10 +141,8 @@ function PreSchoolCasesForm({ submitButtonLabel, onCancel, onSubmit, defaultValu
                   value: inputs.preSchool.value,
                 }}
             />
-
-            {/*<SelectCountryScreen/>*/}
           </View>
-        {/*</View>*/}
+
           <Input
             label="Name"
             invalid={!inputs.name.isValid}

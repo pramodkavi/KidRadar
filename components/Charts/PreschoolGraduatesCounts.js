@@ -5,7 +5,7 @@ import {useNavigation} from "@react-navigation/native";
 
 const pieChartData = [
     { name: 'Ja-Ela', population: 85, color: '#CDBDFA', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-    { name: 'Negambo', population: 21, color: '#4B3886', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+    { name: 'Negombo', population: 21, color: '#4B3886', legendFontColor: '#7F7F7F', legendFontSize: 15 },
     { name: 'Katana', population: 10, color: 'rgba(99, 81, 159, 1)', legendFontColor: '#7F7F7F', legendFontSize: 15 },
 ]
 const chartConfig = {

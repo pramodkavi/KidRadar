@@ -7,11 +7,12 @@ import { GlobalStyles } from '../../constants/styles';
 import DropdownComponent from "../DropdownComponent";
 
 function PreSchoolForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }) {
+  console.log("///////////////////////defaultValues", defaultValues);
   const [selected, setSelected] = React.useState("");
   const division = [
     { label: 'Katana', value: '1' },
     { label: 'Ja-Ela',value: '2'},
-    { label: 'Negambo',value: '3'},
+    { label: 'Negombo',value: '3'},
   ];
 
   const school = [
@@ -68,7 +69,7 @@ function PreSchoolForm({ submitButtonLabel, onCancel, onSubmit, defaultValues })
     });
   }
   function submitHandler() {
-    const caseData = {
+    const preSchoolData = {
       preSchool: inputs.preSchool.value,
       description: inputs.description.value,
       address: inputs.address.value,
@@ -76,13 +77,14 @@ function PreSchoolForm({ submitButtonLabel, onCancel, onSubmit, defaultValues })
       date: new Date(inputs.date.value),
       division: inputs.division.value,
     };
+    const currentDate = new Date();
+    const preSchoolIsValid = preSchoolData.preSchool.trim().length > 0;
+    const descriptionIsValid = preSchoolData.description.trim().length > 0;
+    const addressIsValid = preSchoolData.address.trim().length > 0;
+    const contactNoIsValid = !isNaN(preSchoolData.contactNo) && (preSchoolData.contactNo ===10);
+    const dateIsValid = preSchoolData.date.toString() !== 'Invalid Date'&& preSchoolData.date <= currentDate;
+    const divisionIsValid = preSchoolData.division!="";
 
-    // const amountIsValid = !isNaN(caseData.name) && caseData.name > 0;
-    const preSchoolIsValid = caseData.preSchool.trim().length > 0;
-    const descriptionIsValid = caseData.description.trim().length > 0;
-    const addressIsValid = caseData.address.trim().length > 0;
-    const contactNoIsValid = !isNaN(caseData.contactNo) && (caseData.contactNo ===10);
-    const dateIsValid = caseData.date.toString() !== 'Invalid Date';
 
     if (!preSchoolIsValid || !descriptionIsValid || !addressIsValid || !dateIsValid  || contactNoIsValid) {
       setInputs((curInputs) => {
@@ -92,12 +94,12 @@ function PreSchoolForm({ submitButtonLabel, onCancel, onSubmit, defaultValues })
           address: { value: curInputs.address.value, isValid: addressIsValid },
           contactNo: { value: curInputs.contactNo.value, isValid: contactNoIsValid },
           date: { value: curInputs.date.value, isValid: dateIsValid },
+          division: { value: curInputs.division.value , isValid: divisionIsValid},
         };
       });
       return;
     }
-    // console.log("//////////////////////caseData",caseData)
-    onSubmit(caseData);
+    onSubmit(preSchoolData);
   }
 
   const formIsInvalid =
@@ -105,15 +107,17 @@ function PreSchoolForm({ submitButtonLabel, onCancel, onSubmit, defaultValues })
     !inputs.description.isValid ||
     !inputs.address.isValid ||
     !inputs.contactNo.isValid ||
-    !inputs.date.isValid;
+    !inputs.date.isValid||
+    !inputs.division.isValid;
 
   return (
     <ScrollView>
       <View>
         <Text style={styles.title}>Create New PreSchool</Text>
-        {/*<View style={styles.container}>*/}
+        <View style={styles.container}>
           <View style={styles.inputsRow}>
             <DropdownComponent
+                invalid={!inputs.division.isValid}
                 label={"Division"}
                 data={division}
                 textInputConfig={{
@@ -123,7 +127,7 @@ function PreSchoolForm({ submitButtonLabel, onCancel, onSubmit, defaultValues })
             />
             {/*<SelectCountryScreen/>*/}
           </View>
-        {/*</View>*/}
+        </View>
           <Input
             label="PreSchool"
             invalid={!inputs.preSchool.isValid}

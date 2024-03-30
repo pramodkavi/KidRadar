@@ -21,7 +21,6 @@ function PreSchoolOutput({ totalCases, fallbackText }) {
   if (filteredPreSchool.length > 0) {
     content = <PreSchoolList preSchoolDetails={filteredPreSchool} />;
   }else{
-    console.log("hutto")
     content = <Text style={styles.infoText}>{fallbackText}</Text>;
   }
   function dropdownChangedHandler(inputIdentifier, enteredValue) {

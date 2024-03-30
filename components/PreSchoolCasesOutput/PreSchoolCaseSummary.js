@@ -38,7 +38,7 @@ function PreSchoolCaseSummary({ count }) {
     <View style={styles.section}>
       {SummaryByDivision("Katana")}
       {SummaryByDivision("Ja-Ela")}
-      {SummaryByDivision("Negambo")}
+      {SummaryByDivision("Negombo")}
 
     </View>
   );

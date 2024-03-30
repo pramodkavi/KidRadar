@@ -5,7 +5,6 @@ import { GlobalStyles } from '../../constants/styles';
 import { getFormattedDate } from '../../util/date';
 
 function PreSchoolItem({ id, preSchool, description, division }) {
-  console.log("//////////////,,,,,,,,,,,,,division in Items",division.label)
   const navigation = useNavigation();
   // const label = caseType.label;
   function casePressHandler() {

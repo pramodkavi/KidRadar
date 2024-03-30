@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
+import {GlobalStyles} from "../constants/styles";
 
 const data = [
     { label: 'Item 1', value: '1' },
@@ -34,7 +35,7 @@ const DropdownComponent = (prop) => {
 
     return (
         <Dropdown
-            style={styles.dropdown}
+            style={[styles.dropdown, prop.invalid && { backgroundColor: GlobalStyles.colors.error50}]}
             placeholderStyle={styles.placeholderStyle}
             selectedTextStyle={styles.selectedTextStyle}
             inputSearchStyle={styles.inputSearchStyle}

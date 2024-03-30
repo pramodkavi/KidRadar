@@ -29,8 +29,8 @@ function ChildCaseSummary({ cases, periodName }) {
         <Text style={styles.sum}>{countCasesByDivision("Ja-Ela")}</Text>
       </View>
       <View style={styles.container}>
-        <Text style={styles.city}>Negambo</Text>
-        <Text style={styles.sum}>{countCasesByDivision("Negambo")}</Text>
+        <Text style={styles.city}>Negombo</Text>
+        <Text style={styles.sum}>{countCasesByDivision("Negombo")}</Text>
       </View>
     </View>
   );

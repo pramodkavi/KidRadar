@@ -4,7 +4,7 @@ import {Button} from "react-native-paper";
 
 const pieChartData = [
     { name: 'Ja-Ela', population: 55, color: '#CDBDFA', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-    { name: 'Negambo', population: 24, color: '#4B3886', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+    { name: 'Negombo', population: 24, color: '#4B3886', legendFontColor: '#7F7F7F', legendFontSize: 15 },
     { name: 'Katana', population: 95, color: 'rgba(99, 81, 159, 1)', legendFontColor: '#7F7F7F', legendFontSize: 15 },
 ]
 const chartConfig = {

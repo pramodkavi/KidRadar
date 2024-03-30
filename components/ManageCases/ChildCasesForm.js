@@ -11,7 +11,7 @@ function ChildCasesForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }
   const division = [
     { label: 'Katana', value: '1' },
     { label: 'Ja-Ela',value: '2'},
-    { label: 'Negambo',value: '3'},
+    { label: 'Negombo',value: '3'},
   ];
 
   const school = [
@@ -93,13 +93,16 @@ function ChildCasesForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }
       school: inputs.school.value,
     };
 
-    // const amountIsValid = !isNaN(caseData.name) && caseData.name > 0;
+    const currentDate = new Date();
     const nameIsValid = caseData.name.trim().length > 0;
     const ageIsValid = !isNaN(caseData.age) && (caseData.age > 0 && caseData.age < 19);
     const addressIsValid = caseData.name.trim().length > 0;
     const contactNoIsValid = !isNaN(caseData.contactNo) && (caseData.contactNo ===10);
-    const dateIsValid = caseData.date.toString() !== 'Invalid Date';
+    const dateIsValid = caseData.date.toString() !== 'Invalid Date'&& caseData.date <= currentDate;
     const reasonIsValid = caseData.reason.trim().length > 0;
+    const divisionIsValid = caseData.division!="";
+    const schoolIsValid = caseData.school!="";
+    const caseTypeIsValid = caseData.caseType!="";
 
     if (!nameIsValid || !ageIsValid || !addressIsValid || !dateIsValid || !reasonIsValid || contactNoIsValid) {
       // Alert.alert('Invalid input', 'Please check your input values');
@@ -114,6 +117,9 @@ function ChildCasesForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }
             value: curInputs.reason.value,
             isValid: reasonIsValid,
           },
+          division: { value: curInputs.division.value , isValid: divisionIsValid},
+          school: { value: curInputs.school.value , isValid: schoolIsValid},
+          caseType: { value: curInputs.caseType.value , isValid: caseTypeIsValid},
         };
       });
       return;
@@ -128,7 +134,10 @@ function ChildCasesForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }
     !inputs.address.isValid ||
     !inputs.contactNo.isValid ||
     !inputs.date.isValid ||
-    !inputs.reason.isValid;
+    !inputs.reason.isValid||
+    !inputs.division.isValid||
+    !inputs.school.isValid||
+    !inputs.caseType.isValid;
 
   return (
       <ScrollView>
@@ -137,6 +146,7 @@ function ChildCasesForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }
       {/*<View style={styles.container}>*/}
         <View style={styles.inputsRow}>
           <DropdownComponent
+              invalid={!inputs.division.isValid}
               label={"Division"}
               data={division}
               textInputConfig={{
@@ -145,6 +155,7 @@ function ChildCasesForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }
               }}
           />
           <DropdownComponent
+              invalid={!inputs.school.isValid}
               label={"School"}
               data={school}
               textInputConfig={{
@@ -153,6 +164,7 @@ function ChildCasesForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }
               }}
           />
           <DropdownComponent
+              invalid={!inputs.caseType.isValid}
               label={"Case Type"}
               data={caseType}
               textInputConfig={{

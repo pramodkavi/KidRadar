@@ -11,7 +11,7 @@ function PreSchoolCasesCountForm({ submitButtonLabel, onCancel, onSubmit, defaul
   const division = [
     { label: 'Katana', value: '1' },
     { label: 'Ja-Ela',value: '2'},
-    { label: 'Negambo',value: '3'},
+    { label: 'Negombo',value: '3'},
   ];
 
   const school = [
@@ -77,6 +77,8 @@ function PreSchoolCasesCountForm({ submitButtonLabel, onCancel, onSubmit, defaul
     const descriptionIsValid = caseData.description.trim().length > 0;
     const graduatesCountsIsValid = !isNaN(caseData.graduatesCounts) && (caseData.graduatesCounts > 0 && caseData.graduatesCounts < 5000);
     const scholarsCountsIsValid = !isNaN(caseData.scholarsCounts) && (caseData.scholarsCounts > 0 && caseData.scholarsCounts < 5000);
+    const divisionIsValid = caseData.division!="";
+    const preSchoolIsValid = caseData.preSchool!="";
 
     if (!descriptionIsValid || !graduatesCountsIsValid || !scholarsCountsIsValid) {
       setInputs((curInputs) => {
@@ -84,6 +86,8 @@ function PreSchoolCasesCountForm({ submitButtonLabel, onCancel, onSubmit, defaul
           description: { value: curInputs.description.value, isValid: descriptionIsValid },
           graduatesCounts: { value: curInputs.graduatesCounts.value, isValid: graduatesCountsIsValid },
           scholarsCounts: { value: curInputs.scholarsCounts.value, isValid: scholarsCountsIsValid },
+          division: { value: curInputs.division.value, isValid: divisionIsValid },
+          preSchool: { value: curInputs.preSchool.value, isValid: preSchoolIsValid },
         };
       });
       return;
@@ -95,7 +99,9 @@ function PreSchoolCasesCountForm({ submitButtonLabel, onCancel, onSubmit, defaul
   const formIsInvalid =
     !inputs.description.isValid ||
     !inputs.graduatesCounts.isValid ||
-    !inputs.scholarsCounts.isValid;
+    !inputs.scholarsCounts.isValid||
+    !inputs.division.isValid||
+    !inputs.preSchool.isValid;
 
   return (
       <ScrollView>
@@ -104,6 +110,7 @@ function PreSchoolCasesCountForm({ submitButtonLabel, onCancel, onSubmit, defaul
           {/*<View style={styles.container}>*/}
             <View style={styles.inputsRow}>
               <DropdownComponent
+                  invalid={!inputs.division.isValid}
                   label={"Division"}
                   data={division}
                   textInputConfig={{
@@ -112,6 +119,7 @@ function PreSchoolCasesCountForm({ submitButtonLabel, onCancel, onSubmit, defaul
                   }}
               />
               <DropdownComponent
+                  invalid={!inputs.preSchool.isValid}
                   label={"Pre-School"}
                   data={school}
                   textInputConfig={{
@@ -119,10 +127,7 @@ function PreSchoolCasesCountForm({ submitButtonLabel, onCancel, onSubmit, defaul
                     value: inputs.preSchool.value,
                   }}
               />
-
-              {/*<SelectCountryScreen/>*/}
             </View>
-          {/*</View>*/}
             <Input
               label="Description"
               invalid={!inputs.description.isValid}
@@ -149,10 +154,6 @@ function PreSchoolCasesCountForm({ submitButtonLabel, onCancel, onSubmit, defaul
                 value: inputs.scholarsCounts.value,
               }}
           />
-
-          {/*</View>*/}
-
-
           {formIsInvalid && (
             <Text style={styles.errorText}>
               Invalid input values - please check your entered data!

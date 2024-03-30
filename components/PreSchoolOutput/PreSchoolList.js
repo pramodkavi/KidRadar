@@ -7,7 +7,6 @@ function renderCasesItem(itemData) {
 }
 
 function PreSchoolList({ preSchoolDetails }) {
-console.log("'''''''''''''''''''''''In Item PreSchoolDetails ",preSchoolDetails)
   return (
     <FlatList
       data={preSchoolDetails}

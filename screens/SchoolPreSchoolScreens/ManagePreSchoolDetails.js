@@ -22,7 +22,6 @@ function ManagePreSchoolDetails({ route, navigation }) {
 
   const dispatch = useDispatch(); // Redux hook to dispatch actions
   const preSchool = useSelector(selectPreSchool); // Accessing expenses state from Redux store
-  console.log("////////////////////PreSchool ",preSchool)
   const editedCaseId = route.params?.expenseId;
   const isEditing = !!editedCaseId;
 
