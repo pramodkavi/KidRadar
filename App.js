@@ -6,7 +6,6 @@ import { Ionicons } from '@expo/vector-icons';
 import ManageChildCases from './screens/ManageChildCases';
 import ChildCases from './screens/ChildCases';
 import { GlobalStyles } from './constants/styles';
-import ExpensesContextProvider from './store/case-context';
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
 const Tab = createMaterialTopTabNavigator();
@@ -17,6 +16,18 @@ import StudentCasesScreen from "./screens/StudentCasesScreen";
 import ManagePreSchoolCases from "./screens/PreSchoolStudentScreens/ManagePreSchoolCases";
 import ManagePreSchoolCasesCount from "./screens/PreSchoolStudentScreens/ManagePreSchoolCasesCount";
 import PreSchoolCases from "./screens/PreSchoolStudentScreens/PreSchoolCases";
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import PreSchoolDetails from './screens/SchoolPreSchoolScreens/PreSchoolDetails';
+import ManagePreSchoolDetails from './screens/SchoolPreSchoolScreens/ManagePreSchoolDetails';
+import SchoolDetails from './screens/SchoolPreSchoolScreens/SchoolDetails';
+import ManageSchoolDetails from './screens/SchoolPreSchoolScreens/ManageSchoolDetails';
+import AuthContextProvider, {AuthContext} from "./store/auth-context";
+import {useContext} from "react";
+import WelcomeScreen from "./screens/WelcomeScreen";
+import IconButton from './components/UI/IconButton';
+import LoginScreen from "./screens/LoginScreen";
+import SignupScreen from "./screens/SignupScreen";
+
 function ChildCasesOverview() {
     return (
         <BottomTabs.Navigator
@@ -53,11 +64,7 @@ function ChildCasesOverview() {
         </BottomTabs.Navigator>
     );
 }
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import PreSchoolDetails from './screens/SchoolPreSchoolScreens/PreSchoolDetails';
-import ManagePreSchoolDetails from './screens/SchoolPreSchoolScreens/ManagePreSchoolDetails';
-import SchoolDetails from './screens/SchoolPreSchoolScreens/SchoolDetails';
-import ManageSchoolDetails from './screens/SchoolPreSchoolScreens/ManageSchoolDetails';
+
 
 
 function SchoolPreSchooolOverview() {
@@ -75,88 +82,213 @@ function SchoolPreSchooolOverview() {
         </Tab.Navigator>
     );
 }
-export default function App() {
-    // const count = useSelector((state) => state.counter.value)
-    // const dispatch = useDispatch()
-    return (
-        // <>
-        //
-        // </>
-        <Provider store={store}>
-            <PaperProvider>
-                <StatusBar style="white" />
-                <NavigationContainer>
-                    <Stack.Navigator
-                        screenOptions={{
-                            headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
-                            headerTintColor: 'black',
-                        }}
-                    >
-                        {/* <Stack.Screen
-                            name="ChildCasesOverview"
-                            component={ChildCasesOverview}
-                            options={{ headerShown: false }}
-                        /> */}
-                        <Stack.Screen
-                            name="School PreSchoool Overview"
-                            component={SchoolPreSchooolOverview}
-                            options={{
-                                presentation: 'modal',
-                            }}
-                        />
-                        <Stack.Screen
-                            name="ChildCases"
-                            component={ChildCases}
-                            options={{
-                                presentation: 'modal',
-                            }}
-                        />
-                        <Stack.Screen
-                            name="PreSchoolCases"
-                            component={PreSchoolCases}
-                            options={{
-                                presentation: 'modal',
-                            }}
-                        />
 
-                        <Stack.Screen
-                            name="ManageChildCases"
-                            component={ManageChildCases}
-                            options={{
-                                presentation: 'modal',
-                            }}
-                        />
-                        <Stack.Screen
-                            name="ManagePreSchoolCases"
-                            component={ManagePreSchoolCases}
-                            options={{
-                                presentation: 'modal',
-                            }}
-                        />
-                        <Stack.Screen
-                            name="ManagePreSchoolCasesCount"
-                            component={ManagePreSchoolCasesCount}
-                            options={{
-                                presentation: 'modal',
-                            }}
-                        />
-                        <Stack.Screen
-                            name="ManagePreSchoolDetails"
-                            component={ManagePreSchoolDetails}
-                            options={{
-                                presentation: 'modal',
-                            }}
-                        />
-                        <Stack.Screen
-                            name="ManageSchoolDetails"
-                            component={ManageSchoolDetails}
-                            options={{
-                                presentation: 'modal',
-                            }}
-                        />
-                    </Stack.Navigator>
-                </NavigationContainer>
-            </PaperProvider>
-        </Provider>
+function AuthStack() {
+    return (
+        <Stack.Navigator
+            screenOptions={{
+                headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
+                headerTintColor: 'black',
+            }}
+        >
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="Signup" component={SignupScreen} />
+        </Stack.Navigator>
     );
 }
+
+function AuthenticatedStack() {
+    const authCtx = useContext(AuthContext);
+    return (
+        <Stack.Navigator
+            screenOptions={{
+                headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
+                headerTintColor: 'black',
+            }}
+        >
+            {/*<Stack.Screen*/}
+            {/*    name="Welcome"*/}
+            {/*    component={WelcomeScreen}*/}
+            {/*    options={{*/}
+            {/*        headerRight: ({ tintColor }) => (*/}
+            {/*            <IconButton*/}
+            {/*                icon="exit"*/}
+            {/*                color={tintColor}*/}
+            {/*                size={24}*/}
+            {/*                onPress={authCtx.logout}*/}
+            {/*            />*/}
+            {/*        ),*/}
+            {/*    }}*/}
+            {/*/>*/}
+             <Stack.Screen
+                name="ChildCasesOverview"
+                component={ChildCasesOverview}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name="School PreSchoool Overview"
+                component={SchoolPreSchooolOverview}
+                options={{
+                    presentation: 'modal',
+                }}
+            />
+            <Stack.Screen
+                name="ChildCases"
+                component={ChildCases}
+                options={{
+                    presentation: 'modal',
+                }}
+            />
+            <Stack.Screen
+                name="PreSchoolCases"
+                component={PreSchoolCases}
+                options={{
+                    presentation: 'modal',
+                }}
+            />
+
+            <Stack.Screen
+                name="ManageChildCases"
+                component={ManageChildCases}
+                options={{
+                    presentation: 'modal',
+                }}
+            />
+            <Stack.Screen
+                name="ManagePreSchoolCases"
+                component={ManagePreSchoolCases}
+                options={{
+                    presentation: 'modal',
+                }}
+            />
+            <Stack.Screen
+                name="ManagePreSchoolCasesCount"
+                component={ManagePreSchoolCasesCount}
+                options={{
+                    presentation: 'modal',
+                }}
+            />
+            <Stack.Screen
+                name="ManagePreSchoolDetails"
+                component={ManagePreSchoolDetails}
+                options={{
+                    presentation: 'modal',
+                }}
+            />
+            <Stack.Screen
+                name="ManageSchoolDetails"
+                component={ManageSchoolDetails}
+                options={{
+                    presentation: 'modal',
+                }}
+            />
+        </Stack.Navigator>
+    );
+}
+
+function Navigation() {
+    const authCtx = useContext(AuthContext);
+
+    return (
+        <NavigationContainer>
+            {!authCtx.isAuthenticated && <AuthStack />}
+            {authCtx.isAuthenticated && <AuthenticatedStack />}
+        </NavigationContainer>
+    );
+}
+
+
+export default function App() {
+    return (
+        <>
+            <Provider store={store}>
+                <PaperProvider>
+                    <AuthContextProvider>
+                        <Navigation />
+                    </AuthContextProvider>
+                </PaperProvider>
+            </Provider>
+        </>
+    );
+}
+// export default function App() {
+//     return (
+//
+//         <Provider store={store}>
+//             <PaperProvider>
+//                 <StatusBar style="white" />
+//                 <NavigationContainer>
+//                     <Stack.Navigator
+//                         screenOptions={{
+//                             headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
+//                             headerTintColor: 'black',
+//                         }}
+//                     >
+//                         {/* <Stack.Screen
+//                             name="ChildCasesOverview"
+//                             component={ChildCasesOverview}
+//                             options={{ headerShown: false }}
+//                         /> */}
+//                         <Stack.Screen
+//                             name="School PreSchoool Overview"
+//                             component={SchoolPreSchooolOverview}
+//                             options={{
+//                                 presentation: 'modal',
+//                             }}
+//                         />
+//                         <Stack.Screen
+//                             name="ChildCases"
+//                             component={ChildCases}
+//                             options={{
+//                                 presentation: 'modal',
+//                             }}
+//                         />
+//                         <Stack.Screen
+//                             name="PreSchoolCases"
+//                             component={PreSchoolCases}
+//                             options={{
+//                                 presentation: 'modal',
+//                             }}
+//                         />
+//
+//                         <Stack.Screen
+//                             name="ManageChildCases"
+//                             component={ManageChildCases}
+//                             options={{
+//                                 presentation: 'modal',
+//                             }}
+//                         />
+//                         <Stack.Screen
+//                             name="ManagePreSchoolCases"
+//                             component={ManagePreSchoolCases}
+//                             options={{
+//                                 presentation: 'modal',
+//                             }}
+//                         />
+//                         <Stack.Screen
+//                             name="ManagePreSchoolCasesCount"
+//                             component={ManagePreSchoolCasesCount}
+//                             options={{
+//                                 presentation: 'modal',
+//                             }}
+//                         />
+//                         <Stack.Screen
+//                             name="ManagePreSchoolDetails"
+//                             component={ManagePreSchoolDetails}
+//                             options={{
+//                                 presentation: 'modal',
+//                             }}
+//                         />
+//                         <Stack.Screen
+//                             name="ManageSchoolDetails"
+//                             component={ManageSchoolDetails}
+//                             options={{
+//                                 presentation: 'modal',
+//                             }}
+//                         />
+//                     </Stack.Navigator>
+//                 </NavigationContainer>
+//             </PaperProvider>
+//         </Provider>
+//     );
+// }

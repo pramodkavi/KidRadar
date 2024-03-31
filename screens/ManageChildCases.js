@@ -44,7 +44,7 @@ function ManageChildCases({ route, navigation }) {
     navigation.goBack();
   }
 
-  async function confirmHandler(caseData) {
+  async function onSubmit(caseData) {
     setIsSubmitting(true);
     try {
       if (isEditing) {

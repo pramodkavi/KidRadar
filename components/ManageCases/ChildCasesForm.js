@@ -105,7 +105,7 @@ function ChildCasesForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }
     const caseTypeIsValid = caseData.caseType!="";
 
     if (!nameIsValid || !ageIsValid || !addressIsValid || !dateIsValid || !reasonIsValid || contactNoIsValid) {
-      // Alert.alert('Invalid input', 'Please check your input values');
+
       setInputs((curInputs) => {
         return {
           name: { value: curInputs.name.value, isValid: nameIsValid },
