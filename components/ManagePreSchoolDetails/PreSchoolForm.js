@@ -7,7 +7,6 @@ import { GlobalStyles } from '../../constants/styles';
 import DropdownComponent from "../DropdownComponent";
 
 function PreSchoolForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }) {
-  console.log("///////////////////////defaultValues", defaultValues);
   const [selected, setSelected] = React.useState("");
   const division = [
     { label: 'Katana', value: '1' },

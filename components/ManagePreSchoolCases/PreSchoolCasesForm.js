@@ -86,12 +86,12 @@ function PreSchoolCasesForm({ submitButtonLabel, onCancel, onSubmit, defaultValu
     const nameIsValid = caseData.name.trim().length > 0;
     const ageIsValid = !isNaN(caseData.age) && (caseData.age > 0 && caseData.age < 19);
     const addressIsValid = caseData.name.trim().length > 0;
-    const contactNoIsValid = !isNaN(caseData.contactNo) && (caseData.contactNo ===10);
+    const contactNoIsValid = !isNaN(caseData.contactNo) && (caseData.contactNo ===9);
     const dateIsValid = caseData.date.toString() !== 'Invalid Date';
     const divisionIsValid = caseData.division!="";
     const preSchoolIsValid = caseData.preSchool!="";
 
-    if (!nameIsValid || !ageIsValid || !addressIsValid || !dateIsValid  || contactNoIsValid || divisionIsValid || preSchoolIsValid) {
+    if (!nameIsValid || !ageIsValid || !addressIsValid || !dateIsValid  || contactNoIsValid || !divisionIsValid || !preSchoolIsValid) {
       setInputs((curInputs) => {
         return {
           name: { value: curInputs.name.value, isValid: nameIsValid },
@@ -113,7 +113,7 @@ function PreSchoolCasesForm({ submitButtonLabel, onCancel, onSubmit, defaultValu
     !inputs.name.isValid ||
     !inputs.age.isValid ||
     !inputs.address.isValid ||
-    !inputs.contactNo.isValid ||
+    // !inputs.contactNo.isValid ||
     !inputs.date.isValid ||
     !inputs.division.isValid ||
     !inputs.preSchool.isValid;
@@ -173,7 +173,7 @@ function PreSchoolCasesForm({ submitButtonLabel, onCancel, onSubmit, defaultValu
             label="Guardian Contact No"
             invalid={!inputs.contactNo.isValid}
             textInputConfig={{
-              // keyboardType: 'decimal-pad',
+              keyboardType: 'decimal-pad',
               onChangeText: inputChangedHandler.bind(this, 'contactNo'),
               value: inputs.contactNo.value,
             }}

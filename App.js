@@ -40,7 +40,7 @@ function ChildCasesOverview() {
         >
             <BottomTabs.Screen
                 name="Student Cases"
-                component={StudentCasesScreen}
+                component={SchoolPreSchooolOverview}
                 options={{
                     title: 'Students',
                     tabBarLabel: 'Students',
@@ -49,17 +49,17 @@ function ChildCasesOverview() {
                     ),
                 }}
             />
-            {/*<BottomTabs.Screen*/}
-            {/*    name="Child Cases"*/}
-            {/*    component={ChildCases}*/}
-            {/*    options={{*/}
-            {/*        title: 'Child Cases',*/}
-            {/*        tabBarLabel: 'Child Cases',*/}
-            {/*        tabBarIcon: ({ color, size }) => (*/}
-            {/*            <Ionicons name="calendar" size={size} color={color} />*/}
-            {/*        ),*/}
-            {/*    }}*/}
-            {/*/>*/}
+            <BottomTabs.Screen
+                name="Child Cases"
+                component={ChildCases}
+                options={{
+                    title: 'Child Cases',
+                    tabBarLabel: 'Child Cases',
+                    tabBarIcon: ({ color, size }) => (
+                        <Ionicons name="calendar" size={size} color={color} />
+                    ),
+                }}
+            />
 
         </BottomTabs.Navigator>
     );
@@ -188,6 +188,8 @@ function AuthenticatedStack() {
 
 function Navigation() {
     const authCtx = useContext(AuthContext);
+    console.log("///////////////////authCtx.token In APP",authCtx.token)
+    console.log("///////////////////authCtx.token In APP",authCtx.uId)
 
     return (
         <NavigationContainer>

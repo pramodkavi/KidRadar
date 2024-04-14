@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from 'react';
+import {useContext, useLayoutEffect, useState} from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux'; // Importing Redux hooks
 import {deleteCase, storeCases, storePreSchoolCasesCount, updateCase} from '../../util/http';
@@ -8,10 +8,12 @@ import ErrorOverlay from "../../components/UI/ErrorOverlay";
 import {IconButton} from "react-native-paper";
 import PreSchoolCasesCountForm from "../../components/ManagePreSchoolCases/PreSchoolCasesCountForm";
 import {addPreSchoolCasesCount, setPreSchoolCasesCount} from "../../slices/PreSchoolCasesCountSlice";
+import {AuthContext} from "../../store/auth-context";
 
 function ManagePreSchoolCasesCount({ route, navigation }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState();
+  const authCtx = useContext(AuthContext);
   const preSchoolCasesCount = useSelector((state) => state.preSchoolCasesCount.preSchoolCasesCount);
 
   const dispatch = useDispatch(); // Redux hook to dispatch actions
@@ -47,7 +49,7 @@ function ManagePreSchoolCasesCount({ route, navigation }) {
   }
 
   async function confirmHandler(caseData) {
-
+    caseData.uid=authCtx.uId;
     setIsSubmitting(true);
     try {
       if (isEditing) {
@@ -55,9 +57,7 @@ function ManagePreSchoolCasesCount({ route, navigation }) {
         await updateCase(editedCaseId, caseData);
       } else {
         const id = await storePreSchoolCasesCount(caseData);
-        console.log(".....................Before Checking storePreSchoolCasesCount")
         dispatch(addPreSchoolCasesCount({ ...caseData, id: id }))
-        console.log(".....................After Checking storePreSchoolCasesCount")
       }
       navigation.goBack();
     } catch (error) {

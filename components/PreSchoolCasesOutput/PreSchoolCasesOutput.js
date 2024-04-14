@@ -13,7 +13,6 @@ function PreSchoolCasesOutput({ totalCases, fallbackText }) {
   const [searchQuery, setSearchQuery] = useState('');
   const preSchoolCases = useSelector((state) => state.preSchoolCases.preSchoolCases); // Accessing cases state from Redux store
   const preSchoolCasesCount = useSelector((state) => state.preSchoolCasesCount.preSchoolCasesCount);
-  console.log(".....................preSchoolCasesCount",preSchoolCasesCount);
   const filteredCases = preSchoolCases.filter(
       (item) =>
           item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||

@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from 'react';
+import {useContext, useLayoutEffect, useState} from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux'; // Importing Redux hooks
 import ChildCasesForm from '../components/ManageCases/ChildCasesForm';
@@ -6,12 +6,13 @@ import ErrorOverlay from '../components/UI/ErrorOverlay';
 import IconButton from '../components/UI/IconButton';
 import LoadingOverlay from '../components/UI/LoadingOverlay';
 import { deleteCase, storeCases, updateCase } from '../util/http';
-import { deleteCase as deleteCaseAction, addCase as addCaseAction, updateCase as updateCaseAction } from '../slices/CaseSlice'; // Importing Redux actions
+import { deleteCase as deleteCaseAction, addCase as addCaseAction, updateCase as updateCaseAction } from '../slices/CaseSlice';
+import {AuthContext} from "../store/auth-context"; // Importing Redux actions
 
 function ManageChildCases({ route, navigation }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState();
-
+  const authCtx = useContext(AuthContext);
   const dispatch = useDispatch(); // Redux hook to dispatch actions
   const cases = useSelector(state => state.cases.cases); // Accessing expenses state from Redux store
 
@@ -44,7 +45,8 @@ function ManageChildCases({ route, navigation }) {
     navigation.goBack();
   }
 
-  async function onSubmit(caseData) {
+  async function confirmHandler(caseData) {
+    caseData.uid=authCtx.uId;
     setIsSubmitting(true);
     try {
       if (isEditing) {

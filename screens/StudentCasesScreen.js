@@ -17,6 +17,7 @@ function StudentCasesScreen() {
         async function getCases() {
             try {
                 const casesFetch = await fetchCases();
+                console.log("///////////////////casesFetch",casesFetch)
                 dispatch(setCaseAction(casesFetch)); // Dispatching setCase action
             } catch (error) {
                 console.error('Could not fetch expenses:', error);

@@ -124,7 +124,7 @@ function ChildCasesForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }
       });
       return;
     }
-
+    // caseData.date=caseData.date+'';
     onSubmit(caseData);
   }
 
@@ -205,7 +205,7 @@ function ChildCasesForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }
           label="Guardian Contact No"
           invalid={!inputs.contactNo.isValid}
           textInputConfig={{
-            // keyboardType: 'decimal-pad',
+            keyboardType: 'decimal-pad',
             onChangeText: inputChangedHandler.bind(this, 'contactNo'),
             value: inputs.contactNo.value,
           }}

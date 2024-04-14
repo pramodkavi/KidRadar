@@ -21,9 +21,9 @@ function PreSchoolCases() {
                 dispatch(setPreSchoolCase(preCasesFetch)); // Dispatching setCase action
 
                 const preCasesCountFetch=await fetchPreSchoolCasesCount();
-                console.log("///////////////////preCasesCountFetch",preCasesCountFetch);
+                // console.log("///////////////////preCasesCountFetch",preCasesCountFetch);
                 dispatch(setPreSchoolCasesCount(preCasesCountFetch)); // Dispatching setCase action
-                console.log("///////////////////After preCasesCountFetch",preCasesCountFetch);
+                // console.log("///////////////////After preCasesCountFetch",preCasesCountFetch);
 
 
             } catch (error) {

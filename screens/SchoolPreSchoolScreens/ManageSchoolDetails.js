@@ -7,7 +7,7 @@ import LoadingOverlay from "../../components/UI/LoadingOverlay";
 import ErrorOverlay from "../../components/UI/ErrorOverlay";
 import IconButton from '../../components/UI/IconButton';
 import SchoolForm from "../../components/ManageSchoolDetails/SchoolForm";
-import {addSchool} from "../../slices/SchoolSlice"; // Importing Redux actions
+import {addSchool, updateSchool} from "../../slices/SchoolSlice"; // Importing Redux actions
 
 function ManageSchoolDetails({ route, navigation }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -46,10 +46,11 @@ function ManageSchoolDetails({ route, navigation }) {
   }
 
   async function confirmHandler(schoolData) {
+    console.log("////////////////schoolData in Manage",schoolData);
     setIsSubmitting(true);
     try {
       if (isEditing) {
-        dispatch(updateCaseAction({ id: editedCaseId, data: schoolData })); // Dispatching updateCase action
+        dispatch(updateSchool({ id: editedCaseId, data: schoolData })); // Dispatching updateCase action
         await updateCase(editedCaseId, schoolData);
       } else {
         const id = await storeSchool(schoolData);

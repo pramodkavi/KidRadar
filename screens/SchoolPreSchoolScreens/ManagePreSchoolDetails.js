@@ -1,24 +1,22 @@
-import { useLayoutEffect, useState } from 'react';
+import {useContext, useLayoutEffect, useState} from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux'; // Importing Redux hooks
 import {
-  deleteCase,
   deletePreSchool,
-  storeCases,
   storePreSchool,
-  storePreSchoolCases,
   updateCase
 } from '../../util/http';
-import { deleteCase as deleteCaseAction, addCase as addCaseAction, updateCase as updateCaseAction } from '../../slices/CaseSlice';
 import LoadingOverlay from "../../components/UI/LoadingOverlay";
 import ErrorOverlay from "../../components/UI/ErrorOverlay";
 import IconButton from '../../components/UI/IconButton';
 import PreSchoolForm from "../../components/ManagePreSchoolDetails/PreSchoolForm";
-import {addPreSchool, selectPreSchool,deletepreSchool} from "../../slices/PreSchoolSlice"; // Importing Redux actions
+import {addPreSchool, selectPreSchool,deletepreSchool,updatePreSchool} from "../../slices/PreSchoolSlice";
+import {AuthContext} from "../../store/auth-context"; // Importing Redux actions
 
 function ManagePreSchoolDetails({ route, navigation }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState();
+  const authCtx = useContext(AuthContext);
 
   const dispatch = useDispatch(); // Redux hook to dispatch actions
   const preSchool = useSelector(selectPreSchool); // Accessing expenses state from Redux store
@@ -52,10 +50,11 @@ function ManagePreSchoolDetails({ route, navigation }) {
   }
 
   async function confirmHandler(preSchoolData) {
+    preSchoolData.uid=authCtx.uId;
     setIsSubmitting(true);
     try {
       if (isEditing) {
-        dispatch(updateCaseAction({ id: editedCaseId, data: preSchoolData })); // Dispatching updateCase action
+        dispatch(updatePreSchool({ id: editedCaseId, data: preSchoolData })); // Dispatching updateCase action
         await updateCase(editedCaseId, preSchoolData);
       } else {
         const id = await storePreSchool(preSchoolData);

@@ -4,20 +4,34 @@ import {StackActions as cases} from "@react-navigation/routers/src";
 const BACKEND_URL =
     'https://kidradar-580da-default-rtdb.firebaseio.com';
 
+const API = "http://192.168.8.100:8080";
+
 export async function storeCases(casesData) {
-  const response = await axios.post(BACKEND_URL + '/cases.json', casesData);
-  const id = response.data.name;
+  let id =""
+  try {
+    const response = await axios.post(API+'/childcases', casesData);
+    // id = response.data.name;
+    id = response.data.id;
+  }catch (err){
+    console.log("Here is error",err)
+  }
   return id;
 }
 
 export async function fetchCases() {
-  const response = await axios.get(BACKEND_URL + '/cases.json');
+  const uid = "pIvQlCCo0kWrIxYIouvx38romT63";
+  const res = await axios.get(API+`/childcases/${uid}`,uid);
+
+  const response = JSON.parse(res.request._response);
+  // const childDataArray = responseData.d;
+
+  // const response = await axios.get(BACKEND_URL + '/cases.json');
 
   const cases = [];
 
   for (const key in response.data) {
     const casesObj = {
-      id: key,
+      id: response.data[key]._id,
       name: response.data[key].name,
       age: response.data[key].age,
       address: response.data[key].address,
@@ -28,6 +42,7 @@ export async function fetchCases() {
       school: response.data[key].school,
       caseType: response.data[key].caseType,
     };
+
     cases.push(casesObj);
   }
 
@@ -35,17 +50,23 @@ export async function fetchCases() {
 }
 
 export function updateCase(id, caseData) {
-  return axios.put(BACKEND_URL + `/cases/${id}.json`, caseData);
+  return axios.put(API+`/childcases/${id}`, caseData);
 }
 
 export function deleteCase(id) {
-  return axios.delete(BACKEND_URL + `/cases/${id}.json`,id);
+  return axios.delete(API+`/childcases/${id}`,id);
 }
 /////////////////////////////////////////////////////////////////////////////////
 
 export async function storePreSchoolCasesCount(casesCountData) {
-  const response = await axios.post(BACKEND_URL + '/preSchoolCasesCount.json', casesCountData);
-  const id = response.data.name;
+  let id =""
+  try {
+    const response = await axios.post(API + '/preSchoolCasesCount', casesCountData);
+    id = response.data.id;
+  }catch (err){
+    console.log("Here is error",err)
+  }
+
   return id;
 }
 
@@ -77,13 +98,22 @@ export function deletePreSchoolCasesCount(id) {
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 export async function storePreSchoolCases(casesData) {
-  const response = await axios.post(BACKEND_URL + '/preSchoolCases.json', casesData);
-  const id = response.data.name;
+  let id =""
+  try {
+    const response = await axios.post(API + '/preSchoolCases', casesData);
+    // id = response.data.name;
+    id = response.data.id;
+  }catch (err){
+    console.log("Here is error",err)
+  }
   return id;
 }
 
 export async function fetchPreSchoolCases() {
-  const response = await axios.get(BACKEND_URL + '/preSchoolCases.json');
+  const uid = "pIvQlCCo0kWrIxYIouvx38romT63";
+  const res = await axios.get(API+`/preSchoolCases/${uid}`,uid);
+
+  const response = JSON.parse(res.request._response);
   const cases = [];
 
   for (const key in response.data) {
@@ -104,17 +134,18 @@ export async function fetchPreSchoolCases() {
 }
 
 export function updatePreSchoolCases(id, casesData) {
-  return axios.put(BACKEND_URL + `/preSchoolCases/${id}.json`, casesData);
+  return axios.put(API + `/preSchoolCases/${id}`, casesData);
 }
 
 export function deletePreSchoolCases(id) {
-  return axios.delete(BACKEND_URL + `/preSchoolCases/${id}.json`,id);
+  return axios.delete(API + `/preSchoolCases/${id}`,id);
 }
 
 /////////////////////////////////////////////////////////////////////////////////
 
 export async function storeSchool(schoolData) {
-  const response = await axios.post(BACKEND_URL + '/schools.json', schoolData);
+  console.log("//////////////////////Here is school data",schoolData)
+  const response = await axios.post(API + '/schools', schoolData);
   const id = response.data.name;
   return id;
 }
@@ -151,9 +182,16 @@ export function deleteSchool(id) {
 /////////////////////////////////////////////////////////////////////////////////
 
 export async function storePreSchool(schoolData) {
-  const response = await axios.post(BACKEND_URL + '/preSchools.json', schoolData);
-  const id = response.data.name;
+  console.log("//////////////preSchoolData", schoolData)
+  let id =""
+  try {
+    const response = await axios.post(API + '/preSchools', schoolData);
+    id = response.data.id;
+  }catch (err){
+    console.log("Here is error",err)
+  }
   return id;
+
 }
 
 export async function fetchPreSchools() {

@@ -80,11 +80,12 @@ function SchoolForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }) {
     const schoolIsValid = schoolData.school.trim().length > 0;
     const descriptionIsValid = schoolData.description.trim().length > 0;
     const addressIsValid = schoolData.address.trim().length > 0;
-    const contactNoIsValid = !isNaN(schoolData.contactNo) && (schoolData.contactNo ===10);
+    // const contactNoIsValid = !isNaN(schoolData.contactNo) && (schoolData.contactNo ===9);
+    const contactNoIsValid = !isNaN(schoolData.contactNo);
     const dateIsValid = schoolData.date.toString() !== 'Invalid Date'&& schoolData.date <= currentDate;
     const divisionIsValid = schoolData.division!="";
 
-    if (!schoolIsValid || !descriptionIsValid || !addressIsValid || !dateIsValid  || contactNoIsValid || divisionIsValid) {
+    if (!schoolIsValid || !descriptionIsValid || !addressIsValid || !dateIsValid  || !contactNoIsValid || !divisionIsValid) {
       setInputs((curInputs) => {
         return {
           school: { value: curInputs.school.value, isValid: schoolIsValid },
@@ -97,6 +98,7 @@ function SchoolForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }) {
       });
       return;
     }
+
     console.log("//////////////////////schoolData",schoolData)
     onSubmit(schoolData);
   }
