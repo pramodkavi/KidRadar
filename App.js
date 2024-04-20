@@ -18,7 +18,7 @@ import ManagePreSchoolCasesCount from "./screens/PreSchoolStudentScreens/ManageP
 import PreSchoolCases from "./screens/PreSchoolStudentScreens/PreSchoolCases";
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import PreSchoolDetails from './screens/SchoolPreSchoolScreens/PreSchoolDetails';
-import ManagePreSchoolDetails from './screens/SchoolPreSchoolScreens/ManagePreSchoolDetails';
+import ManageInstitute from './screens/InstituteScreens/ManageInstitute';
 import SchoolDetails from './screens/SchoolPreSchoolScreens/SchoolDetails';
 import ManageSchoolDetails from './screens/SchoolPreSchoolScreens/ManageSchoolDetails';
 import AuthContextProvider, {AuthContext} from "./store/auth-context";
@@ -27,6 +27,10 @@ import WelcomeScreen from "./screens/WelcomeScreen";
 import IconButton from './components/UI/IconButton';
 import LoginScreen from "./screens/LoginScreen";
 import SignupScreen from "./screens/SignupScreen";
+import Institutes from "./screens/InstituteScreens/Institutes";
+import Courses from "./screens/CourseScreens/Courses";
+import ManagePreSchoolDetails from "./screens/SchoolPreSchoolScreens/ManagePreSchoolDetails";
+import ManageCourse from './screens/CourseScreens/ManageCourse';
 
 function ChildCasesOverview() {
     return (
@@ -82,7 +86,21 @@ function SchoolPreSchooolOverview() {
         </Tab.Navigator>
     );
 }
-
+function InstituteOverview() {
+    return (
+        <Tab.Navigator
+            screenOptions={({ navigation }) => ({
+                headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
+                headerTintColor: 'black',
+                tabBarStyle: { backgroundColor: GlobalStyles.colors.primary500 },
+                tabBarActiveTintColor: GlobalStyles.colors.primary400,
+            })}
+        >
+            <Tab.Screen name="PreSchools" component={PreSchoolDetails} />
+            <Tab.Screen name="School" component={SchoolDetails} />
+        </Tab.Navigator>
+    );
+}
 function AuthStack() {
     return (
         <Stack.Navigator
@@ -120,14 +138,16 @@ function AuthenticatedStack() {
             {/*        ),*/}
             {/*    }}*/}
             {/*/>*/}
-             <Stack.Screen
-                name="ChildCasesOverview"
-                component={ChildCasesOverview}
-                options={{ headerShown: false }}
+            <Stack.Screen
+                name="Institutes"
+                component={Institutes}
+                options={{
+                    presentation: 'modal',
+                }}
             />
             <Stack.Screen
-                name="School PreSchoool Overview"
-                component={SchoolPreSchooolOverview}
+                name="Courses"
+                component={Courses}
                 options={{
                     presentation: 'modal',
                 }}
@@ -139,6 +159,25 @@ function AuthenticatedStack() {
                     presentation: 'modal',
                 }}
             />
+            <Stack.Screen
+                name="ChildCasesOverview"
+                component={ChildCasesOverview}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name="School PreSchoool Overview"
+                component={SchoolPreSchooolOverview}
+                options={{
+                    presentation: 'modal',
+                }}
+            />
+            {/*<Stack.Screen*/}
+            {/*    name="ChildCases"*/}
+            {/*    component={ChildCases}*/}
+            {/*    options={{*/}
+            {/*        presentation: 'modal',*/}
+            {/*    }}*/}
+            {/*/>*/}
             <Stack.Screen
                 name="PreSchoolCases"
                 component={PreSchoolCases}
@@ -178,6 +217,27 @@ function AuthenticatedStack() {
             <Stack.Screen
                 name="ManageSchoolDetails"
                 component={ManageSchoolDetails}
+                options={{
+                    presentation: 'modal',
+                }}
+            />
+            <Stack.Screen
+                name="Institute Overview"
+                component={InstituteOverview}
+                options={{
+                    presentation: 'modal',
+                }}
+            />
+            <Stack.Screen
+                name="ManageInstitute"
+                component={ManageInstitute}
+                options={{
+                    presentation: 'modal',
+                }}
+            />
+            <Stack.Screen
+                name="ManageCourse"
+                component={ManageCourse}
                 options={{
                     presentation: 'modal',
                 }}
@@ -275,8 +335,8 @@ export default function App() {
 //                             }}
 //                         />
 //                         <Stack.Screen
-//                             name="ManagePreSchoolDetails"
-//                             component={ManagePreSchoolDetails}
+//                             name="ManageInstitute"
+//                             component={ManageInstitute}
 //                             options={{
 //                                 presentation: 'modal',
 //                             }}

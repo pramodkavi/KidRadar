@@ -4,7 +4,7 @@ import {StackActions as cases} from "@react-navigation/routers/src";
 const BACKEND_URL =
     'https://kidradar-580da-default-rtdb.firebaseio.com';
 
-const API = "http://192.168.8.100:8080";
+const API = "http://127.0.0.1:8080";
 
 export async function storeCases(casesData) {
   let id =""
@@ -182,7 +182,7 @@ export function deleteSchool(id) {
 /////////////////////////////////////////////////////////////////////////////////
 
 export async function storePreSchool(schoolData) {
-  console.log("//////////////preSchoolData", schoolData)
+  console.log("//////////////////////////////preSchoolData", schoolData)
   let id =""
   try {
     const response = await axios.post(API + '/preSchools', schoolData);
@@ -191,7 +191,6 @@ export async function storePreSchool(schoolData) {
     console.log("Here is error",err)
   }
   return id;
-
 }
 
 export async function fetchPreSchools() {
@@ -221,4 +220,92 @@ export function updatePreSchool(id, schoolData) {
 
 export function deletePreSchool(id) {
   return axios.delete(BACKEND_URL + `/preSchools/${id}.json`,id);
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+
+export async function storeInstitute(instituteData) {
+  console.log("//////////////////////Here is instituteData",instituteData)
+  let id =""
+  try {
+    const response = await axios.post(API + '/institutes', instituteData);
+    id = response.data.id;
+  }catch (err){
+    console.log("Here is error",err)
+  }
+  return id;
+}
+
+export async function fetchInstitute() {
+  const uid = "pIvQlCCo0kWrIxYIouvx38romT63";
+  const res = await axios.get(API+`/institutes/${uid}`,uid);
+  const response = JSON.parse(res.request._response);
+  const institutes = [];
+
+  for (const key in response.data) {
+    const institute = {
+      id: response.data[key]._id,
+      name: response.data[key].name,
+      detailedName: response.data[key].detailedName,
+      email: response.data[key].email,
+      maxNVQ: response.data[key].maxNVQ,
+      description: response.data[key].description,
+      address: response.data[key].address,
+      contactNo: response.data[key].contactNo,
+    };
+    institutes.push(institute);
+  }
+  return institutes;
+}
+
+export function updateInstitut(id, instituteData) {
+  return axios.put(API + `/institutes/${id}`, instituteData);
+}
+
+export function deleteInstitute(id) {
+  return axios.delete(BACKEND_URL + `/schools/${id}.json`,id);
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+
+export async function storeCourses(courseData) {
+  console.log("///////////////////////// courseData in http",courseData)
+  let id =""
+  try {
+    const response = await axios.post(API+'/courses', courseData);
+    id = response.data.id;
+  }catch (err){
+    console.log("Storing error",err)
+  }
+  return id;
+}
+
+export async function fetchCourses(instituteId) {
+  // const instituteId = "pIvQlCCo0kWrIxYIouvx38romT63";
+  const res = await axios.get(API+`/courses/${instituteId}`,instituteId);
+  const response = JSON.parse(res.request._response);
+
+
+  const courses = [];
+
+  for (const key in response.data) {
+    const courseObj = {
+      id: response.data[key]._id,
+      name: response.data[key].name,
+      type: response.data[key].type,
+      maxNVQ: response.data[key].maxNVQ,
+      description:response.data[key].description
+    };
+    courses.push(courseObj);
+  }
+
+  return courses;
+}
+
+export function updateCourse(id, courseData) {
+  return axios.put(API+`/courses/${id}`, courseData);
+}
+
+export function deleteCourse(id) {
+  return axios.delete(API+`/courses/${id}`,id);
 }

@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.colors.primary700,
   },
   text: {
-    color: 'white',
+    color: 'black',
     textAlign: 'center',
     marginBottom: 8,
   },

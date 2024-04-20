@@ -5,6 +5,9 @@ import PreSchoolCasesCountSlice from "../slices/PreSchoolCasesCountSlice";
 import PreSchoolSlice from "../slices/PreSchoolSlice";
 import SchoolSlice from "../slices/SchoolSlice";
 import UserReducer from '../slices/UserSlice';
+import InstituteSlice from '../slices/InstituteSlice';
+import CourseSlice from '../slices/CourseSlice';
+
 
 
 export const store = configureStore({
@@ -15,5 +18,7 @@ export const store = configureStore({
         preschool:PreSchoolSlice,
         schools:SchoolSlice,
         user:UserReducer,
+        institutes:InstituteSlice,
+        courses:CourseSlice
     },
 })
