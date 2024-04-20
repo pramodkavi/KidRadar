@@ -31,6 +31,10 @@ import Institutes from "./screens/InstituteScreens/Institutes";
 import Courses from "./screens/CourseScreens/Courses";
 import ManagePreSchoolDetails from "./screens/SchoolPreSchoolScreens/ManagePreSchoolDetails";
 import ManageCourse from './screens/CourseScreens/ManageCourse';
+import CasesView from './components/CasesOutput/CasesView';
+import PreSchoolCasesView from "./components/PreSchoolCasesOutput/PreSchoolCasesView";
+import PreSchoolView from "./components/PreSchoolOutput/PreSchoolView";
+import SchoolView from "./components/SchoolOutput/SchoolView";
 
 function ChildCasesOverview() {
     return (
@@ -90,14 +94,14 @@ function InstituteOverview() {
     return (
         <Tab.Navigator
             screenOptions={({ navigation }) => ({
-                headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
-                headerTintColor: 'black',
-                tabBarStyle: { backgroundColor: GlobalStyles.colors.primary500 },
-                tabBarActiveTintColor: GlobalStyles.colors.primary400,
+                headerStyle: {backgroundColor:GlobalStyles.colors.primary500},
+                headerTintColor:"black",
+                tabBarStyle:{backgroundColor:GlobalStyles.colors.primary500},
+                tabBarActiveTintColor:GlobalStyles.colors.primary400,
             })}
         >
-            <Tab.Screen name="PreSchools" component={PreSchoolDetails} />
-            <Tab.Screen name="School" component={SchoolDetails} />
+            <Tab.Screen name="Course" component={Courses} />
+            {/* <Tab.Screen name="OverView" component={SchoolDetails} /> */}
         </Tab.Navigator>
     );
 }
@@ -138,7 +142,7 @@ function AuthenticatedStack() {
             {/*        ),*/}
             {/*    }}*/}
             {/*/>*/}
-            <Stack.Screen
+            {/* <Stack.Screen
                 name="Institutes"
                 component={Institutes}
                 options={{
@@ -151,19 +155,12 @@ function AuthenticatedStack() {
                 options={{
                     presentation: 'modal',
                 }}
-            />
-            <Stack.Screen
-                name="ChildCases"
-                component={ChildCases}
-                options={{
-                    presentation: 'modal',
-                }}
-            />
-            <Stack.Screen
+            /> */}
+            {/* <Stack.Screen
                 name="ChildCasesOverview"
                 component={ChildCasesOverview}
                 options={{ headerShown: false }}
-            />
+            /> */}
             <Stack.Screen
                 name="School PreSchoool Overview"
                 component={SchoolPreSchooolOverview}
@@ -171,19 +168,19 @@ function AuthenticatedStack() {
                     presentation: 'modal',
                 }}
             />
-            {/*<Stack.Screen*/}
-            {/*    name="ChildCases"*/}
-            {/*    component={ChildCases}*/}
-            {/*    options={{*/}
-            {/*        presentation: 'modal',*/}
-            {/*    }}*/}
-            {/*/>*/}
+            <Stack.Screen
+               name="ChildCases"
+               component={ChildCases}
+               options={{
+                   presentation: 'modal',
+               }}
+            />
             <Stack.Screen
                 name="PreSchoolCases"
                 component={PreSchoolCases}
                 options={{
-                    presentation: 'modal',
-                }}
+                   presentation: 'modal',
+               }}
             />
 
             <Stack.Screen
@@ -222,7 +219,7 @@ function AuthenticatedStack() {
                 }}
             />
             <Stack.Screen
-                name="Institute Overview"
+                name="InstituteOverview"
                 component={InstituteOverview}
                 options={{
                     presentation: 'modal',
@@ -242,19 +239,49 @@ function AuthenticatedStack() {
                     presentation: 'modal',
                 }}
             />
+            <Stack.Screen
+                name="CasesView"
+                component={CasesView}
+                options={{
+                    presentation: 'modal',
+                }}
+            />
+            <Stack.Screen
+                name="PreSchoolCasesView"
+                component={PreSchoolCasesView}
+                options={{
+                    presentation: 'modal',
+                }}
+            />
+            <Stack.Screen
+                name="PreSchoolView"
+                component={PreSchoolView}
+                options={{
+                    presentation: 'modal',
+                }}
+            />
+            <Stack.Screen
+                name="School View"
+                component={SchoolView}
+                options={{
+                    presentation: 'modal',
+                }}
+            />
         </Stack.Navigator>
     );
 }
 
 function Navigation() {
     const authCtx = useContext(AuthContext);
-    console.log("///////////////////authCtx.token In APP",authCtx.token)
-    console.log("///////////////////authCtx.token In APP",authCtx.uId)
+    // console.log("///////////////////authCtx.token In APP",authCtx.token)
+    // console.log("///////////////////authCtx.token In APP",authCtx.uId)
 
     return (
         <NavigationContainer>
             {!authCtx.isAuthenticated && <AuthStack />}
             {authCtx.isAuthenticated && <AuthenticatedStack />}
+            {/* {true && <AuthenticatedStack />} */}
+
         </NavigationContainer>
     );
 }

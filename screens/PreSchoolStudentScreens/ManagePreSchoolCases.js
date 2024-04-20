@@ -22,13 +22,15 @@ function ManagePreSchoolCases({ route, navigation }) {
   const authCtx = useContext(AuthContext);
   const dispatch = useDispatch(); // Redux hook to dispatch actions
   const cases = useSelector(state => state.preSchoolCases.preSchoolCases); // Accessing expenses state from Redux store
+console.log("//////////////////// prameter data",route.params?.dataId)
 
-  const editedCaseId = route.params?.expenseId;
+  const editedCaseId = route.params?.dataId;
   const isEditing = !!editedCaseId;
 
   const selectedCase = cases.find(
       (expense) => expense.id === editedCaseId
   );
+  console.log("//////////////////// selectedCase",selectedCase)
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -37,11 +39,11 @@ function ManagePreSchoolCases({ route, navigation }) {
   }, [navigation, isEditing]);
 
   async function deleteCaseHandler(){
+    navigation.navigate('PreSchoolCases')
     setIsSubmitting(true);
     try {
       await deletePreSchoolCases(editedCaseId);
       dispatch(deletePreSchoolCase(editedCaseId)); // Dispatching deleteCase action
-      navigation.goBack();
     } catch (error) {
       setError('Could not delete pre-school cases - please try again later!');
       setIsSubmitting(false);
@@ -57,8 +59,9 @@ function ManagePreSchoolCases({ route, navigation }) {
     setIsSubmitting(true);
     try {
       if (isEditing) {
-        dispatch(updatePreSchoolCase({ id: editedCaseId, data: caseData })); // Dispatching updateCase action
         await updatePreSchoolCases(editedCaseId, caseData);
+        dispatch(updatePreSchoolCase({ id: editedCaseId, data: caseData })); // Dispatching updateCase action
+      
       } else {
         const id = await storePreSchoolCases(caseData);
         dispatch(addPreSchoolCase({ ...caseData, id: id })); // Dispatching addCase action

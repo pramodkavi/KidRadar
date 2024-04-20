@@ -8,8 +8,8 @@ function SchoolItem({ id, school, description, division }) {
   const navigation = useNavigation();
   // const label = caseType.label;
   function casePressHandler() {
-    navigation.navigate('ManageSchoolDetails', {
-      expenseId: id
+    navigation.navigate('School View', {
+      dataId: id
     });
   }
 

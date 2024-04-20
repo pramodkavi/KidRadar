@@ -16,7 +16,7 @@ function CourseDetailsOutput({ totalCases, fallbackText }) {
           item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
           (item.address && item.address.toLowerCase().includes(searchQuery.toLowerCase()))
   );
-console.log("////////////////////////filteredCourses",filteredCourses)
+console.log("////////////////////////Checking courses",filteredCourses)
   let content = <Text style={styles.infoText}>{fallbackText}</Text>;
   if (filteredCourses.length > 0) {
     console.log("////////////////////////filteredCourses",filteredCourses)
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   infoText: {
-    color: 'white',
+    color: 'black',
     fontSize: 16,
     textAlign: 'center',
     marginTop: 32,

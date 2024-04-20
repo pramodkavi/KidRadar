@@ -15,7 +15,7 @@ function SignupScreen() {
       const res = await createUser(email, password);
       console.log("/////////////res",res)
       authCtx.authenticate(res.token);
-      authCtx.setUID(res.localId);
+      authCtx.setUID(res.localId?res.localId:"pIvQlCCo0kWrIxYIouvx38romT63");
     }  catch (error) {
       Alert.alert(
           'Authentication failed',

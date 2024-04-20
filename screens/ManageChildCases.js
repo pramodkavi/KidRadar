@@ -32,9 +32,9 @@ function ManageChildCases({ route, navigation }) {
   async function deleteCaseHandler() {
     setIsSubmitting(true);
     try {
+      navigation.navigate('ChildCases')
       await deleteCase(editedCaseId);
       dispatch(deleteCaseAction(editedCaseId)); // Dispatching deleteCase action
-      navigation.goBack();
     } catch (error) {
       setError('Could not delete expense - please try again later!');
       setIsSubmitting(false);

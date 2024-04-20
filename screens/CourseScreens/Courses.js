@@ -3,32 +3,35 @@ import { useDispatch, useSelector } from 'react-redux'; // Importing Redux hooks
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import IconButton from '../../components/UI/IconButton';
 import { useNavigation } from '@react-navigation/native';
-import {fetchCases, fetchInstitute} from '../../util/http';
-import {selectCase, setCase as setCaseAction} from '../../slices/CaseSlice'; // Importing Redux actions
+import {fetchCourses} from '../../util/http';
 import { GlobalStyles } from '../../constants/styles';
 import {selectInstitute, setInstitute} from "../../slices/InstituteSlice";
 import CourseDetailsOutput from '../../components/CoursesOutput/CourseDetailsOutput';
+import { selectCourse, setCourses } from '../../slices/CourseSlice';
+import { selectGeneralId } from '../../slices/GeneralIdSlice';
 
 
 function Courses() {
+    console.log("I am in Course")
+    // const editedInstituteId = route.params?.instituteId;
+    // console.log("////////////////////////////////////////////////////////////// ID IS COMMING",editedInstitute)
     const dispatch = useDispatch(); // Redux hook to dispatch actions
-    const navigation = useNavigation();
-    const institutes = useSelector(selectInstitute); // Accessing cases state from Redux store
+    const courses = useSelector(selectCourse); // Accessing cases state from Redux store
+    const generalId = useSelector(selectGeneralId)
+    console.log("//////////////////////////////// General Id",generalId)
     useEffect(() => {
-        async function getCases() {
-            try {
-                const institutesFetch = await fetchInstitute();
-                dispatch(setInstitute(institutesFetch)); // Dispatching setCase action
+        async function getCourses() {
+            try { 
+                const coursesFetch = await fetchCourses(generalId);
+                dispatch(setCourses(coursesFetch)); // Dispatching setCase action
             } catch (error) {
-                console.error('Could not fetch expenses:', error);
-
+                console.error('Could not fetch courses:', error);
             }
         }
-
-        getCases();
+        getCourses();
     }, [dispatch]); // Added dispatch as a dependency
 
-    console.log("////////////////////////////////// institutes",institutes)
+    console.log("////////////////////////////////// Courses",courses)
     return (
         <>
             <CourseDetailsOutput

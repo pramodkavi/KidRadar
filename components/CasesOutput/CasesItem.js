@@ -7,8 +7,9 @@ import { getFormattedDate } from '../../util/date';
 function CasesItem({ id, reason, name, date , caseType }) {
   const navigation = useNavigation();
   // const label = caseType.label;
+  
   function casePressHandler() {
-    navigation.navigate('ManageChildCases', {
+    navigation.navigate('CasesView', {
       expenseId: id
     });
   }

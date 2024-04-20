@@ -16,7 +16,7 @@ function ManageSchoolDetails({ route, navigation }) {
   const dispatch = useDispatch(); // Redux hook to dispatch actions
   const cases = useSelector(state => state.schools.schools); // Accessing expenses state from Redux store
 
-  const editedCaseId = route.params?.expenseId;
+  const editedCaseId = route.params?.dataId;
   const isEditing = !!editedCaseId;
 
   const selectedCase = cases.find(
@@ -31,6 +31,7 @@ function ManageSchoolDetails({ route, navigation }) {
 
   async function deleteCaseHandler(){
     setIsSubmitting(true);
+    navigation.navigate('School PreSchoool Overview');
     try {
       await deleteCase(editedCaseId);
       dispatch(deleteCaseAction(editedCaseId)); // Dispatching deleteCase action

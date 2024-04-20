@@ -4,7 +4,7 @@ import {StackActions as cases} from "@react-navigation/routers/src";
 const BACKEND_URL =
     'https://kidradar-580da-default-rtdb.firebaseio.com';
 
-const API = "http://127.0.0.1:8080";
+const API = "http://192.168.8.102:8080";
 
 export async function storeCases(casesData) {
   let id =""
@@ -76,7 +76,7 @@ export async function fetchPreSchoolCasesCount() {
 
   for (const key in response.data) {
     const casesObj = {
-      id: key,
+      id: response.data[key]._id,
       description: response.data[key].description,
       graduatesCounts: response.data[key].graduatesCounts,
       scholarsCounts: response.data[key].scholarsCounts,
@@ -110,15 +110,17 @@ export async function storePreSchoolCases(casesData) {
 }
 
 export async function fetchPreSchoolCases() {
+  console.log("//////////////////// in Fetch pre");
   const uid = "pIvQlCCo0kWrIxYIouvx38romT63";
   const res = await axios.get(API+`/preSchoolCases/${uid}`,uid);
 
   const response = JSON.parse(res.request._response);
+  console.log("///////////////////////////////////////////respnse",response)
   const cases = [];
 
   for (const key in response.data) {
     const casesObj = {
-      id: key,
+      id:  response.data[key]._id,
       name: response.data[key].name,
       age: response.data[key].age,
       address: response.data[key].address,
@@ -157,7 +159,7 @@ export async function fetchSchools() {
 
   for (const key in response.data) {
     const school = {
-      id: key,
+    id:  response.data[key]._id,
       school: response.data[key].school,
       description: response.data[key].description,
       address: response.data[key].address,
@@ -237,9 +239,17 @@ export async function storeInstitute(instituteData) {
 }
 
 export async function fetchInstitute() {
+  console.log("////////////////////// here in  fetch Institute")
   const uid = "pIvQlCCo0kWrIxYIouvx38romT63";
-  const res = await axios.get(API+`/institutes/${uid}`,uid);
-  const response = JSON.parse(res.request._response);
+  let res =null;
+  try{
+    res = await axios.get(API+`/institutes/${uid}`,uid);
+    console.log("//////////////////////////////// Response above",res.data)
+  }catch(err){
+    console.log("]]]]]]]]]]]]]]]]]]]]]]]]]]]]Error occur",err)
+  }
+
+  const response = res.data;
   const institutes = [];
 
   for (const key in response.data) {
@@ -282,8 +292,14 @@ export async function storeCourses(courseData) {
 
 export async function fetchCourses(instituteId) {
   // const instituteId = "pIvQlCCo0kWrIxYIouvx38romT63";
-  const res = await axios.get(API+`/courses/${instituteId}`,instituteId);
-  const response = JSON.parse(res.request._response);
+  console.log("///////////////////////// institute id",instituteId)
+  let res= null;
+  try{
+    res = await axios.get(API+`/courses/${instituteId}`,instituteId);
+  }catch(err){
+    console.log("Fetching err", err)
+  }
+  const response = res.data;
 
 
   const courses = [];

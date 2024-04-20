@@ -21,7 +21,6 @@ function SchoolDetails() {
         async function getPreSchool() {
             try {
                 const fetchPreSchoolDetails = await fetchSchools();
-                console.log("/////////////////////fetchSchoolDetails",fetchPreSchoolDetails)
                 dispatch(setSchools(fetchPreSchoolDetails));
             } catch (error) {
                 console.error('Could not fetch preschool details:', error);

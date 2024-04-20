@@ -20,7 +20,7 @@ function ManagePreSchoolDetails({ route, navigation }) {
 
   const dispatch = useDispatch(); // Redux hook to dispatch actions
   const preSchool = useSelector(selectPreSchool); // Accessing expenses state from Redux store
-  const editedCaseId = route.params?.expenseId;
+  const editedCaseId = route.params?.dataId;
   const isEditing = !!editedCaseId;
 
   const selectedCase = preSchool.find(
@@ -35,10 +35,10 @@ function ManagePreSchoolDetails({ route, navigation }) {
 
   async function deleteDetailsHandler(){
     setIsSubmitting(true);
+    navigation.navigate('School PreSchoool Overview');
     try {
       await deletePreSchool(editedCaseId);
       dispatch(deletepreSchool(editedCaseId)); // Dispatching deleteCase action
-      navigation.goBack();
     } catch (error) {
       setError('Could not delete expense - please try again later!');
       setIsSubmitting(false);

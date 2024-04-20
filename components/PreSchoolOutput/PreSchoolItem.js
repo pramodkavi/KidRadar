@@ -8,8 +8,8 @@ function PreSchoolItem({ id, preSchool, description, division }) {
   const navigation = useNavigation();
   // const label = caseType.label;
   function casePressHandler() {
-    navigation.navigate('ManagePreSchoolDetails', {
-      expenseId: id
+    navigation.navigate('PreSchoolView', {
+      dataId: id
     });
   }
 

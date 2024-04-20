@@ -16,10 +16,8 @@ function InstituteDetailsOutput({ totalCases, fallbackText }) {
           item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
           (item.address && item.address.toLowerCase().includes(searchQuery.toLowerCase()))
   );
-console.log("////////////////////////filteredCases",filteredCases)
   let content = <Text style={styles.infoText}>{fallbackText}</Text>;
   if (filteredCases.length > 0) {
-    console.log("////////////////////////filteredCases",filteredCases)
     content = <InstituteList institutes={filteredCases} />;
   }
   function dropdownChangedHandler(inputIdentifier, enteredValue) {

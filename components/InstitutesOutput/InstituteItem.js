@@ -3,12 +3,16 @@ import { useNavigation } from '@react-navigation/native';
 
 import { GlobalStyles } from '../../constants/styles';
 import { getFormattedDate } from '../../util/date';
+import { useDispatch } from 'react-redux';
+import { setGeneralId } from '../../slices/GeneralIdSlice';
 
 function InstituteItem({ id,name, detailedName }) {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   // const label = caseType.label;
   function casePressHandler() {
-    navigation.navigate('Courses', {
+    dispatch(setGeneralId(id))
+    navigation.navigate('InstituteOverview', {
       instituteId: id
     });
   }

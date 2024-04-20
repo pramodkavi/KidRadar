@@ -54,9 +54,8 @@ function ManageCourse({ route, navigation }) {
       } else {
         courseData.instituteId ="6620de7eb07d140952120cde"; 
         const id = await storeCourses(courseData);
-        dispatch(addCourse({ ...courseData, id: id })); // Dispatching addCase action
+        // dispatch(addCourse({ ...courseData, id: id })); // Dispatching addCase action
       }
-      console.log("///////////////////////// courses",courses);
       navigation.goBack();
     } catch (error) {
       setError('Could not save data - please try again later!');

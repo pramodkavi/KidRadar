@@ -13,8 +13,8 @@ function LoginScreen() {
     setIsAuthenticating(true);
     try {
       const res = await login(email, password);
-      console.log("/////////////res.token",res.idToken)
-      console.log("/////////////res.localId",res.localId)
+      // console.log("/////////////res.token",res.idToken)
+      // console.log("/////////////res.localId",res.localId)
       authCtx.authenticate(res.idToken);
       authCtx.setUID(res.localId);
     } catch (error) {
