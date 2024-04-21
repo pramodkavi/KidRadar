@@ -22,6 +22,7 @@ function ManagePreSchoolCasesCount({ route, navigation }) {
   const editedCaseId = route.params?.expenseId;
   const isEditing = !!editedCaseId;
 
+  console.log("///////////////// editedCaseId", editedCaseId);
   const selectedCase = cases.find(
       (expense) => expense.id === editedCaseId
   );

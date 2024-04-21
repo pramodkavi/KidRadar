@@ -3,12 +3,12 @@ import {PieChart} from "react-native-chart-kit";
 import {Button} from "react-native-paper";
 import {GlobalStyles} from "../../constants/styles";
 import {useNavigation} from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { fetchCases } from "../../util/http";
+import { setCase } from "../../slices/CaseSlice";
 
-const pieChartData = [
-    { name: 'Ja-Ela', population: 48, color: '#CDBDFA', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-    { name: 'Negombo', population: 71, color: '#4B3886', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-    { name: 'Katana', population: 35, color: 'rgba(99, 81, 159, 1)', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-]
+
 const chartConfig = {
     backgroundGradientFrom: "#fff",
     backgroundGradientFromOpacity: 0,
@@ -26,8 +26,48 @@ const graphStyle = {
 }
 export function ChildrenCasesChart(){
     const navigation = useNavigation();
+    const dispatch = useDispatch();
     const width = Dimensions.get('window').width
     const height = 220
+    const cases = useSelector((state) => state.cases.cases); // Accessing cases state from Redux store
+    useEffect(() => {
+        async function getCases() {
+            try {
+                const casesFetch = await fetchCases();
+                dispatch(setCase(casesFetch)); // Dispatching setCase action
+            } catch (error) {
+                console.error('Could not fetch expenses:', error);
+                // Handle error as needed
+            }
+        }
+
+        getCases();
+    }, [dispatch]);
+    console.log("////////////////////////// cases",cases);
+    const jaEla = cases.reduce((acc, obj) => {
+        if (obj.division.label === "Ja-Ela") {
+          acc++;
+        }
+        return acc;
+    }, 0);
+    const katana = cases.reduce((acc, obj) => {
+        if (obj.division.label === "Katana") {
+          acc++;
+        }
+        return acc;
+    }, 0);
+    const negombo = cases.reduce((acc, obj) => {
+        if (obj.division.label === "Negombo") {
+          acc++;
+        }
+        return acc;
+    }, 0);
+
+    const pieChartData = [
+        { name: 'Ja-Ela', population: jaEla, color: '#CDBDFA', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+        { name: 'Negombo', population: negombo, color: '#4B3886', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+        { name: 'Katana', population: katana, color: 'rgba(99, 81, 159, 1)', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+    ];
 
     return (
         <>

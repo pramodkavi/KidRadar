@@ -46,6 +46,7 @@ function ManageChildCases({ route, navigation }) {
   }
 
   async function confirmHandler(caseData) {
+    console.log("////////////////////////// caseData",caseData)
     caseData.uid=authCtx.uId;
     setIsSubmitting(true);
     try {

@@ -71,7 +71,10 @@ export async function storePreSchoolCasesCount(casesCountData) {
 }
 
 export async function fetchPreSchoolCasesCount() {
-  const response = await axios.get(BACKEND_URL + '/preSchoolCasesCount.json');
+  const uid = "pIvQlCCo0kWrIxYIouvx38romT63";
+  const res = await axios.get(API+`/preSchoolCasesCount/${uid}`,uid);
+  const response = JSON.parse(res.request._response);
+
   const preCasesCount = [];
 
   for (const key in response.data) {

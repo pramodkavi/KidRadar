@@ -91,7 +91,7 @@ function PreSchoolCasesForm({ submitButtonLabel, onCancel, onSubmit, defaultValu
     const divisionIsValid = caseData.division!="";
     const preSchoolIsValid = caseData.preSchool!="";
 
-    if (!nameIsValid || !ageIsValid || !addressIsValid || !dateIsValid  || contactNoIsValid || !divisionIsValid || !preSchoolIsValid) {
+    if (!nameIsValid || !ageIsValid || !addressIsValid || !dateIsValid  || !contactNoIsValid || !divisionIsValid || !preSchoolIsValid) {
       setInputs((curInputs) => {
         return {
           name: { value: curInputs.name.value, isValid: nameIsValid },

@@ -32,7 +32,7 @@ function PreSchoolCasesOutput({ totalCases, fallbackText }) {
         <View style={styles.textwrap}>
           <Text style={styles.maintext}>Preschooler Insights</Text>
         </View>
-        <PreSchoolCaseSummary count={preSchoolCasesCount}/>
+        <PreSchoolCaseSummary countDetails={preSchoolCasesCount}/>
         <View style={styles.searchbar}>
           <Searchbar
               placeholder="Search"

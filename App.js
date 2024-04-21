@@ -36,6 +36,7 @@ import PreSchoolCasesView from "./components/PreSchoolCasesOutput/PreSchoolCases
 import PreSchoolView from "./components/PreSchoolOutput/PreSchoolView";
 import SchoolView from "./components/SchoolOutput/SchoolView";
 import InstituteView from './components/InstitutesOutput/InstituteView';
+import { LogBox } from 'react-native';
 
 function ChildCasesOverview() {
     return (
@@ -47,7 +48,7 @@ function ChildCasesOverview() {
                 tabBarActiveTintColor: GlobalStyles.colors.primary400,
             })}
         >
-            <BottomTabs.Screen
+            {/* <BottomTabs.Screen
                 name="Student Cases"
                 component={SchoolPreSchooolOverview}
                 options={{
@@ -57,7 +58,7 @@ function ChildCasesOverview() {
                         <Ionicons name="calendar" size={size} color={color} />
                     ),
                 }}
-            />
+            /> */}
             <BottomTabs.Screen
                 name="Child Cases"
                 component={ChildCases}
@@ -143,6 +144,16 @@ function AuthenticatedStack() {
             {/*        ),*/}
             {/*    }}*/}
             {/*/>*/}
+            {/*<Stack.Screen*/}
+            {/*    name="StudentCasesScreen"*/}
+            {/*    component={StudentCasesScreen}*/}
+            {/*    options={{ headerShown: false }}*/}
+            {/*/>*/}
+            <Stack.Screen
+                name="ChildCasesOverview"
+                component={ChildCasesOverview}
+                options={{ headerShown: false }}
+            />
             <Stack.Screen
                 name="Institutes"
                 component={Institutes}
@@ -290,6 +301,7 @@ function Navigation() {
 
 
 export default function App() {
+    //LogBox.ignoreAllLogs();
     return (
         <>
             <Provider store={store}>

@@ -19,13 +19,8 @@ function PreSchoolCases() {
             try {
                 const preCasesFetch = await fetchPreSchoolCases();
                 dispatch(setPreSchoolCase(preCasesFetch)); // Dispatching setCase action
-
-                // const preCasesCountFetch=await fetchPreSchoolCasesCount();
-                // console.log("///////////////////preCasesCountFetch",preCasesCountFetch);
-                // dispatch(setPreSchoolCasesCount(preCasesCountFetch)); // Dispatching setCase action
-                // console.log("///////////////////After preCasesCountFetch",preCasesCountFetch);
-
-
+                 const preCasesCountFetch=await fetchPreSchoolCasesCount();
+                 dispatch(setPreSchoolCasesCount(preCasesCountFetch)); // Dispatching setCase action
             } catch (error) {
                 console.error('Could not fetch Pre School Cases:', error);
             }

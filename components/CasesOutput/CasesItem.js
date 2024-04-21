@@ -7,7 +7,7 @@ import { getFormattedDate } from '../../util/date';
 function CasesItem({ id, reason, name, date , caseType }) {
   const navigation = useNavigation();
   // const label = caseType.label;
-  
+  console.log("/////////////// caseType",caseType)
   function casePressHandler() {
     navigation.navigate('CasesView', {
       expenseId: id
@@ -26,9 +26,9 @@ function CasesItem({ id, reason, name, date , caseType }) {
           </Text>
           <Text style={styles.textBase}>{getFormattedDate(date)}</Text>
         </View>
-        {/*<View style={styles.amountContainer}>*/}
-        {/*  <Text style={styles.amount}>{caseType.label}</Text>*/}
-        {/*</View>*/}
+        <View style={styles.amountContainer}>
+          <Text style={styles.amount}>{caseType.label}</Text>
+        </View>
       </View>
     </Pressable>
   );

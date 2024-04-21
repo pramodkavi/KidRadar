@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { GlobalStyles } from '../../constants/styles';
 import {useSelector} from "react-redux";
 
-function PreSchoolCaseSummary({ count }) {
+function PreSchoolCaseSummary({ countDetails }) {
   // const description = count[0].description;
   const graduatesCounts = 18;
   const scholarsCounts = 148;
@@ -16,19 +16,26 @@ function PreSchoolCaseSummary({ count }) {
   //     return count;
   //   }, 0);
   // };
+function SummaryByDivision(division) {
+  // Filter countDetails based on division label
+  const divisionData = countDetails.find(item => item.division.label === division);
 
-  function SummaryByDivision(division) {
-    return(
-        <View style={styles.container}>
-          <Text style={styles.city}>{division}</Text>
-          <View style={styles.subContainer}>
-            <Text style={styles.sum}>{scholarsCounts}</Text>
-            <Text style={styles.horizontleLine}>|</Text>
-            <Text style={styles.sumWarn}>{graduatesCounts}</Text>
-          </View>
-        </View>
-    )
-  }
+  // If divisionData is found, extract graduatesCounts and scholarsCounts
+  const graduatesCounts = divisionData ? divisionData.graduatesCounts : 0;
+  const scholarsCounts = divisionData ? divisionData.scholarsCounts : 0;
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.city}>{division}</Text>
+      <View style={styles.subContainer}>
+        <Text style={styles.sum}>{scholarsCounts}</Text>
+        <Text style={styles.horizontleLine}>|</Text>
+        <Text style={styles.sumWarn}>{graduatesCounts}</Text>
+      </View>
+    </View>
+  );
+}
+
 
   // const casesSum = cases.reduce((sum, expense) => {
   //   return sum + expense.amount;

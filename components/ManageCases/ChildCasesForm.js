@@ -104,7 +104,7 @@ function ChildCasesForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }
     const schoolIsValid = caseData.school!="";
     const caseTypeIsValid = caseData.caseType!="";
 
-    if (!nameIsValid || !ageIsValid || !addressIsValid || !dateIsValid || !reasonIsValid || contactNoIsValid) {
+    if (!nameIsValid || !ageIsValid || !addressIsValid || !dateIsValid || !reasonIsValid || !contactNoIsValid) {
 
       setInputs((curInputs) => {
         return {
@@ -124,6 +124,8 @@ function ChildCasesForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }
       });
       return;
     }
+    console.log("//////////////////////////  in form caseData",caseData)
+
     // caseData.date=caseData.date+'';
     onSubmit(caseData);
   }
