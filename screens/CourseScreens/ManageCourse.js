@@ -5,8 +5,9 @@ import CourseForm from '../../components/ManageCourseDetails/CourseForm';
 import ErrorOverlay from "../../components/UI/ErrorOverlay";
 import IconButton from '../../components/UI/IconButton';
 import LoadingOverlay from "../../components/UI/LoadingOverlay";
-import { addCourse, selectCourse } from '../../slices/CourseSlice';
-import { deleteCase, deleteCourse, storeCourses, storeSchool, updateCase, updateCourse } from '../../util/http';
+import { addCourse, deleteCourse, selectCourse, updateCourse } from '../../slices/CourseSlice';
+import { deleteCase, deleteCourses, storeCourses, updateCourses } from '../../util/http';
+import { selectGeneralId } from '../../slices/GeneralIdSlice';
 
 function ManageCourse({ route, navigation }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -14,8 +15,8 @@ function ManageCourse({ route, navigation }) {
 
   const dispatch = useDispatch(); // Redux hook to dispatch actions
   const courses = useSelector(selectCourse); // Accessing expenses state from Redux store
-
-  const editedCourseId = route.params?.expenseId;
+  const instituteid = useSelector(selectGeneralId); // Accessing expenses state from Redux store
+  const editedCourseId = route.params?.dataId;
   const isEditing = !!editedCourseId;
 
   const selectedCase = courses.find(
@@ -24,17 +25,18 @@ function ManageCourse({ route, navigation }) {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      title: isEditing ? 'Edit School Case' : 'Create School Case',
+      title: isEditing ? 'Edit Course Case' : 'Create Course Case',
     });
   }, [navigation, isEditing]);
 
   async function deleteCaseHandler(){
     setIsSubmitting(true);
     try {
-      await deleteCase(editedCaseId);
-      dispatch(deleteCourse(editedCaseId)); // Dispatching deleteCase action
+      await deleteCourses(editedCourseId);
+      dispatch(deleteCourse(editedCourseId)); // Dispatching deleteCase action
       navigation.goBack();
     } catch (error) {
+      console.log("////////////////////// err delte",error)
       setError('Could not delete expense - please try again later!');
       setIsSubmitting(false);
     }
@@ -45,19 +47,20 @@ function ManageCourse({ route, navigation }) {
   }
 
   async function confirmHandler(courseData) {
-    console.log("////////////////courseData in Manage",courseData);
     setIsSubmitting(true);
     try {
       if (isEditing) {
-        dispatch(updateCourse({ id: editedCaseId, data: courseData })); // Dispatching updateCase action
-        await updateCourse(editedCaseId, courseData);
+    console.log("////////////////courseData in Manage",courseData);
+        await updateCourses(editedCourseId, courseData);
+        dispatch(updateCourse({ id: editedCourseId, data: courseData })); // Dispatching updateCase action
       } else {
-        courseData.instituteId ="6620de7eb07d140952120cde"; 
+        courseData.instituteId =instituteid; 
         const id = await storeCourses(courseData);
         // dispatch(addCourse({ ...courseData, id: id })); // Dispatching addCase action
       }
       navigation.goBack();
     } catch (error) {
+      console.log("////////////////////// err",error)
       setError('Could not save data - please try again later!');
       setIsSubmitting(false);
     }

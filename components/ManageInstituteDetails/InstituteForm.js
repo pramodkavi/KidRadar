@@ -80,7 +80,8 @@ function InstituteForm({ submitButtonLabel, onCancel, onSubmit, defaultValues })
     const addressIsValid = instituteData.address.trim().length > 0;
     const emailIsValid = instituteData.email.includes('@');
     const maxNVQIsValid = !isNaN(instituteData.maxNVQ);
-    const contactNoIsValid = !isNaN(instituteData.contactNo);
+    const contactNoIsValid = !isNaN(instituteData.contactNo) && (String(instituteData.contactNo).length ==9);
+
 
     if (! nameIsValid || ! detailedNameIsValid || ! descriptionIsValid || ! addressIsValid || ! emailIsValid || ! maxNVQIsValid || ! contactNoIsValid) {
       setInputs((curInputs) => {

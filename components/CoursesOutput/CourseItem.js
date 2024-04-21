@@ -3,13 +3,18 @@ import { useNavigation } from '@react-navigation/native';
 
 import { GlobalStyles } from '../../constants/styles';
 import { getFormattedDate } from '../../util/date';
+import { setGeneralId } from '../../slices/GeneralIdSlice';
+import { useDispatch } from 'react-redux';
 
-function InstituteItem({ id,name, detailedName }) {
+function CourseItem({ id,name, detailedName }) {
   const navigation = useNavigation();
-  // const label = caseType.label;
+  const dispatch = useDispatch();
+  
   function casePressHandler() {
-    navigation.navigate('Courses', {
-      instituteId: id
+    // dispatch(setGeneralId(id))
+    // navigation.navigate('InstituteOverview');
+    navigation.navigate('ManageCourse', {
+      dataId: id
     });
   }
 
@@ -33,7 +38,7 @@ function InstituteItem({ id,name, detailedName }) {
   );
 }
 
-export default InstituteItem;
+export default CourseItem;
 
 const styles = StyleSheet.create({
   pressed: {

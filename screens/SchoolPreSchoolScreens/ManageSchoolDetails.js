@@ -1,18 +1,19 @@
-import { useLayoutEffect, useState } from 'react';
+import { useContext, useLayoutEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux'; // Importing Redux hooks
-import {deleteCase, storeCases, storePreSchoolCases, storeSchool, updateCase} from '../../util/http';
+import { deleteSchools,storeSchool, updateSchools} from '../../util/http';
 import { deleteCase as deleteCaseAction, addCase as addCaseAction, updateCase as updateCaseAction } from '../../slices/CaseSlice';
 import LoadingOverlay from "../../components/UI/LoadingOverlay";
 import ErrorOverlay from "../../components/UI/ErrorOverlay";
 import IconButton from '../../components/UI/IconButton';
 import SchoolForm from "../../components/ManageSchoolDetails/SchoolForm";
-import {addSchool, updateSchool} from "../../slices/SchoolSlice"; // Importing Redux actions
+import {addSchool, deleteSchool, updateSchool} from "../../slices/SchoolSlice"; // Importing Redux actions
+import {AuthContext} from "../../store/auth-context";
 
 function ManageSchoolDetails({ route, navigation }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState();
-
+  const authCtx = useContext(AuthContext);
   const dispatch = useDispatch(); // Redux hook to dispatch actions
   const cases = useSelector(state => state.schools.schools); // Accessing expenses state from Redux store
 
@@ -33,9 +34,8 @@ function ManageSchoolDetails({ route, navigation }) {
     setIsSubmitting(true);
     navigation.navigate('School PreSchoool Overview');
     try {
-      await deleteCase(editedCaseId);
-      dispatch(deleteCaseAction(editedCaseId)); // Dispatching deleteCase action
-      navigation.goBack();
+      await deleteSchools(editedCaseId);
+      dispatch(deleteSchool(editedCaseId)); // Dispatching deleteCase action
     } catch (error) {
       setError('Could not delete expense - please try again later!');
       setIsSubmitting(false);
@@ -47,12 +47,13 @@ function ManageSchoolDetails({ route, navigation }) {
   }
 
   async function confirmHandler(schoolData) {
+    schoolData.uid=authCtx.uId;
     console.log("////////////////schoolData in Manage",schoolData);
     setIsSubmitting(true);
     try {
       if (isEditing) {
         dispatch(updateSchool({ id: editedCaseId, data: schoolData })); // Dispatching updateCase action
-        await updateCase(editedCaseId, schoolData);
+        await updateSchools(editedCaseId, schoolData);
       } else {
         const id = await storeSchool(schoolData);
         dispatch(addSchool({ ...schoolData, id: id })); // Dispatching addCase action

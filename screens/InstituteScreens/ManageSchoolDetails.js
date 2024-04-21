@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from 'react';
+import { useContext, useLayoutEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux'; // Importing Redux hooks
 import {deleteCase, storeCases, storePreSchoolCases, storeSchool, updateCase} from '../../util/http';
@@ -12,7 +12,7 @@ import {addSchool, updateSchool} from "../../slices/SchoolSlice"; // Importing R
 function ManageSchoolDetails({ route, navigation }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState();
-
+  const authCtx = useContext(AuthContext);
   const dispatch = useDispatch(); // Redux hook to dispatch actions
   const cases = useSelector(state => state.schools.schools); // Accessing expenses state from Redux store
 
@@ -46,15 +46,17 @@ function ManageSchoolDetails({ route, navigation }) {
   }
 
   async function confirmHandler(schoolData) {
-    console.log("////////////////schoolData in Manage",schoolData);
+    schoolData.uid=authCtx.uId;
+    console.log("////////////////authCtx.uId");
+    console.log("////////////////schhuttaoolData in Manage",schoolData);
     setIsSubmitting(true);
     try {
       if (isEditing) {
         dispatch(updateSchool({ id: editedCaseId, data: schoolData })); // Dispatching updateCase action
         await updateCase(editedCaseId, schoolData);
       } else {
-        const id = await storeSchool(schoolData);
-        dispatch(addSchool({ ...schoolData, id: id })); // Dispatching addCase action
+        // const id = await storeSchool(schoolData);
+        // dispatch(addSchool({ ...schoolData, id: id })); // Dispatching addCase action
       }
       navigation.goBack();
     } catch (error) {

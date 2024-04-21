@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { GlobalStyles } from '../../constants/styles';
-import InstituteList from './InstituteList';
+import CourseList from './CourseList';
 import { Searchbar } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import DropdownComponent from "../DropdownComponent";
@@ -16,11 +16,9 @@ function CourseDetailsOutput({ totalCases, fallbackText }) {
           item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
           (item.address && item.address.toLowerCase().includes(searchQuery.toLowerCase()))
   );
-console.log("////////////////////////Checking courses",filteredCourses)
   let content = <Text style={styles.infoText}>{fallbackText}</Text>;
   if (filteredCourses.length > 0) {
-    console.log("////////////////////////filteredCourses",filteredCourses)
-    content = <InstituteList institutes={filteredCourses} />;
+    content = <CourseList institutes={filteredCourses} />;
   }
   function dropdownChangedHandler(inputIdentifier, enteredValue) {
     setInputs((curInputs) => {

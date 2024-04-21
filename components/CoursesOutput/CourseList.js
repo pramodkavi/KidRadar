@@ -1,13 +1,13 @@
 import { FlatList } from 'react-native';
 
-import InstituteItem from './InstituteItem';
+import CourseItem from './CourseItem';
 
 function renderCasesItem(itemData){
 //print the item data
-  return <InstituteItem {...itemData.item} />;
+  return <CourseItem {...itemData.item} />;
 }
 
-function InstituteList({ institutes }) {
+function CourseList({ institutes }) {
   return (
     <FlatList
       data={institutes}
@@ -17,4 +17,4 @@ function InstituteList({ institutes }) {
   );
 }
 
-export default InstituteList;
+export default CourseList;

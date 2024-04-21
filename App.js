@@ -35,6 +35,7 @@ import CasesView from './components/CasesOutput/CasesView';
 import PreSchoolCasesView from "./components/PreSchoolCasesOutput/PreSchoolCasesView";
 import PreSchoolView from "./components/PreSchoolOutput/PreSchoolView";
 import SchoolView from "./components/SchoolOutput/SchoolView";
+import InstituteView from './components/InstitutesOutput/InstituteView';
 
 function ChildCasesOverview() {
     return (
@@ -101,7 +102,7 @@ function InstituteOverview() {
             })}
         >
             <Tab.Screen name="Course" component={Courses} />
-            {/* <Tab.Screen name="OverView" component={SchoolDetails} /> */}
+            <Tab.Screen name="Institute Details" component={InstituteView} />
         </Tab.Navigator>
     );
 }
@@ -142,7 +143,7 @@ function AuthenticatedStack() {
             {/*        ),*/}
             {/*    }}*/}
             {/*/>*/}
-            {/* <Stack.Screen
+            <Stack.Screen
                 name="Institutes"
                 component={Institutes}
                 options={{
@@ -155,7 +156,7 @@ function AuthenticatedStack() {
                 options={{
                     presentation: 'modal',
                 }}
-            /> */}
+            />
             {/* <Stack.Screen
                 name="ChildCasesOverview"
                 component={ChildCasesOverview}
@@ -267,6 +268,7 @@ function AuthenticatedStack() {
                     presentation: 'modal',
                 }}
             />
+            
         </Stack.Navigator>
     );
 }

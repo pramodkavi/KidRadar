@@ -80,12 +80,18 @@ function PreSchoolForm({ submitButtonLabel, onCancel, onSubmit, defaultValues })
     const preSchoolIsValid = preSchoolData.preSchool.trim().length > 0;
     const descriptionIsValid = preSchoolData.description.trim().length > 0;
     const addressIsValid = preSchoolData.address.trim().length > 0;
-    const contactNoIsValid = !isNaN(preSchoolData.contactNo) && (preSchoolData.contactNo ===10);
+    const contactNoIsValid = !isNaN(preSchoolData.contactNo) && (String(preSchoolData.contactNo).length ==9);
     const dateIsValid = preSchoolData.date.toString() !== 'Invalid Date'&& preSchoolData.date <= currentDate;
     const divisionIsValid = preSchoolData.division!="";
 
 
-    if (!preSchoolIsValid || !descriptionIsValid || !addressIsValid || !dateIsValid  || contactNoIsValid) {
+    if (!preSchoolIsValid || !descriptionIsValid || !addressIsValid || !dateIsValid  || !contactNoIsValid ||!divisionIsValid) {
+      console.log("//////////////////////preSchoolIsValid",preSchoolIsValid)
+      console.log("//////////////////////descriptionIsValid",descriptionIsValid)
+      console.log("//////////////////////addressIsValid",addressIsValid)
+      console.log("//////////////////////contactNoIsValid",contactNoIsValid)
+      console.log("//////////////////////dateIsValid",dateIsValid)
+      console.log("//////////////////////divisionIsValid",divisionIsValid)
       setInputs((curInputs) => {
         return {
           preSchool: { value: curInputs.preSchool.value, isValid: preSchoolIsValid },

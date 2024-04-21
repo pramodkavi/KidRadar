@@ -4,7 +4,7 @@ import {StackActions as cases} from "@react-navigation/routers/src";
 const BACKEND_URL =
     'https://kidradar-580da-default-rtdb.firebaseio.com';
 
-const API = "http://192.168.8.101:8080";
+const API = "http://192.168.8.100:8080";
 
 export async function storeCases(casesData) {
   let id =""
@@ -110,12 +110,10 @@ export async function storePreSchoolCases(casesData) {
 }
 
 export async function fetchPreSchoolCases() {
-  console.log("//////////////////// in Fetch pre");
   const uid = "pIvQlCCo0kWrIxYIouvx38romT63";
   const res = await axios.get(API+`/preSchoolCases/${uid}`,uid);
 
   const response = JSON.parse(res.request._response);
-  console.log("///////////////////////////////////////////respnse",response)
   const cases = [];
 
   for (const key in response.data) {
@@ -146,14 +144,23 @@ export function deletePreSchoolCases(id) {
 /////////////////////////////////////////////////////////////////////////////////
 
 export async function storeSchool(schoolData) {
-  console.log("//////////////////////Here is school data",schoolData)
-  const response = await axios.post(API + '/schools', schoolData);
-  const id = response.data.name;
+
+  let id =""
+  try {
+    const response = await axios.post(API + '/schools', schoolData);
+    // id = response.data.name;
+    const id = response.data.name;
+  }catch (err){
+    console.log("Here is error",err)
+  }
   return id;
 }
 
 export async function fetchSchools() {
-  const response = await axios.get(BACKEND_URL + '/schools.json');
+  const uid = "pIvQlCCo0kWrIxYIouvx38romT63";
+  const res = await axios.get(API+`/schools/${uid}`,uid);
+
+  const response = JSON.parse(res.request._response);
 
   const schools = [];
 
@@ -173,12 +180,12 @@ export async function fetchSchools() {
   return schools;
 }
 
-export function updateSchool(id, schoolData) {
-  return axios.put(BACKEND_URL + `/schools/${id}.json`, schoolData);
+export function updateSchools(id, schoolData) {
+  return axios.put(API + `/schools/${id}`, schoolData);
 }
 
-export function deleteSchool(id) {
-  return axios.delete(BACKEND_URL + `/schools/${id}.json`,id);
+export function deleteSchools(id) {
+  return axios.delete(API + `/schools/${id}`,id);
 }
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -196,11 +203,9 @@ export async function storePreSchool(schoolData) {
 }
 
 export async function fetchPreSchools() {
-  console.log("//////////////////// in Fetch pre");
   const uid = "pIvQlCCo0kWrIxYIouvx38romT63";
   const res = await axios.get(API+`/preSchools/${uid}`,uid);
   const response = JSON.parse(res.request._response);
-  console.log("///////////////////////////////////////////respnse",response)
 
   const preSchools = [];
 
@@ -244,14 +249,12 @@ export async function storeInstitute(instituteData) {
 }
 
 export async function fetchInstitute() {
-  console.log("////////////////////// here in  fetch Institute")
   const uid = "pIvQlCCo0kWrIxYIouvx38romT63";
   let res =null;
   try{
     res = await axios.get(API+`/institutes/${uid}`,uid);
-    console.log("//////////////////////////////// Response above",res.data)
   }catch(err){
-    console.log("]]]]]]]]]]]]]]]]]]]]]]]]]]]]Error occur",err)
+    console.log("Error occur",err)
   }
 
   const response = res.data;
@@ -323,10 +326,12 @@ export async function fetchCourses(instituteId) {
   return courses;
 }
 
-export function updateCourse(id, courseData) {
+export function updateCourses(id, courseData) {
+  console.log("///////////////////////// courseData in http",courseData)
   return axios.put(API+`/courses/${id}`, courseData);
 }
 
-export function deleteCourse(id) {
+export function deleteCourses(id) {
+  console.log("///////////////////////// courseData in http",id)
   return axios.delete(API+`/courses/${id}`,id);
 }

@@ -86,7 +86,7 @@ function PreSchoolCasesForm({ submitButtonLabel, onCancel, onSubmit, defaultValu
     const nameIsValid = caseData.name.trim().length > 0;
     const ageIsValid = !isNaN(caseData.age) && (caseData.age > 0 && caseData.age < 19);
     const addressIsValid = caseData.name.trim().length > 0;
-    const contactNoIsValid = !isNaN(caseData.contactNo) && (caseData.contactNo ===9);
+    const contactNoIsValid = !isNaN(caseData.contactNo) && (String(caseData.contactNo).length ==9);
     const dateIsValid = caseData.date.toString() !== 'Invalid Date';
     const divisionIsValid = caseData.division!="";
     const preSchoolIsValid = caseData.preSchool!="";

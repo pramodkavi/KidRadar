@@ -21,7 +21,7 @@ function SchoolView({ route, navigation }) {
   console.log("//////////////////////selected case",selectedData)
   useLayoutEffect(() => {
     navigation.setOptions({
-      title:  'Pre-School Details',
+      title:  'School Details',
     });
   }, [navigation]);
 
@@ -35,9 +35,13 @@ function SchoolView({ route, navigation }) {
 
     <View style={styles.container}>
       <View style={styles.textwrap}>
-        <Text style={styles.maintext}>Pre-School Details</Text>
+        <Text style={styles.maintext}>School Details</Text>
       </View>
       <View style={{ paddingTop: 20}}>
+      <DataTable.Row>
+          <DataTable.Cell>School</DataTable.Cell>
+          <DataTable.Cell>{selectedData.school}</DataTable.Cell>
+      </DataTable.Row>
       <DataTable.Row>
         <DataTable.Cell>Contact Number</DataTable.Cell>
         <DataTable.Cell>{selectedData.contactNo}</DataTable.Cell>
@@ -54,10 +58,7 @@ function SchoolView({ route, navigation }) {
           <DataTable.Cell>Division</DataTable.Cell>
           <DataTable.Cell>{selectedData.division.label}</DataTable.Cell>
       </DataTable.Row>
-      <DataTable.Row>
-          <DataTable.Cell>School</DataTable.Cell>
-          <DataTable.Cell>{selectedData.school}</DataTable.Cell>
-      </DataTable.Row>
+      
         {/* <DataTable.Row>
             <DataTable.Cell>Pre School</DataTable.Cell>
             <DataTable.Cell>{selectedData.preSchool}</DataTable.Cell>

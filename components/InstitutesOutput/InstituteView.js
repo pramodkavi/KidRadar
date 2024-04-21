@@ -5,67 +5,58 @@ import IconButton from '../UI/IconButton';
 import { GlobalStyles } from '../../constants/styles';
 import { DataTable } from 'react-native-paper';
 import { getFormattedDate } from '../../util/date';
+import {selectPreSchool} from "../../slices/PreSchoolSlice";
+import {selectSchool} from "../../slices/SchoolSlice";
+import { selectInstitute } from '../../slices/InstituteSlice';
+import { selectGeneralId } from '../../slices/GeneralIdSlice';
 
-function CasesView({ route, navigation }) {
+function InstituteView({ route, navigation }) {
   const dispatch = useDispatch(); // Redux hook to dispatch actions
-  const cases = useSelector(state => state.cases.cases); // Accessing expenses state from Redux store
+  const cases = useSelector(selectInstitute); // Accessing expenses state from Redux store
 
-  const id = route.params?.expenseId;
-
-  const selectedCase = cases.find(
+  const id = useSelector(selectGeneralId); // Accessing expenses state from Redux store
+  const selectedData = cases.find(
       (data) => data.id === id
   );
 
-  console.log("//////////////////////selected case",selectedCase)
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      title:  'Child Case Details',
-    });
-  }, [navigation]);
+  console.log("//////////////////////selected case",selectedData)
 
   function casePressHandler() {
-    navigation.navigate('ManageChildCases', {
-      expenseId: id
+    navigation.navigate('ManageInstitute', {
+      instituteId: id
     });
+
   }
   return (
 
     <View style={styles.container}>
       <View style={styles.textwrap}>
-        <Text style={styles.maintext}>Case Details</Text>
+        <Text style={styles.maintext}>School Details</Text>
       </View>
       <View style={{ paddingTop: 20}}>
         <DataTable.Row>
             <DataTable.Cell>Name</DataTable.Cell>
-            <DataTable.Cell>{selectedCase.name}</DataTable.Cell>
+            <DataTable.Cell>{selectedData.name}</DataTable.Cell>
         </DataTable.Row>
-        <DataTable.Row>
-            <DataTable.Cell>Age</DataTable.Cell>
-            <DataTable.Cell>{selectedCase.age}</DataTable.Cell>
-        </DataTable.Row>
-        <DataTable.Row>
-            <DataTable.Cell>Case Type</DataTable.Cell>
-            <DataTable.Cell>{selectedCase.caseType.label}</DataTable.Cell>
-        </DataTable.Row>
-        <DataTable.Row>
+          <DataTable.Row>
             <DataTable.Cell>Contact Number</DataTable.Cell>
-            <DataTable.Cell>{selectedCase.contactNo}</DataTable.Cell>
+            <DataTable.Cell>{selectedData.contactNo}</DataTable.Cell>
         </DataTable.Row>
         <DataTable.Row>
-            <DataTable.Cell>Date</DataTable.Cell>
-            <DataTable.Cell numberOfLines={5}>{getFormattedDate(selectedCase.date)}</DataTable.Cell>
+            <DataTable.Cell>Description</DataTable.Cell>
+            <DataTable.Cell>{selectedData.description}</DataTable.Cell>
         </DataTable.Row>
         <DataTable.Row>
-            <DataTable.Cell>Division</DataTable.Cell>
-            <DataTable.Cell>{selectedCase.division.label}</DataTable.Cell>
+            <DataTable.Cell>Detailed Name</DataTable.Cell>
+            <DataTable.Cell>{selectedData.detailedName}</DataTable.Cell>
         </DataTable.Row>
         <DataTable.Row>
-            <DataTable.Cell>Reason</DataTable.Cell>
-            <DataTable.Cell>{selectedCase.reason}</DataTable.Cell>
+            <DataTable.Cell>Email</DataTable.Cell>
+            <DataTable.Cell>{selectedData.email}</DataTable.Cell>
         </DataTable.Row>
         <DataTable.Row>
-            <DataTable.Cell>School</DataTable.Cell>
-            <DataTable.Cell>{selectedCase.school.label}</DataTable.Cell>
+            <DataTable.Cell>Max NVQ</DataTable.Cell>
+            <DataTable.Cell>{selectedData.maxNVQ}</DataTable.Cell>
         </DataTable.Row>
       </View>
       <TouchableOpacity style={styles.addBtn}>
@@ -81,7 +72,7 @@ function CasesView({ route, navigation }) {
   );
 }
 
-export default CasesView;
+export default InstituteView;
 
 const styles = StyleSheet.create({
   container: {

@@ -97,7 +97,7 @@ function ChildCasesForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }
     const nameIsValid = caseData.name.trim().length > 0;
     const ageIsValid = !isNaN(caseData.age) && (caseData.age > 0 && caseData.age < 19);
     const addressIsValid = caseData.name.trim().length > 0;
-    const contactNoIsValid = !isNaN(caseData.contactNo) && (caseData.contactNo ===10);
+    const contactNoIsValid = !isNaN(caseData.contactNo) && (String(caseData.contactNo).length ==9);
     const dateIsValid = caseData.date.toString() !== 'Invalid Date'&& caseData.date <= currentDate;
     const reasonIsValid = caseData.reason.trim().length > 0;
     const divisionIsValid = caseData.division!="";

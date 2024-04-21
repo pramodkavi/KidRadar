@@ -39,11 +39,11 @@ console.log("editedInstituteId",editedInstituteId)
   }, [navigation, isEditing]);
 
   async function deleteDetailsHandler(){
+    navigation.navigate('InstituteOverview');
     setIsSubmitting(true);
     try {
       await deletePreSchool(editedInstituteId);
       dispatch(deleteInstitute(editedInstituteId)); // Dispatching deleteCase action
-      navigation.goBack();
     } catch (error) {
       setError('Could not delete Institute - please try again later!');
       setIsSubmitting(false);

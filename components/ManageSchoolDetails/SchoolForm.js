@@ -80,8 +80,8 @@ function SchoolForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }) {
     const schoolIsValid = schoolData.school.trim().length > 0;
     const descriptionIsValid = schoolData.description.trim().length > 0;
     const addressIsValid = schoolData.address.trim().length > 0;
-    // const contactNoIsValid = !isNaN(schoolData.contactNo) && (schoolData.contactNo ===9);
-    const contactNoIsValid = !isNaN(schoolData.contactNo);
+    console.log("///////////////schoolData.contactNo.length" ,String(schoolData.contactNo).length)
+    const contactNoIsValid = !isNaN(schoolData.contactNo)&& (String(schoolData.contactNo).length ==9);
     const dateIsValid = schoolData.date.toString() !== 'Invalid Date'&& schoolData.date <= currentDate;
     const divisionIsValid = schoolData.division!="";
 
@@ -99,7 +99,6 @@ function SchoolForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }) {
       return;
     }
 
-    console.log("//////////////////////schoolData",schoolData)
     onSubmit(schoolData);
   }
 
@@ -157,7 +156,7 @@ function SchoolForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }) {
             label="Contact No"
             invalid={!inputs.contactNo.isValid}
             textInputConfig={{
-              // keyboardType: 'decimal-pad',
+              keyboardType: 'decimal-pad',
               onChangeText: inputChangedHandler.bind(this, 'contactNo'),
               value: inputs.contactNo.value,
             }}

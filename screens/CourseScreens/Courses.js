@@ -13,12 +13,10 @@ import { selectGeneralId } from '../../slices/GeneralIdSlice';
 
 function Courses() {
     console.log("I am in Course")
-    // const editedInstituteId = route.params?.instituteId;
-    // console.log("////////////////////////////////////////////////////////////// ID IS COMMING",editedInstitute)
+    const navigation = useNavigation();
     const dispatch = useDispatch(); // Redux hook to dispatch actions
     const courses = useSelector(selectCourse); // Accessing cases state from Redux store
     const generalId = useSelector(selectGeneralId)
-    console.log("//////////////////////////////// General Id",generalId)
     useEffect(() => {
         async function getCourses() {
             try { 

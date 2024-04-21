@@ -18,7 +18,6 @@ function Institutes() {
         async function getCases() {
             try {
                 const institutesFetch = await fetchInstitute();
-                console.log("//////////////////////////////////////// Fetch details :",institutesFetch)
                 dispatch(setInstitute(institutesFetch)); // Dispatching setCase action
             } catch (error) {
                 console.error('Could not fetch expenses:', error);
