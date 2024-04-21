@@ -4,7 +4,7 @@ import {StackActions as cases} from "@react-navigation/routers/src";
 const BACKEND_URL =
     'https://kidradar-580da-default-rtdb.firebaseio.com';
 
-const API = "http://192.168.8.102:8080";
+const API = "http://192.168.8.101:8080";
 
 export async function storeCases(casesData) {
   let id =""
@@ -196,13 +196,17 @@ export async function storePreSchool(schoolData) {
 }
 
 export async function fetchPreSchools() {
-  const response = await axios.get(BACKEND_URL + '/preSchools.json');
+  console.log("//////////////////// in Fetch pre");
+  const uid = "pIvQlCCo0kWrIxYIouvx38romT63";
+  const res = await axios.get(API+`/preSchools/${uid}`,uid);
+  const response = JSON.parse(res.request._response);
+  console.log("///////////////////////////////////////////respnse",response)
 
   const preSchools = [];
 
   for (const key in response.data) {
     const preSchool = {
-      id: key,
+      id: response.data[key]._id,
       preSchool: response.data[key].preSchool,
       description: response.data[key].description,
       address: response.data[key].address,
@@ -216,12 +220,13 @@ export async function fetchPreSchools() {
   return preSchools;
 }
 
-export function updatePreSchool(id, schoolData) {
-  return axios.put(BACKEND_URL + `/preSchools/${id}.json`, schoolData);
+export function updatePreschool(id, preschoolData) {
+  console.log("/////////////////////////Here is preschoolData",preschoolData)
+  return axios.put(API + `/preSchools/${id}`, preschoolData);
 }
 
 export function deletePreSchool(id) {
-  return axios.delete(BACKEND_URL + `/preSchools/${id}.json`,id);
+  return axios.delete(API + `/preSchools/${id}`,id);
 }
 
 /////////////////////////////////////////////////////////////////////////////////

@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'; // Importing Redux hooks
 import {
   deletePreSchool,
   storePreSchool,
-  updateCase
+  updateCase,
+  updatePreschool
 } from '../../util/http';
 import LoadingOverlay from "../../components/UI/LoadingOverlay";
 import ErrorOverlay from "../../components/UI/ErrorOverlay";
@@ -53,9 +54,10 @@ function ManagePreSchoolDetails({ route, navigation }) {
     preSchoolData.uid=authCtx.uId;
     setIsSubmitting(true);
     try {
+      console.log("/////////////////////////preSchoolData in EDIT",preSchoolData)
       if (isEditing) {
         dispatch(updatePreSchool({ id: editedCaseId, data: preSchoolData })); // Dispatching updateCase action
-        await updateCase(editedCaseId, preSchoolData);
+        await updatePreschool(editedCaseId, preSchoolData);
       } else {
         const id = await storePreSchool(preSchoolData);
         dispatch(addPreSchool({ ...preSchoolData, id: id }));
