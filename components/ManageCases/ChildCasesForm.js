@@ -5,9 +5,19 @@ import Button from '../UI/Button';
 import { getFormattedDate } from '../../util/date';
 import { GlobalStyles } from '../../constants/styles';
 import DropdownComponent from "../DropdownComponent";
+import {useNavigation} from "@react-navigation/native";
 
 function ChildCasesForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }) {
+  const navigation = useNavigation();
   const [selected, setSelected] = React.useState("");
+  const initialRegion = {
+    latitude: 7.0873,
+    longitude: 79.9998,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+};
+const [selectedLocation, setSelectedLocation] = useState(initialRegion);
+
   const division = [
     { label: 'Katana', value: '1' },
     { label: 'Ja-Ela',value: '2'},
@@ -124,10 +134,18 @@ function ChildCasesForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }
       });
       return;
     }
-    console.log("//////////////////////////  in form caseData",caseData)
+    caseData.location = selectedLocation;
+    console.log("//////////////////////////  in form Location hutto",caseData)
 
     // caseData.date=caseData.date+'';
-    onSubmit(caseData);
+    // onSubmit(caseData);
+  }
+
+  function mapHandler() {
+    navigation.navigate('MapScreen', {
+      setLocation: selectedLocation,
+      getlocation: setSelectedLocation,
+    });
   }
 
   const formIsInvalid =
@@ -235,6 +253,10 @@ function ChildCasesForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }
           value: inputs.reason.value,
         }}
       />
+      <Button style={styles.button} 
+        onPress={mapHandler}>
+          Set Location
+        </Button>
 
       {formIsInvalid && (
         <Text style={styles.errorText}>

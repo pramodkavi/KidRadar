@@ -37,6 +37,7 @@ import PreSchoolView from "./components/PreSchoolOutput/PreSchoolView";
 import SchoolView from "./components/SchoolOutput/SchoolView";
 import InstituteView from './components/InstitutesOutput/InstituteView';
 import { LogBox } from 'react-native';
+import MapScreen from './screens/ChildCasesScreen/MapScreen';
 
 function ChildCasesOverview() {
     return (
@@ -279,7 +280,11 @@ function AuthenticatedStack() {
                     presentation: 'modal',
                 }}
             />
-            
+            <Stack.Screen
+                name="MapScreen"
+                component={MapScreen}
+                options={{presentation: "fullScreenModal"}}
+            />
         </Stack.Navigator>
     );
 }

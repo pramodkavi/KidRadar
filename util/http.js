@@ -41,6 +41,7 @@ export async function fetchCases() {
       division: response.data[key].division,
       school: response.data[key].school,
       caseType: response.data[key].caseType,
+      location: response.data[key].location,
     };
 
     cases.push(casesObj);
