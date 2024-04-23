@@ -45,16 +45,7 @@ function PreSchoolCases() {
                     }}
                 />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.addBtn1}>
-                <IconButton
-                    icon="add"
-                    size={32}
-                    color={GlobalStyles.colors.primary800}
-                    onPress={() => {
-                        navigation.navigate('ManagePreSchoolCasesCount');
-                    }}
-                />
-            </TouchableOpacity>
+            
         </>
     );
 }

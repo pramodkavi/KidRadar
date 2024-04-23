@@ -7,7 +7,8 @@ import { Searchbar } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import DropdownComponent from "../DropdownComponent";
 import PreSchoolCaseSummary from "./PreSchoolCaseSummary";
-
+import Button from '../UI/Button';
+import { division } from '../../constants/Constants';
 function PreSchoolCasesOutput({ totalCases, fallbackText }) {
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -31,6 +32,14 @@ function PreSchoolCasesOutput({ totalCases, fallbackText }) {
       <View style={styles.container}>
         <View style={styles.textwrap}>
           <Text style={styles.maintext}>Preschooler Insights</Text>
+          <Button 
+              size={32}
+              color={GlobalStyles.colors.primary800}
+              onPress={() => {
+                  navigation.navigate('ManagePreSchoolCasesCount');
+              }}
+          >  Count
+          </Button>
         </View>
         <PreSchoolCaseSummary countDetails={preSchoolCasesCount}/>
         <View style={styles.searchbar}>
@@ -42,7 +51,7 @@ function PreSchoolCasesOutput({ totalCases, fallbackText }) {
           <View style={styles.inputsRow}>
             <DropdownComponent
                 label={"Division"}
-                // data={division}
+                data={division}
                 // textInputConfig={{
                 //   onChange: dropdownChangedHandler.bind(this, 'division'),
                 //   // value: inputs.division.value,

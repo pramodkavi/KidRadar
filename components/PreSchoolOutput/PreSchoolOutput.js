@@ -6,6 +6,7 @@ import { GlobalStyles } from '../../constants/styles';
 import DropdownComponent from "../DropdownComponent";
 import PreSchoolList from './PreSchoolList';
 import {selectPreSchool} from "../../slices/PreSchoolSlice";
+import { division } from '../../constants/Constants';
 
 function PreSchoolOutput({ totalCases, fallbackText }) {
 
@@ -42,7 +43,7 @@ function PreSchoolOutput({ totalCases, fallbackText }) {
           <View style={styles.inputsRow}>
             <DropdownComponent
                 label={"Division"}
-                // data={division}
+                data={division}
                 // textInputConfig={{
                 //   onChange: dropdownChangedHandler.bind(this, 'division'),
                 //   // value: inputs.division.value,

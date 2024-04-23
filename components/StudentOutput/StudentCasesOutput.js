@@ -16,20 +16,7 @@ function StudentCasesOutput({ totalCases, fallbackText }) {
   // const [searchQuery, setSearchQuery] = useState('');
   const cases = useSelector((state) => state.cases.cases);
 
-  // const filteredCases = cases.filter(
-  //     (item) =>
-  //         item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-  //         (item.address && item.address.toLowerCase().includes(searchQuery.toLowerCase()))
-  // );
-
   let content = <Text style={styles.infoText}>{fallbackText}</Text>;
-  // if (filteredCases.length > 0) {
-  //   content = <PreSchoolCasesList cases={filteredCases} />;
-  // }
-  // function dropdownChangedHandler(inputIdentifier, enteredValue) {
-  //   setInputs((curInputs) => {
-  //   });
-  // }
 
   return (
       <ScrollView style={styles.container}>

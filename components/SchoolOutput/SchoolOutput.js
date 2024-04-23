@@ -6,6 +6,7 @@ import { GlobalStyles } from '../../constants/styles';
 import DropdownComponent from "../DropdownComponent";
 import {selectSchool} from "../../slices/SchoolSlice";
 import SchoolList from "./SchoolList";
+import { division } from '../../constants/Constants';
 
 function SchoolOutput({ totalCases, fallbackText }) {
 
@@ -39,7 +40,7 @@ function SchoolOutput({ totalCases, fallbackText }) {
           <View style={styles.inputsRow}>
             <DropdownComponent
                 label={"Division"}
-                // data={division}
+                data={division}
                 // textInputConfig={{
                 //   onChange: dropdownChangedHandler.bind(this, 'division'),
                 //   // value: inputs.division.value,

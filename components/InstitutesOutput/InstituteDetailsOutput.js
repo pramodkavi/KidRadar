@@ -6,6 +6,7 @@ import { Searchbar } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import DropdownComponent from "../DropdownComponent";
 import {selectInstitute} from "../../slices/InstituteSlice";
+import { division } from '../../constants/Constants';
 
 function InstituteDetailsOutput({ totalCases, fallbackText }) {
 
@@ -36,7 +37,7 @@ function InstituteDetailsOutput({ totalCases, fallbackText }) {
           <View style={styles.inputsRow}>
             <DropdownComponent
                 label={"Division"}
-                // data={division}
+                data={division}
                 // textInputConfig={{
                 //   onChange: dropdownChangedHandler.bind(this, 'division'),
                 //   // value: inputs.division.value,

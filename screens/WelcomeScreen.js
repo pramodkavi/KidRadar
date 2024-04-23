@@ -1,10 +1,17 @@
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { Image, StyleSheet, View } from "react-native";
+import GreetingCard from "../components/WelcomeScreen/GreetingCard";
 
 function WelcomeScreen() {
   return (
-    <View style={styles.rootContainer}>
-      <Text style={styles.title}>Welcome!</Text>
-      <Text>You authenticated successfully!</Text>
+    <View>
+      <GreetingCard />
+      <View>
+        <Image
+          source={require('../assets/IMG/welcomeImg.png')} // Change the path to your image file
+          style={styles.image}
+        />
+      </View>
     </View>
   );
 }
@@ -12,15 +19,14 @@ function WelcomeScreen() {
 export default WelcomeScreen;
 
 const styles = StyleSheet.create({
-  rootContainer: {
+  container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 32,
   },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 8,
+  image: {
+    width: "100%", // Set your desired width
+    height: 300, // Set your desired height
+    resizeMode: 'cover', // You can adjust the resizeMode as per your requirement
   },
 });

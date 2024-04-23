@@ -6,6 +6,7 @@ import Summary from './ChildCaseSummary';
 import { Searchbar } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import DropdownComponent from "../DropdownComponent";
+import { division } from '../../constants/Constants';
 
 function ChildCasesOutput({ totalCases, fallbackText }) {
 
@@ -41,7 +42,7 @@ function ChildCasesOutput({ totalCases, fallbackText }) {
           <View style={styles.inputsRow}>
             <DropdownComponent
                 label={"Division"}
-                // data={division}
+                data={division}
                 // textInputConfig={{
                 //   onChange: dropdownChangedHandler.bind(this, 'division'),
                 //   // value: inputs.division.value,

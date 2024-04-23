@@ -30,19 +30,7 @@ export function ChildrenCasesChart(){
     const width = Dimensions.get('window').width
     const height = 220
     const cases = useSelector((state) => state.cases.cases); // Accessing cases state from Redux store
-    useEffect(() => {
-        async function getCases() {
-            try {
-                const casesFetch = await fetchCases();
-                dispatch(setCase(casesFetch)); // Dispatching setCase action
-            } catch (error) {
-                console.error('Could not fetch expenses:', error);
-                // Handle error as needed
-            }
-        }
-
-        getCases();
-    }, [dispatch]);
+    
     console.log("////////////////////////// cases",cases);
     const jaEla = cases.reduce((acc, obj) => {
         if (obj.division.label === "Ja-Ela") {

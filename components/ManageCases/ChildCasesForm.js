@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {KeyboardAvoidingView, ScrollView, StyleSheet, Text, View} from 'react-native';
 import Input from './Input';
 import Button from '../UI/Button';
@@ -6,10 +6,28 @@ import { getFormattedDate } from '../../util/date';
 import { GlobalStyles } from '../../constants/styles';
 import DropdownComponent from "../DropdownComponent";
 import {useNavigation} from "@react-navigation/native";
+import { useDispatch, useSelector } from 'react-redux';
+import { selectInstitute, setInstitute } from '../../slices/InstituteSlice';
+import { fetchInstitute } from '../../util/http';
 
 function ChildCasesForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }) {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const [selected, setSelected] = React.useState("");
+
+  useEffect(() => {
+    async function getCases() {
+        try {
+            const institutesFetch = await fetchInstitute();
+            dispatch(setInstitute(institutesFetch)); // Dispatching setCase action
+        } catch (error) {
+            console.error('Could not fetch Institute:', error);
+        }
+    }
+
+    getCases();
+}, [dispatch]);
+  const institutes = useSelector(selectInstitute);
   const initialRegion = {
     latitude: 7.0873,
     longitude: 79.9998,
@@ -34,6 +52,10 @@ const [selectedLocation, setSelectedLocation] = useState(initialRegion);
     { label: 'long absentees',value: '3'},
 
   ];
+  const instituteData= institutes.map((institute, index) => ({
+    label: institute.name,
+    value: (index + 1).toString()
+  }));
   const [inputs, setInputs] = useState({
     name: {
       value: defaultValues ? defaultValues.name: '',
@@ -71,7 +93,14 @@ const [selectedLocation, setSelectedLocation] = useState(initialRegion);
       value: defaultValues ? defaultValues.caseType : '',
       isValid: true,
     },
-
+    institute: {
+      value: defaultValues ? defaultValues.institute : 'N/A',
+      isValid: true,
+    },
+    location: {
+      value: defaultValues ? defaultValues.location : 'N/A',
+      isValid: true,
+    },
   });
 
   function inputChangedHandler(inputIdentifier, enteredValue) {
@@ -91,6 +120,7 @@ const [selectedLocation, setSelectedLocation] = useState(initialRegion);
     });
   }
   function submitHandler() {
+
     const caseData = {
       name: inputs.name.value,
       age: +inputs.age.value,
@@ -101,6 +131,7 @@ const [selectedLocation, setSelectedLocation] = useState(initialRegion);
       caseType: inputs.caseType.value,
       division: inputs.division.value,
       school: inputs.school.value,
+      institute: inputs.institute.value,
     };
 
     const currentDate = new Date();
@@ -130,15 +161,14 @@ const [selectedLocation, setSelectedLocation] = useState(initialRegion);
           division: { value: curInputs.division.value , isValid: divisionIsValid},
           school: { value: curInputs.school.value , isValid: schoolIsValid},
           caseType: { value: curInputs.caseType.value , isValid: caseTypeIsValid},
+          
         };
       });
       return;
     }
     caseData.location = selectedLocation;
-    console.log("//////////////////////////  in form Location hutto",caseData)
-
-    // caseData.date=caseData.date+'';
-    // onSubmit(caseData);
+    console.log("/////////////////////////// case data",caseData);
+    onSubmit(caseData);
   }
 
   function mapHandler() {
@@ -160,7 +190,7 @@ const [selectedLocation, setSelectedLocation] = useState(initialRegion);
     !inputs.caseType.isValid;
 
   return (
-      <ScrollView>
+      // <ScrollView>
         <View>
       <Text style={styles.title}>Create New Case</Text>
       {/*<View style={styles.container}>*/}
@@ -194,6 +224,29 @@ const [selectedLocation, setSelectedLocation] = useState(initialRegion);
           />
           {/*<SelectCountryScreen/>*/}
         </View>
+        {defaultValues &&
+        <><Text>Career Opportunity</Text>
+          <View style={styles.inputsRow}>
+              <DropdownComponent
+                  // invalid={!inputs.division.isValid}
+                  label={"Institutes"}
+                  data={instituteData}
+                  textInputConfig={{
+                    onChange: dropdownChangedHandler.bind(this, 'institute'),
+                    value: inputs.institute.value,
+                  }}
+              />
+              {/* <DropdownComponent
+                  invalid={!inputs.school.isValid}
+                  label={"School"}
+                  data={school}
+                  textInputConfig={{
+                    onChange: dropdownChangedHandler.bind(this, 'school'),
+                    value: inputs.school.value,
+                  }}
+              /> */}
+          </View></>
+      }
       {/*</View>*/}
         <Input
           label="Name"
@@ -253,11 +306,14 @@ const [selectedLocation, setSelectedLocation] = useState(initialRegion);
           value: inputs.reason.value,
         }}
       />
-      <Button style={styles.button} 
-        onPress={mapHandler}>
+      {inputs.caseType.value.label=="Street Child" &&
+        <Button style={styles.button} 
+          onPress={mapHandler}>
           Set Location
         </Button>
-
+      }
+      
+          {/*<SelectCountryScreen/>*/}
       {formIsInvalid && (
         <Text style={styles.errorText}>
           Invalid input values - please check your entered data!
@@ -272,7 +328,7 @@ const [selectedLocation, setSelectedLocation] = useState(initialRegion);
         </Button>
       </View>
     </View>
-      </ScrollView>
+      // </ScrollView>
   );
 }
 

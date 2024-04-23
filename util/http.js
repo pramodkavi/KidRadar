@@ -1,10 +1,7 @@
 import axios from 'axios';
 import {StackActions as cases} from "@react-navigation/routers/src";
 
-const BACKEND_URL =
-    'https://kidradar-580da-default-rtdb.firebaseio.com';
-
-const API = "http://192.168.8.100:8080";
+const API = "http://192.168.8.101:8080";
 
 export async function storeCases(casesData) {
   let id =""
@@ -42,6 +39,8 @@ export async function fetchCases() {
       school: response.data[key].school,
       caseType: response.data[key].caseType,
       location: response.data[key].location,
+      institute: response.data[key].institute,
+      
     };
 
     cases.push(casesObj);
@@ -92,13 +91,6 @@ export async function fetchPreSchoolCasesCount() {
   return preCasesCount;
 }
 
-export function updatePreSchoolCasesCount(id, casesCountData) {
-  return axios.put(BACKEND_URL + `/preSchoolCasesCount/${id}.json`, casesCountData);
-}
-
-export function deletePreSchoolCasesCount(id) {
-  return axios.delete(BACKEND_URL + `/preSchoolCasesCount/${id}.json`,id);
-}
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 export async function storePreSchoolCases(casesData) {
@@ -284,9 +276,9 @@ export function updateInstitut(id, instituteData) {
   return axios.put(API + `/institutes/${id}`, instituteData);
 }
 
-export function deleteInstitute(id) {
-  return axios.delete(BACKEND_URL + `/schools/${id}.json`,id);
-}
+// export function deleteInstitute(id) {
+//   return axios.delete(BACKEND_URL + `/schools/${id}.json`,id);
+// }
 
 /////////////////////////////////////////////////////////////////////////////////
 

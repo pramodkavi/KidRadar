@@ -12,7 +12,7 @@ function InstituteItem({ id,name, detailedName }) {
   // const label = caseType.label;
   function casePressHandler() {
     dispatch(setGeneralId(id))
-    navigation.navigate('InstituteOverview', {
+    navigation.navigate('Institute Overview', {
       instituteId: id
     });
   }

@@ -1,5 +1,5 @@
 import {useContext, useLayoutEffect, useState} from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View,ScrollView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux'; // Importing Redux hooks
 import ChildCasesForm from '../components/ManageCases/ChildCasesForm';
 import ErrorOverlay from '../components/UI/ErrorOverlay';
@@ -75,23 +75,26 @@ function ManageChildCases({ route, navigation }) {
   return (
 
       <View style={styles.container}>
-        <ChildCasesForm
-            submitButtonLabel={isEditing ? 'Update' : 'Add'}
-            onSubmit={confirmHandler}
-            onCancel={cancelHandler}
-            defaultValues={selectedCase}
-        />
-        {isEditing && (
-            <View style={styles.deleteContainer}>
-              <IconButton
-                  icon="trash"
-                  color="red" // Adjust color here as needed
-                  size={36}
-                  onPress={deleteCaseHandler}
-              />
-            </View>
-        )}
+        <ScrollView>
+          <ChildCasesForm
+              submitButtonLabel={isEditing ? 'Update' : 'Add'}
+              onSubmit={confirmHandler}
+              onCancel={cancelHandler}
+              defaultValues={selectedCase}
+          />
+          {isEditing && (
+              <View style={styles.deleteContainer}>
+                <IconButton
+                    icon="trash"
+                    color="red" // Adjust color here as needed
+                    size={36}
+                    onPress={deleteCaseHandler}
+                />
+              </View>
+          )}
+        </ScrollView>
       </View>
+      
   );
 }
 

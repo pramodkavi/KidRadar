@@ -38,6 +38,7 @@ import SchoolView from "./components/SchoolOutput/SchoolView";
 import InstituteView from './components/InstitutesOutput/InstituteView';
 import { LogBox } from 'react-native';
 import MapScreen from './screens/ChildCasesScreen/MapScreen';
+import WelcomeDashboard from './screens/WelcomeDashboard';
 
 function ChildCasesOverview() {
     return (
@@ -116,6 +117,7 @@ function AuthStack() {
                 headerTintColor: 'black',
             }}
         >
+            <Stack.Screen name="KidRadar" component={WelcomeScreen} />
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Signup" component={SignupScreen} />
         </Stack.Navigator>
@@ -150,30 +152,23 @@ function AuthenticatedStack() {
             {/*    component={StudentCasesScreen}*/}
             {/*    options={{ headerShown: false }}*/}
             {/*/>*/}
+            
+            <Stack.Screen
+                name="Welcome Dashboard"
+                component={WelcomeDashboard}
+                options={{presentation: "fullScreenModal"}}
+            />
+            <Stack.Screen
+               name="StudentCasesScreen"
+               component={StudentCasesScreen}
+               options={{presentation: "fullScreenModal"}}
+               //options={{ headerShown: false }}
+            />
             <Stack.Screen
                 name="ChildCasesOverview"
                 component={ChildCasesOverview}
                 options={{ headerShown: false }}
             />
-            <Stack.Screen
-                name="Institutes"
-                component={Institutes}
-                options={{
-                    presentation: 'modal',
-                }}
-            />
-            <Stack.Screen
-                name="Courses"
-                component={Courses}
-                options={{
-                    presentation: 'modal',
-                }}
-            />
-            {/* <Stack.Screen
-                name="ChildCasesOverview"
-                component={ChildCasesOverview}
-                options={{ headerShown: false }}
-            /> */}
             <Stack.Screen
                 name="School PreSchoool Overview"
                 component={SchoolPreSchooolOverview}
@@ -195,7 +190,20 @@ function AuthenticatedStack() {
                    presentation: 'modal',
                }}
             />
-
+            <Stack.Screen
+                name="Institutes"
+                component={Institutes}
+                options={{
+                    presentation: 'modal',
+                }}
+            />
+            <Stack.Screen
+                name="Courses"
+                component={Courses}
+                options={{
+                    presentation: 'modal',
+                }}
+            />
             <Stack.Screen
                 name="ManageChildCases"
                 component={ManageChildCases}
@@ -232,7 +240,7 @@ function AuthenticatedStack() {
                 }}
             />
             <Stack.Screen
-                name="InstituteOverview"
+                name="Institute Overview"
                 component={InstituteOverview}
                 options={{
                     presentation: 'modal',

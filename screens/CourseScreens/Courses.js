@@ -29,12 +29,11 @@ function Courses() {
         getCourses();
     }, [dispatch]); // Added dispatch as a dependency
 
-    console.log("////////////////////////////////// Courses",courses)
     return (
         <>
             <CourseDetailsOutput
                 totalCases="Total"
-                fallbackText="No registered child cases found!"
+                fallbackText="No registered Courses found!"
             />
             <TouchableOpacity style={styles.addBtn}>
                 <IconButton

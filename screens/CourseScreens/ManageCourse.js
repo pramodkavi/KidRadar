@@ -23,6 +23,7 @@ function ManageCourse({ route, navigation }) {
       (expense) => expense.id === editedCourseId
   );
 
+  console.log("///////////////////Institute id",instituteid)
   useLayoutEffect(() => {
     navigation.setOptions({
       title: isEditing ? 'Edit Course Case' : 'Create Course Case',
@@ -56,7 +57,7 @@ function ManageCourse({ route, navigation }) {
       } else {
         courseData.instituteId =instituteid; 
         const id = await storeCourses(courseData);
-        // dispatch(addCourse({ ...courseData, id: id })); // Dispatching addCase action
+        dispatch(addCourse({ ...courseData, id: id })); // Dispatching addCase action
       }
       navigation.goBack();
     } catch (error) {

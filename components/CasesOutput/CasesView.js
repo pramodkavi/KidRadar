@@ -5,6 +5,7 @@ import IconButton from '../UI/IconButton';
 import { GlobalStyles } from '../../constants/styles';
 import { DataTable } from 'react-native-paper';
 import { getFormattedDate } from '../../util/date';
+import Button from '../UI/Button';
 
 function CasesView({ route, navigation }) {
   const dispatch = useDispatch(); // Redux hook to dispatch actions
@@ -16,7 +17,16 @@ function CasesView({ route, navigation }) {
       (data) => data.id === id
   );
 
-  console.log("//////////////////////selected case",selectedCase)
+  const initialRegion = {
+    latitude: 7.0873,
+    longitude: 79.9998,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+};
+  const [selectedLocation, setSelectedLocation] = useState(selectedCase.location);
+  console.log("//////////////////////////////// selectedCase.location",selectedCase.location)
+  // console.log("//////////////////////////////// selectedCase.caseType.label",selectedCase.caseType.label)
+
   useLayoutEffect(() => {
     navigation.setOptions({
       title:  'Child Case Details',
@@ -28,6 +38,14 @@ function CasesView({ route, navigation }) {
       expenseId: id
     });
   }
+  
+  function mapHandler() {
+    navigation.navigate('MapScreen', {
+      setLocation: selectedLocation,
+      getlocation: setSelectedLocation,
+    });
+  }
+
   return (
 
     <View style={styles.container}>
@@ -67,7 +85,20 @@ function CasesView({ route, navigation }) {
             <DataTable.Cell>School</DataTable.Cell>
             <DataTable.Cell>{selectedCase.school.label}</DataTable.Cell>
         </DataTable.Row>
+        {
+          selectedCase.institute.label!= undefined &&
+          <DataTable.Row style={{border: '2px solid green'}}>
+            <DataTable.Cell>Career Opportunity</DataTable.Cell>
+            <DataTable.Cell>{selectedCase.institute.label?selectedCase.institute.label:"N/A"}</DataTable.Cell>
+        </DataTable.Row>
+        }
       </View>
+      {selectedCase.caseType.label=="Street Child" &&
+        <Button style={styles.button} 
+          onPress={mapHandler}>
+          See Location
+        </Button>
+      }
       <TouchableOpacity style={styles.addBtn}>
           <IconButton
               icon="pencil"

@@ -14,18 +14,7 @@ function Institutes() {
     const dispatch = useDispatch(); // Redux hook to dispatch actions
     const navigation = useNavigation();
     const institutes = useSelector(selectInstitute); // Accessing cases state from Redux store
-    useEffect(() => {
-        async function getCases() {
-            try {
-                const institutesFetch = await fetchInstitute();
-                dispatch(setInstitute(institutesFetch)); // Dispatching setCase action
-            } catch (error) {
-                console.error('Could not fetch expenses:', error);
-            }
-        }
-
-        getCases();
-    }, [dispatch]); // Added dispatch as a dependency
+    
 
     return (
         <>

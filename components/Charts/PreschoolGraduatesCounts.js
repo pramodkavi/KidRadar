@@ -27,18 +27,6 @@ const graphStyle = {
 export function PreschoolGraduatesCounts(){
     const navigation = useNavigation();
     const dispatch = useDispatch();
-    useEffect(() => {
-        async function getCases() {
-            try {
-                 const preCasesCountFetch=await fetchPreSchoolCasesCount();
-                 dispatch(setPreSchoolCasesCount(preCasesCountFetch)); // Dispatching setCase action
-            } catch (error) {
-                console.error('Could not fetch Pre School Cases:', error);
-            }
-        }
-
-        getCases();
-    }, [dispatch]); // Added dispatch as a dependency
 
     const width = Dimensions.get('window').width
     const height = 220
@@ -53,7 +41,7 @@ export function PreschoolGraduatesCounts(){
     const katana = preSchoolCasesCount.find(item => item.division.label === "Katana").graduatesCounts?
     preSchoolCasesCount.find(item => item.division.label === "Katana").graduatesCounts: 0
     ;
-console.log("///////////////////////// count divitions",jaEla,negombo,katana)
+    console.log("///////////////////////// count divitions",jaEla,negombo,katana)
     const pieChartData = [
         { name: 'Ja-Ela', population: jaEla, color: '#CDBDFA', legendFontColor: '#7F7F7F', legendFontSize: 15 },
         { name: 'Negombo', population: negombo, color: '#4B3886', legendFontColor: '#7F7F7F', legendFontSize: 15 },

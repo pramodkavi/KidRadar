@@ -12,7 +12,7 @@ function MapScreen({ route }) {
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
     };
-    const [selectedLocation, setSelectedLocation] = useState(initialRegion);
+    const [selectedLocation, setSelectedLocation] = useState(setLocation?setLocation:initialRegion);
 
     const handleMapPress = (event) => {
         getlocation({
