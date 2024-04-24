@@ -8,9 +8,11 @@ import { useSelector } from 'react-redux';
 import DropdownComponent from "../DropdownComponent";
 import PreSchoolCaseSummary from "./PreSchoolCaseSummary";
 import Button from '../UI/Button';
+import { useNavigation } from '@react-navigation/native';
 import { division } from '../../constants/Constants';
-function PreSchoolCasesOutput({ totalCases, fallbackText }) {
 
+function PreSchoolCasesOutput({ totalCases, fallbackText }) {
+  const navigation = useNavigation();
   const [searchQuery, setSearchQuery] = useState('');
   const preSchoolCases = useSelector((state) => state.preSchoolCases.preSchoolCases); // Accessing cases state from Redux store
   const preSchoolCasesCount = useSelector((state) => state.preSchoolCasesCount.preSchoolCasesCount);

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'; // Importing Redux hooks
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import IconButton from '../components/UI/IconButton';
@@ -8,16 +8,18 @@ import {selectCase, setCase as setCaseAction} from '../slices/CaseSlice'; // Imp
 import StudentCasesOutput from '../components/StudentOutput/StudentCasesOutput';
 import { GlobalStyles } from '../constants/styles';
 import ChildCases from "./ChildCases";
+import { AuthContext } from '../store/auth-context';
 
 function StudentCasesScreen() {
     const dispatch = useDispatch(); // Redux hook to dispatch actions
     const navigation = useNavigation();
     const cases = useSelector((state) => state.cases.cases); // Accessing cases state from Redux store
+    const authCtx = useContext(AuthContext);
     useEffect(() => {
         async function getCases() {
             try {
-                const casesFetch = await fetchCases();
-                console.log("///////////////////casesFetch",casesFetch)
+                const uId = authCtx.uId;
+                const casesFetch = await fetchCases(uId);
                 dispatch(setCaseAction(casesFetch)); // Dispatching setCase action
             } catch (error) {
                 console.error('Could not fetch expenses:', error);

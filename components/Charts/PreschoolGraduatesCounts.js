@@ -31,14 +31,17 @@ export function PreschoolGraduatesCounts(){
     const width = Dimensions.get('window').width
     const height = 220
     const preSchoolCasesCount = useSelector((state) => state.preSchoolCasesCount.preSchoolCasesCount);
+    if (preSchoolCasesCount==undefined){
+        preSchoolCasesCount = null;
+    }
     console.log("///////////////////////////// preSchoolCasesCount",preSchoolCasesCount)
-    const jaEla = preSchoolCasesCount.find(item => item.division.label === "Ja-Ela").graduatesCounts?
+    const jaEla = preSchoolCasesCount.find(item => item.division.label === "Ja-Ela").graduatesCounts != undefined?
     preSchoolCasesCount.find(item => item.division.label === "Ja-Ela").graduatesCounts: 0
     ;
-    const negombo = preSchoolCasesCount.find(item => item.division.label === "Negombo").graduatesCounts?
+    const negombo = preSchoolCasesCount.find(item => item.division.label === "Negombo").graduatesCounts!= undefined?
     preSchoolCasesCount.find(item => item.division.label === "Negombo").graduatesCounts: 0
     ;
-    const katana = preSchoolCasesCount.find(item => item.division.label === "Katana").graduatesCounts?
+    const katana = preSchoolCasesCount.find(item => item.division.label === "Katana").graduatesCounts!= undefined?
     preSchoolCasesCount.find(item => item.division.label === "Katana").graduatesCounts: 0
     ;
     console.log("///////////////////////// count divitions",jaEla,negombo,katana)

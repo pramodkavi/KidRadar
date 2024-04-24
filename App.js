@@ -152,14 +152,20 @@ function AuthenticatedStack() {
             {/*    component={StudentCasesScreen}*/}
             {/*    options={{ headerShown: false }}*/}
             {/*/>*/}
-            
+            <Stack.Screen
+               name="ChildCases"
+               component={ChildCases}
+               options={{
+                   presentation: 'modal',
+               }}
+            />
             <Stack.Screen
                 name="Welcome Dashboard"
                 component={WelcomeDashboard}
                 options={{presentation: "fullScreenModal"}}
             />
             <Stack.Screen
-               name="StudentCasesScreen"
+               name="Overview"
                component={StudentCasesScreen}
                options={{presentation: "fullScreenModal"}}
                //options={{ headerShown: false }}
@@ -176,13 +182,13 @@ function AuthenticatedStack() {
                     presentation: 'modal',
                 }}
             />
-            <Stack.Screen
+            {/* <Stack.Screen
                name="ChildCases"
                component={ChildCases}
                options={{
                    presentation: 'modal',
                }}
-            />
+            /> */}
             <Stack.Screen
                 name="PreSchoolCases"
                 component={PreSchoolCases}

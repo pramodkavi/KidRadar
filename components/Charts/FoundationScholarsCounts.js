@@ -41,9 +41,12 @@ export function FoundationScholarsCounts(){
 
     const preSchoolCasesCount = useSelector((state) => state.preSchoolCasesCount.preSchoolCasesCount);
     console.log("////////////////////////////////// preSchoolCasesCount",preSchoolCasesCount);
-    const jaEla = preSchoolCasesCount.find(item => item.division.label === "Ja-Ela").scholarsCounts;
-    const negombo = preSchoolCasesCount.find(item => item.division.label === "Negombo").scholarsCounts;
-    const katana = preSchoolCasesCount.find(item => item.division.label === "Katana").scholarsCounts;
+    const jaEla = preSchoolCasesCount.find(item => item.division.label === "Ja-Ela").scholarsCounts?
+    preSchoolCasesCount.find(item => item.division.label === "Ja-Ela").scholarsCounts:0;
+    const negombo = preSchoolCasesCount.find(item => item.division.label === "Negombo").scholarsCounts?
+    preSchoolCasesCount.find(item => item.division.label === "Negombo").scholarsCounts:0;
+    const katana = preSchoolCasesCount.find(item => item.division.label === "Katana").scholarsCounts?
+    preSchoolCasesCount.find(item => item.division.label === "Katana").scholarsCounts:0;
     const pieChartData = [
         { name: 'Ja-Ela', population: jaEla, color: '#CDBDFA', legendFontColor: '#7F7F7F', legendFontSize: 15 },
         { name: 'Negombo', population: negombo, color: '#4B3886', legendFontColor: '#7F7F7F', legendFontSize: 15 },

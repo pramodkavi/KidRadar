@@ -18,7 +18,7 @@ function GreetingCard() {
         <Button
           mode="text"
           onPress={() => {
-            navigation.navigate("StudentCasesScreen");
+            navigation.navigate("Overview");
           }}
         >
           Children Section

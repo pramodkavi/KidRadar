@@ -16,7 +16,7 @@ function CasesView({ route, navigation }) {
   const selectedCase = cases.find(
       (data) => data.id === id
   );
-
+console.log("/////////////////////////////// selectedCase.institute.label",selectedCase.institute==undefined)
   const initialRegion = {
     latitude: 7.0873,
     longitude: 79.9998,
@@ -24,8 +24,7 @@ function CasesView({ route, navigation }) {
     longitudeDelta: 0.0421,
 };
   const [selectedLocation, setSelectedLocation] = useState(selectedCase.location);
-  console.log("//////////////////////////////// selectedCase.location",selectedCase.location)
-  // console.log("//////////////////////////////// selectedCase.caseType.label",selectedCase.caseType.label)
+
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -86,10 +85,10 @@ function CasesView({ route, navigation }) {
             <DataTable.Cell>{selectedCase.school.label}</DataTable.Cell>
         </DataTable.Row>
         {
-          selectedCase.institute.label!= undefined &&
+          selectedCase.institute!= undefined &&
           <DataTable.Row style={{border: '2px solid green'}}>
             <DataTable.Cell>Career Opportunity</DataTable.Cell>
-            <DataTable.Cell>{selectedCase.institute.label?selectedCase.institute.label:"N/A"}</DataTable.Cell>
+            {/* <DataTable.Cell>{selectedCase.institute?selectedCase.institute.label:"N/A"}</DataTable.Cell> */}
         </DataTable.Row>
         }
       </View>
