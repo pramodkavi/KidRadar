@@ -147,22 +147,22 @@ function AuthenticatedStack() {
             {/*        ),*/}
             {/*    }}*/}
             {/*/>*/}
-            {/*<Stack.Screen*/}
-            {/*    name="StudentCasesScreen"*/}
-            {/*    component={StudentCasesScreen}*/}
-            {/*    options={{ headerShown: false }}*/}
-            {/*/>*/}
+            <Stack.Screen
+                name="Welcome Dashboard"
+                component={WelcomeDashboard}
+                options={{presentation: "fullScreenModal"}}
+            />
+            <Stack.Screen
+                name="StudentCasesScreen"
+                component={StudentCasesScreen}
+                options={{ headerShown: false }}
+            />
             <Stack.Screen
                name="ChildCases"
                component={ChildCases}
                options={{
                    presentation: 'modal',
                }}
-            />
-            <Stack.Screen
-                name="Welcome Dashboard"
-                component={WelcomeDashboard}
-                options={{presentation: "fullScreenModal"}}
             />
             <Stack.Screen
                name="Overview"
@@ -320,7 +320,7 @@ function Navigation() {
 
 
 export default function App() {
-    //LogBox.ignoreAllLogs();
+    LogBox.ignoreAllLogs();
     return (
         <>
             <Provider store={store}>
