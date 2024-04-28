@@ -1,10 +1,11 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useEffect, useState } from "react";
+import { default as React, default as React, useContext, useEffect, useState } from "react";
 import { Alert, Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import { TrashIcon } from "react-native-heroicons/solid";
 import { useDispatch, useSelector } from "react-redux";
 import { GlobalStyles } from "../../constants/styles";
 import { selectInstitute, setInstitute } from "../../slices/InstituteSlice";
+import { AuthContext } from "../../store/auth-context";
 import { getFormattedDate } from "../../util/date";
 import { fetchInstitute } from "../../util/http";
 import DropdownComponent from "../DropdownComponent";
@@ -20,13 +21,16 @@ function ChildCasesForm({
 }) {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const authCtx = useContext(AuthContext);
+
   const [selected, setSelected] = React.useState("");
   const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     async function getCases() {
       try {
-        const institutesFetch = await fetchInstitute();
+        const uId = authCtx.uId;
+        const institutesFetch = await fetchInstitute(uId);
         dispatch(setInstitute(institutesFetch)); // Dispatching setCase action
       } catch (error) {
         console.error("Could not fetch Institute:", error);
@@ -247,14 +251,12 @@ function ChildCasesForm({
             value: inputs.caseType.value,
           }}
         />
-        {/*<SelectCountryScreen/>*/}
       </View>
       {defaultValues && (
         <>
           <Text>Career Opportunity</Text>
           <View style={styles.inputsRow}>
             <DropdownComponent
-              // invalid={!inputs.division.isValid}
               label={"Pathway Hub"}
               data={instituteData}
               textInputConfig={{
@@ -262,24 +264,13 @@ function ChildCasesForm({
                 value: inputs.institute.value,
               }}
             />
-            {/* <DropdownComponent
-                  invalid={!inputs.school.isValid}
-                  label={"School"}
-                  data={school}
-                  textInputConfig={{
-                    onChange: dropdownChangedHandler.bind(this, 'school'),
-                    value: inputs.school.value,
-                  }}
-              /> */}
           </View>
         </>
       )}
-      {/*</View>*/}
       <Input
         label="Name"
         invalid={!inputs.name.isValid}
         textInputConfig={{
-          // keyboardType: 'decimal-pad',
           onChangeText: inputChangedHandler.bind(this, "name"),
           value: inputs.name.value,
         }}

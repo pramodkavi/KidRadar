@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import {
   Alert,
   Modal,
+  Pressable,
   ScrollView,
   StyleSheet,
   Text,
   View,
-  Pressable,
 } from "react-native";
 import { TrashIcon } from "react-native-heroicons/solid";
 import { GlobalStyles } from "../../constants/styles";
@@ -87,9 +87,7 @@ function CourseForm({
   }
 
   const formIsInvalid =
-    !inputs.description.isValid ||
-    !inputs.name.isValid ||
-    !inputs.type.isValid;
+    !inputs.description.isValid || !inputs.name.isValid || !inputs.type.isValid;
   return (
     <ScrollView>
       <View>

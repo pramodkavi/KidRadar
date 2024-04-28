@@ -1,45 +1,47 @@
-import { StatusBar } from "expo-status-bar";
+import { Ionicons } from "@expo/vector-icons";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Ionicons } from "@expo/vector-icons";
-import ManageChildCases from "./screens/ManageChildCases";
-import ChildCases from "./screens/ChildCases";
-import { GlobalStyles } from "./constants/styles";
-const Stack = createNativeStackNavigator();
-const BottomTabs = createBottomTabNavigator();
-const Tab = createMaterialTopTabNavigator();
+import { useContext } from "react";
+import { LogBox } from "react-native";
+import "react-native-gesture-handler";
 import { PaperProvider } from "react-native-paper";
 import { Provider } from "react-redux";
-import { store } from "./store/store";
-import StudentCasesScreen from "./screens/StudentCasesScreen";
-import ManagePreSchoolCases from "./screens/PreSchoolStudentScreens/ManagePreSchoolCases";
-import ManagePreSchoolCasesCount from "./screens/PreSchoolStudentScreens/ManagePreSchoolCasesCount";
-import PreSchoolCases from "./screens/PreSchoolStudentScreens/PreSchoolCases";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import PreSchoolDetails from "./screens/SchoolPreSchoolScreens/PreSchoolDetails";
-import ManageInstitute from "./screens/InstituteScreens/ManageInstitute";
-import SchoolDetails from "./screens/SchoolPreSchoolScreens/SchoolDetails";
-import ManageSchoolDetails from "./screens/SchoolPreSchoolScreens/ManageSchoolDetails";
-import AuthContextProvider, { AuthContext } from "./store/auth-context";
-import { useContext } from "react";
-import WelcomeScreen from "./screens/WelcomeScreen";
-import IconButton from "./components/UI/IconButton";
-import LoginScreen from "./screens/LoginScreen";
-import SignupScreen from "./screens/SignupScreen";
-import Institutes from "./screens/InstituteScreens/Institutes";
-import Courses from "./screens/CourseScreens/Courses";
-import ManagePreSchoolDetails from "./screens/SchoolPreSchoolScreens/ManagePreSchoolDetails";
-import ManageCourse from "./screens/CourseScreens/ManageCourse";
 import CasesView from "./components/CasesOutput/CasesView";
+import InstituteView from "./components/InstitutesOutput/InstituteView";
+import ManageUserDetails from "./components/ManageUsers/ManageUserDetails";
+import UserView from "./components/ManageUsers/UserView";
 import PreSchoolCasesView from "./components/PreSchoolCasesOutput/PreSchoolCasesView";
 import PreSchoolView from "./components/PreSchoolOutput/PreSchoolView";
 import SchoolView from "./components/SchoolOutput/SchoolView";
-import InstituteView from "./components/InstitutesOutput/InstituteView";
-import { LogBox } from "react-native";
+import { GlobalStyles } from "./constants/styles";
+import ChildCases from "./screens/ChildCases";
 import MapScreen from "./screens/ChildCasesScreen/MapScreen";
-import WelcomeDashboard from "./screens/WelcomeDashboard";
+import Courses from "./screens/CourseScreens/Courses";
+import ManageCourse from "./screens/CourseScreens/ManageCourse";
 import EmergencyContacts from "./screens/EmergencyContactScreens";
+import Institutes from "./screens/InstituteScreens/Institutes";
+import ManageInstitute from "./screens/InstituteScreens/ManageInstitute";
+import LoginScreen from "./screens/LoginScreen";
+import ManageChildCases from "./screens/ManageChildCases";
+import ManagePreSchoolCases from "./screens/PreSchoolStudentScreens/ManagePreSchoolCases";
+import ManagePreSchoolCasesCount from "./screens/PreSchoolStudentScreens/ManagePreSchoolCasesCount";
+import PreSchoolCases from "./screens/PreSchoolStudentScreens/PreSchoolCases";
+import ManagePreSchoolDetails from "./screens/SchoolPreSchoolScreens/ManagePreSchoolDetails";
+import ManageSchoolDetails from "./screens/SchoolPreSchoolScreens/ManageSchoolDetails";
+import PreSchoolDetails from "./screens/SchoolPreSchoolScreens/PreSchoolDetails";
+import SchoolDetails from "./screens/SchoolPreSchoolScreens/SchoolDetails";
+import SignupScreen from "./screens/SignupScreen";
+import StudentDetails from "./screens/StudentAssignment/StudentDetails";
+import StudentCasesScreen from "./screens/StudentCasesScreen";
+import WelcomeDashboard from "./screens/WelcomeDashboard";
+import WelcomeScreen from "./screens/WelcomeScreen";
+import AuthContextProvider, { AuthContext } from "./store/auth-context";
+import { store } from "./store/store";
+const Stack = createNativeStackNavigator();
+const BottomTabs = createBottomTabNavigator();
+const Tab = createMaterialTopTabNavigator();
 
 function ChildCasesOverview() {
   return (
@@ -51,17 +53,6 @@ function ChildCasesOverview() {
         tabBarActiveTintColor: GlobalStyles.colors.primary400,
       })}
     >
-      {/* <BottomTabs.Screen
-                name="Student Cases"
-                component={SchoolPreSchooolOverview}
-                options={{
-                    title: 'Students',
-                    tabBarLabel: 'Students',
-                    tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="calendar" size={size} color={color} />
-                    ),
-                }}
-            /> */}
       <BottomTabs.Screen
         name="Child Cases"
         component={ChildCases}
@@ -104,6 +95,7 @@ function InstituteOverview() {
       })}
     >
       <Tab.Screen name="Course" component={Courses} />
+      <Tab.Screen name="Student Details" component={StudentDetails} />
       <Tab.Screen name="Pathway Hub Details" component={InstituteView} />
     </Tab.Navigator>
   );
@@ -119,7 +111,6 @@ function AuthStack() {
     >
       <Stack.Screen name="KidRadar" component={WelcomeScreen} />
       <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="Signup" component={SignupScreen} />
     </Stack.Navigator>
   );
 }
@@ -133,20 +124,6 @@ function AuthenticatedStack() {
         headerTintColor: "black",
       }}
     >
-      {/*<Stack.Screen*/}
-      {/*    name="Welcome"*/}
-      {/*    component={WelcomeScreen}*/}
-      {/*    options={{*/}
-      {/*        headerRight: ({ tintColor }) => (*/}
-      {/*            <IconButton*/}
-      {/*                icon="exit"*/}
-      {/*                color={tintColor}*/}
-      {/*                size={24}*/}
-      {/*                onPress={authCtx.logout}*/}
-      {/*            />*/}
-      {/*        ),*/}
-      {/*    }}*/}
-      {/*/>*/}
       <Stack.Screen
         name="Dashboard"
         component={WelcomeDashboard}
@@ -189,13 +166,6 @@ function AuthenticatedStack() {
           presentation: "modal",
         }}
       />
-      {/* <Stack.Screen
-               name="ChildCases"
-               component={ChildCases}
-               options={{
-                   presentation: 'modal',
-               }}
-            /> */}
       <Stack.Screen
         name="Preschool Cases"
         component={PreSchoolCases}
@@ -253,6 +223,13 @@ function AuthenticatedStack() {
         }}
       />
       <Stack.Screen
+        name="Manage User Details"
+        component={ManageUserDetails}
+        options={{
+          presentation: "modal",
+        }}
+      />
+      <Stack.Screen
         name="Pathway Hub Overview"
         component={InstituteOverview}
         options={{
@@ -302,9 +279,23 @@ function AuthenticatedStack() {
         }}
       />
       <Stack.Screen
+        name="User View"
+        component={UserView}
+        options={{
+          presentation: "modal",
+        }}
+      />
+      <Stack.Screen
         name="MapScreen"
         component={MapScreen}
         options={{ presentation: "fullScreenModal" }}
+      />
+      <Stack.Screen
+        name="Register"
+        component={SignupScreen}
+        options={{
+          presentation: "modal",
+        }}
       />
     </Stack.Navigator>
   );
@@ -336,84 +327,3 @@ export default function App() {
     </>
   );
 }
-// export default function App() {
-//     return (
-//
-//         <Provider store={store}>
-//             <PaperProvider>
-//                 <StatusBar style="white" />
-//                 <NavigationContainer>
-//                     <Stack.Navigator
-//                         screenOptions={{
-//                             headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
-//                             headerTintColor: 'black',
-//                         }}
-//                     >
-//                         {/* <Stack.Screen
-//                             name="ChildCasesOverview"
-//                             component={ChildCasesOverview}
-//                             options={{ headerShown: false }}
-//                         /> */}
-//                         <Stack.Screen
-//                             name="School PreSchoool Overview"
-//                             component={SchoolPreSchooolOverview}
-//                             options={{
-//                                 presentation: 'modal',
-//                             }}
-//                         />
-//                         <Stack.Screen
-//                             name="ChildCases"
-//                             component={ChildCases}
-//                             options={{
-//                                 presentation: 'modal',
-//                             }}
-//                         />
-//                         <Stack.Screen
-//                             name="PreSchoolCases"
-//                             component={PreSchoolCases}
-//                             options={{
-//                                 presentation: 'modal',
-//                             }}
-//                         />
-//
-//                         <Stack.Screen
-//                             name="ManageChildCases"
-//                             component={ManageChildCases}
-//                             options={{
-//                                 presentation: 'modal',
-//                             }}
-//                         />
-//                         <Stack.Screen
-//                             name="ManagePreSchoolCases"
-//                             component={ManagePreSchoolCases}
-//                             options={{
-//                                 presentation: 'modal',
-//                             }}
-//                         />
-//                         <Stack.Screen
-//                             name="ManagePreSchoolCasesCount"
-//                             component={ManagePreSchoolCasesCount}
-//                             options={{
-//                                 presentation: 'modal',
-//                             }}
-//                         />
-//                         <Stack.Screen
-//                             name="ManageInstitute"
-//                             component={ManageInstitute}
-//                             options={{
-//                                 presentation: 'modal',
-//                             }}
-//                         />
-//                         <Stack.Screen
-//                             name="ManageSchoolDetails"
-//                             component={ManageSchoolDetails}
-//                             options={{
-//                                 presentation: 'modal',
-//                             }}
-//                         />
-//                     </Stack.Navigator>
-//                 </NavigationContainer>
-//             </PaperProvider>
-//         </Provider>
-//     );
-// }

@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { GlobalStyles } from "../../constants/styles";
-import InstituteList from "./InstituteList";
 import { Searchbar } from "react-native-paper";
 import { useSelector } from "react-redux";
-import DropdownComponent from "../DropdownComponent";
+import { GlobalStyles } from "../../constants/styles";
 import { selectInstitute } from "../../slices/InstituteSlice";
+import DropdownComponent from "../DropdownComponent";
+import InstituteList from "./InstituteList";
 
 function InstituteDetailsOutput({ totalCases, fallbackText }) {
   const [selectedDivision, setSelectedDivision] = useState("");
@@ -27,8 +27,7 @@ function InstituteDetailsOutput({ totalCases, fallbackText }) {
         institutes.filter(
           (item) =>
             item.name?.toLowerCase().includes(searchQuery.toLowerCase()) &&
-            (selectedDivision === "" ||
-              item.type?.value === selectedDivision)
+            (selectedDivision === "" || item.type?.value === selectedDivision)
         )
       );
     };
@@ -72,7 +71,6 @@ function InstituteDetailsOutput({ totalCases, fallbackText }) {
               value: selectedDivision,
             }}
           />
-          {/*<SelectCountryScreen/>*/}
         </View>
       </View>
       {content}

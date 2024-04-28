@@ -1,5 +1,4 @@
 import axios from "axios";
-import { StackActions as cases } from "@react-navigation/routers/src";
 import { useContext } from "react";
 import { AuthContext } from "../store/auth-context";
 
@@ -9,6 +8,51 @@ function getUid() {
   const authCtx = useContext(AuthContext);
   const uId = authCtx.uId;
   return uId;
+}
+
+export async function storeUser(userData) {
+  let id = "";
+  try {
+    const response = await axios.post(API + "/user", userData);
+
+    id = response.data.id;
+  } catch (err) {
+    console.log("Here is error", err);
+  }
+  console.log("///////////////////// userdata", userData);
+  return id;
+}
+export async function fetchUser(uId) {
+  console.log("///////////////////// I am here fetched user", uId);
+
+  const uid = uId;
+  const res = await axios.get(API + `/user/${uid}`, uid);
+
+  const response = JSON.parse(res.request._response);
+  // const childDataArray = responseData.d;
+
+  // const response = await axios.get(BACKEND_URL + '/cases.json');
+
+  const user = [];
+
+  for (const key in response.data) {
+    const userObj = {
+      id: response.data[key]._id,
+      name: response.data[key].name,
+      email: response.data[key].email,
+      phoneNumber: response.data[key].phoneNumber,
+      role: response.data[key].role,
+      uId: response.data[key].uId,
+      designation: response.data[key].designation,
+    };
+
+    user.push(userObj);
+  }
+
+  return user;
+}
+export async function updateUsers(id, caseData) {
+  return axios.put(API + `/user/${id}`, caseData);
 }
 
 export async function storeCases(casesData) {
@@ -24,14 +68,10 @@ export async function storeCases(casesData) {
 }
 
 export async function fetchCases(uId) {
-  const uid = "UnZMmZop3EMFnW8Kb7caHdwNBAL2";
+  const uid = uId;
   const res = await axios.get(API + `/childcases/${uid}`, uid);
 
   const response = JSON.parse(res.request._response);
-  // const childDataArray = responseData.d;
-
-  // const response = await axios.get(BACKEND_URL + '/cases.json');
-
   const cases = [];
 
   for (const key in response.data) {
@@ -79,8 +119,8 @@ export async function storePreSchoolCasesCount(casesCountData) {
   return id;
 }
 
-export async function fetchPreSchoolCasesCount() {
-  const uid = "UnZMmZop3EMFnW8Kb7caHdwNBAL2";
+export async function fetchPreSchoolCasesCount(uId) {
+  const uid = uId;
   const res = await axios.get(API + `/preSchoolCasesCount/${uid}`, uid);
   const response = JSON.parse(res.request._response);
 
@@ -111,8 +151,8 @@ export async function storePreSchoolCases(casesData) {
   return id;
 }
 
-export async function fetchPreSchoolCases() {
-  const uid = "UnZMmZop3EMFnW8Kb7caHdwNBAL2";
+export async function fetchPreSchoolCases(uId) {
+  const uid = uId;
   const res = await axios.get(API + `/preSchoolCases/${uid}`, uid);
 
   const response = JSON.parse(res.request._response);
@@ -155,12 +195,11 @@ export async function storeSchool(schoolData) {
   return id;
 }
 
-export async function fetchSchools() {
-  const uid = "UnZMmZop3EMFnW8Kb7caHdwNBAL2";
+export async function fetchSchools(uId) {
+  const uid = uId;
   const res = await axios.get(API + `/schools/${uid}`, uid);
 
   const response = JSON.parse(res.request._response);
-
   const schools = [];
 
   for (const key in response.data) {
@@ -199,8 +238,8 @@ export async function storePreSchool(schoolData) {
   return id;
 }
 
-export async function fetchPreSchools() {
-  const uid = "UnZMmZop3EMFnW8Kb7caHdwNBAL2";
+export async function fetchPreSchools(uId) {
+  const uid = uId;
   const res = await axios.get(API + `/preSchools/${uid}`, uid);
   const response = JSON.parse(res.request._response);
 
@@ -241,8 +280,8 @@ export async function storeInstitute(instituteData) {
   return id;
 }
 
-export async function fetchInstitute() {
-  const uid = "UnZMmZop3EMFnW8Kb7caHdwNBAL2";
+export async function fetchInstitute(uId) {
+  const uid = uId;
   let res = null;
   try {
     res = await axios.get(API + `/institutes/${uid}`, uid);
@@ -291,12 +330,11 @@ export async function storeCourses(courseData) {
 }
 
 export async function fetchCourses(instituteId) {
-  // const instituteId = "UnZMmZop3EMFnW8Kb7caHdwNBAL2";
   let res = null;
   try {
     res = await axios.get(API + `/courses/${instituteId}`, instituteId);
   } catch (err) {
-    console.error(err);
+    console.log("Fetching err", err);
   }
   const response = res.data;
 

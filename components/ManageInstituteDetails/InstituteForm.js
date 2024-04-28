@@ -8,11 +8,11 @@ import {
   Text,
   View,
 } from "react-native";
-import { LockClosedIcon, TrashIcon } from "react-native-heroicons/solid";
+import { LockClosedIcon } from "react-native-heroicons/solid";
 import { GlobalStyles } from "../../constants/styles";
+import DropdownComponent from "../DropdownComponent";
 import Button from "../UI/Button";
 import Input from "./Input";
-import DropdownComponent from "../DropdownComponent";
 
 function InstituteForm({
   submitButtonLabel,

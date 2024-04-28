@@ -1,14 +1,10 @@
-import { useContext, useLayoutEffect, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { useDispatch, useSelector } from "react-redux"; // Importing Redux hooks
-import IconButton from "../UI/IconButton";
-import { GlobalStyles } from "../../constants/styles";
 import { DataTable } from "react-native-paper";
-import { getFormattedDate } from "../../util/date";
-import { selectPreSchool } from "../../slices/PreSchoolSlice";
-import { selectSchool } from "../../slices/SchoolSlice";
-import { selectInstitute } from "../../slices/InstituteSlice";
+import { useDispatch, useSelector } from "react-redux"; // Importing Redux hooks
+import { GlobalStyles } from "../../constants/styles";
 import { selectGeneralId } from "../../slices/GeneralIdSlice";
+import { selectInstitute } from "../../slices/InstituteSlice";
+import IconButton from "../UI/IconButton";
 
 function InstituteView({ route, navigation }) {
   const dispatch = useDispatch(); // Redux hook to dispatch actions

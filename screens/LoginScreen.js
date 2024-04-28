@@ -1,26 +1,33 @@
-import AuthContent from '../components/Auth/AuthContent';
+import { useContext, useState } from "react";
+import { Alert } from "react-native";
+import { useDispatch } from "react-redux";
+import AuthContent from "../components/Auth/AuthContent";
 import LoadingOverlay from "../components/UI/LoadingOverlay";
-import {login} from "../util/auth";
-import {useContext, useState} from "react";
-import {Alert} from "react-native";
-import {AuthContext} from "../store/auth-context";
+import { setUser } from "../slices/UserSlice";
+import { AuthContext } from "../store/auth-context";
+import { login } from "../util/auth";
+import { fetchUser } from "../util/http";
 
 function LoginScreen() {
   const [isAuthenticating, setIsAuthenticating] = useState(false);
   const authCtx = useContext(AuthContext);
+  const dispatch = useDispatch();
 
   async function loginHandler({ email, password }) {
     setIsAuthenticating(true);
     try {
       const res = await login(email, password);
+
+      const user = await fetchUser(res.localId);
+      dispatch(setUser(user));
       authCtx.authenticate(res.idToken);
       authCtx.setUID(res.localId);
     } catch (error) {
       Alert.alert(
-          'Authentication failed!',
-          'Could not log you in. Please check your credentials or try again later!'
+        "Authentication failed!",
+        "Could not log you in. Please check your credentials or try again later!"
       );
-    setIsAuthenticating(false);
+      setIsAuthenticating(false);
     }
   }
 

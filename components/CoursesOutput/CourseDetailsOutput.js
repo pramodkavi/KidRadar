@@ -1,53 +1,39 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { GlobalStyles } from '../../constants/styles';
-import CourseList from './CourseList';
-import { Searchbar } from 'react-native-paper';
-import { useSelector } from 'react-redux';
-import DropdownComponent from "../DropdownComponent";
-import { selectCourse } from '../../slices/CourseSlice';
-import { division } from '../../constants/Constants';
+import React, { useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { Searchbar } from "react-native-paper";
+import { useSelector } from "react-redux";
+import { GlobalStyles } from "../../constants/styles";
+import { selectCourse } from "../../slices/CourseSlice";
+import CourseList from "./CourseList";
 
 function CourseDetailsOutput({ totalCases, fallbackText }) {
-
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const courses = useSelector(selectCourse);
   const filteredCourses = courses.filter(
-      (item) =>
-          item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          (item.address && item.address.toLowerCase().includes(searchQuery.toLowerCase()))
+    (item) =>
+      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (item.address &&
+        item.address.toLowerCase().includes(searchQuery.toLowerCase()))
   );
   let content = <Text style={styles.infoText}>{fallbackText}</Text>;
   if (filteredCourses.length > 0) {
     content = <CourseList institutes={filteredCourses} />;
   }
   function dropdownChangedHandler(inputIdentifier, enteredValue) {
-    setInputs((curInputs) => {
-    });
+    setInputs((curInputs) => {});
   }
 
   return (
-      <View style={styles.container}>
-        <View style={styles.searchbar}>
-          <Searchbar
-              placeholder="Search"
-              onChangeText={(text) => setSearchQuery(text)}
-              value={searchQuery}
-          />
-          <View style={styles.inputsRow}>
-            {/* <DropdownComponent
-                label={"Division"}
-                data={division}
-                // textInputConfig={{
-                //   onChange: dropdownChangedHandler.bind(this, 'division'),
-                //   // value: inputs.division.value,
-                // }}
-            /> */}
-            {/*<SelectCountryScreen/>*/}
-          </View>
-        </View>
-        {content}
+    <View style={styles.container}>
+      <View style={styles.searchbar}>
+        <Searchbar
+          placeholder="Search"
+          onChangeText={(text) => setSearchQuery(text)}
+          value={searchQuery}
+        />
       </View>
+      {content}
+    </View>
   );
 }
 
@@ -61,18 +47,18 @@ const styles = StyleSheet.create({
     paddingBottom: 0,
     backgroundColor: GlobalStyles.colors.primary700,
   },
-  searchbar:{
+  searchbar: {
     marginVertical: 8,
   },
   infoText: {
-    color: 'black',
+    color: "black",
     fontSize: 16,
-    textAlign: 'center',
+    textAlign: "center",
     marginTop: 32,
   },
   inputsRow: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
+    flexDirection: "row",
+    justifyContent: "flex-end",
     marginVertical: 8,
   },
   maintext: {
@@ -82,5 +68,5 @@ const styles = StyleSheet.create({
   },
   textwrap: {
     marginBottom: 6,
-  }
+  },
 });
