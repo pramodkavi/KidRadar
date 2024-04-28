@@ -3,7 +3,7 @@ import {StackActions as cases} from "@react-navigation/routers/src";
 import { useContext } from 'react';
 import { AuthContext } from '../store/auth-context';
 
-const API = "http://192.168.8.100:8080";
+const API = "http://192.168.8.101:8080";
 
 function getUid(){
   const authCtx = useContext(AuthContext);
@@ -11,7 +11,50 @@ function getUid(){
   return uId;
 }
 
+export async function storeUser(userData) {
+  let id =""
+  try {
+    const response = await axios.post(API+'/user', userData);
+
+    id = response.data.id;
+  }catch (err){
+    console.log("Here is error",err)
+  }
+  console.log("///////////////////// userdata",userData)
+  return id;
+}
+export async function fetchUser(uId) {
+  console.log("///////////////////// I am here fetched user",uId)
+  
+  const uid =uId;
+  const res = await axios.get(API+`/user/${uid}`,uid);
+
+  const response = JSON.parse(res.request._response);
+  // const childDataArray = responseData.d;
+
+  // const response = await axios.get(BACKEND_URL + '/cases.json');
+
+  const user = [];
+
+  for (const key in response.data) {
+    const userObj = {
+      id: response.data[key]._id,
+      name: response.data[key].name,
+      email: response.data[key].email,
+      phoneNumber: response.data[key].phoneNumber,
+      role: response.data[key].role,
+      uId: response.data[key].uId,
+      designation: response.data[key].designation,
+    };
+
+    user.push(userObj);
+  }
+
+  return user;
+}
+
 export async function storeCases(casesData) {
+  console.log("/////////////////////////cases data",casesData)
   let id =""
   try {
     const response = await axios.post(API+'/childcases', casesData);

@@ -4,10 +4,14 @@ import {login} from "../util/auth";
 import {useContext, useState} from "react";
 import {Alert} from "react-native";
 import {AuthContext} from "../store/auth-context";
+import { fetchUser } from '../util/http';
+import { useDispatch } from 'react-redux';
+import { addUser, setUser } from '../slices/UserSlice';
 
 function LoginScreen() {
   const [isAuthenticating, setIsAuthenticating] = useState(false);
   const authCtx = useContext(AuthContext);
+  const dispatch = useDispatch();
 
   async function loginHandler({ email, password }) {
     setIsAuthenticating(true);
@@ -15,6 +19,9 @@ function LoginScreen() {
       const res = await login(email, password);
       // console.log("/////////////res.token",res.idToken)
       // console.log("/////////////res.localId",res.localId)
+      const user = await fetchUser(res.localId);
+      console.log("////////////////////////////////// fetched user",user)
+      dispatch(setUser(user));
       authCtx.authenticate(res.idToken);
       authCtx.setUID(res.localId);
     } catch (error) {

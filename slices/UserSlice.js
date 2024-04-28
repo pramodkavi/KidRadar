@@ -1,25 +1,31 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    userId: null,
-    isAuthenticated: false,
+    users: [],
 };
 
-const UserSlice = createSlice({
-    name: 'user',
+const userSlice = createSlice({
+    name: 'users',
     initialState,
     reducers: {
-        setUser: (state, action) => {
-            state.userId = action.payload;
-            state.isAuthenticated = true;
+        addUser(state, action) {
+            state.users.unshift(action.payload);
         },
-        clearUser: (state) => {
-            state.userId = null;
-            state.isAuthenticated = false;
+        setUser(state, action) {
+            state.users = action.payload.reverse();
+        },
+        deleteUser(state, action) {
+            state.users = state.users.filter(user => user.email !== action.payload);
+        },
+        updateUser(state, action) {
+            const updateUserIndex = state.users.findIndex(user => user.email === action.payload.email);
+            state.users[updateUserIndex] = action.payload.data;
         },
     },
 });
 
-export const { setUser, clearUser } = UserSlice.actions;
+export const { addUser, deleteUser, updateUser, setUser } = userSlice.actions;
+export const selectUsers = state => state.users.users;
+export const selectUserByEmail = (state, email) => state.users.users.find(user => user.email === email);
 
-export default UserSlice.reducer;
+export default userSlice.reducer;

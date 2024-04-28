@@ -8,7 +8,7 @@ import UserReducer from '../slices/UserSlice';
 import InstituteSlice from '../slices/InstituteSlice';
 import CourseSlice from '../slices/CourseSlice';
 import GeneralIdSlice from '../slices/GeneralIdSlice';
-
+import userSlice from "../slices/UserSlice";
 
 
 
@@ -22,6 +22,7 @@ export const store = configureStore({
         user:UserReducer,
         institutes:InstituteSlice,
         courses:CourseSlice,
-        generalid:GeneralIdSlice
+        generalid:GeneralIdSlice,
+        users:userSlice
     },
 })
