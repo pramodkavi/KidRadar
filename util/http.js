@@ -1,31 +1,31 @@
-import axios from 'axios';
-import {StackActions as cases} from "@react-navigation/routers/src";
-import { useContext } from 'react';
-import { AuthContext } from '../store/auth-context';
+import axios from "axios";
+import { StackActions as cases } from "@react-navigation/routers/src";
+import { useContext } from "react";
+import { AuthContext } from "../store/auth-context";
 
-const API = "http://192.168.8.100:8080";
+const API = "http://192.168.8.113:8090";
 
-function getUid(){
+function getUid() {
   const authCtx = useContext(AuthContext);
   const uId = authCtx.uId;
   return uId;
 }
 
 export async function storeCases(casesData) {
-  let id =""
+  let id = "";
   try {
-    const response = await axios.post(API+'/childcases', casesData);
+    const response = await axios.post(API + "/childcases", casesData);
     // id = response.data.name;
     id = response.data.id;
-  }catch (err){
-    console.log("Here is error",err)
+  } catch (err) {
+    console.error(err);
   }
   return id;
 }
 
 export async function fetchCases(uId) {
   const uid = "UnZMmZop3EMFnW8Kb7caHdwNBAL2";
-  const res = await axios.get(API+`/childcases/${uid}`,uid);
+  const res = await axios.get(API + `/childcases/${uid}`, uid);
 
   const response = JSON.parse(res.request._response);
   // const childDataArray = responseData.d;
@@ -48,7 +48,6 @@ export async function fetchCases(uId) {
       caseType: response.data[key].caseType,
       location: response.data[key].location,
       institute: response.data[key].institute,
-      
     };
 
     cases.push(casesObj);
@@ -58,21 +57,23 @@ export async function fetchCases(uId) {
 }
 
 export function updateCase(id, caseData) {
-  return axios.put(API+`/childcases/${id}`, caseData);
+  return axios.put(API + `/childcases/${id}`, caseData);
 }
 
 export function deleteCase(id) {
-  return axios.delete(API+`/childcases/${id}`,id);
+  return axios.delete(API + `/childcases/${id}`, id);
 }
-/////////////////////////////////////////////////////////////////////////////////
 
 export async function storePreSchoolCasesCount(casesCountData) {
-  let id =""
+  let id = "";
   try {
-    const response = await axios.post(API + '/preSchoolCasesCount', casesCountData);
+    const response = await axios.post(
+      API + "/preSchoolCasesCount",
+      casesCountData
+    );
     id = response.data.id;
-  }catch (err){
-    console.log("Here is error",err)
+  } catch (err) {
+    console.error(err);
   }
 
   return id;
@@ -80,7 +81,7 @@ export async function storePreSchoolCasesCount(casesCountData) {
 
 export async function fetchPreSchoolCasesCount() {
   const uid = "UnZMmZop3EMFnW8Kb7caHdwNBAL2";
-  const res = await axios.get(API+`/preSchoolCasesCount/${uid}`,uid);
+  const res = await axios.get(API + `/preSchoolCasesCount/${uid}`, uid);
   const response = JSON.parse(res.request._response);
 
   const preCasesCount = [];
@@ -99,30 +100,27 @@ export async function fetchPreSchoolCasesCount() {
   return preCasesCount;
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////
-
 export async function storePreSchoolCases(casesData) {
-  let id =""
+  let id = "";
   try {
-    const response = await axios.post(API + '/preSchoolCases', casesData);
-    // id = response.data.name;
+    const response = await axios.post(API + "/preSchoolCases", casesData);
     id = response.data.id;
-  }catch (err){
-    console.log("Here is error",err)
+  } catch (err) {
+    console.error(err);
   }
   return id;
 }
 
 export async function fetchPreSchoolCases() {
   const uid = "UnZMmZop3EMFnW8Kb7caHdwNBAL2";
-  const res = await axios.get(API+`/preSchoolCases/${uid}`,uid);
+  const res = await axios.get(API + `/preSchoolCases/${uid}`, uid);
 
   const response = JSON.parse(res.request._response);
   const cases = [];
 
   for (const key in response.data) {
     const casesObj = {
-      id:  response.data[key]._id,
+      id: response.data[key]._id,
       name: response.data[key].name,
       age: response.data[key].age,
       address: response.data[key].address,
@@ -142,27 +140,24 @@ export function updatePreSchoolCases(id, casesData) {
 }
 
 export function deletePreSchoolCases(id) {
-  return axios.delete(API + `/preSchoolCases/${id}`,id);
+  return axios.delete(API + `/preSchoolCases/${id}`, id);
 }
 
-/////////////////////////////////////////////////////////////////////////////////
-
 export async function storeSchool(schoolData) {
-
-  let id =""
+  let id = "";
   try {
-    const response = await axios.post(API + '/schools', schoolData);
+    const response = await axios.post(API + "/schools", schoolData);
     // id = response.data.name;
     const id = response.data.name;
-  }catch (err){
-    console.log("Here is error",err)
+  } catch (err) {
+    console.error(err);
   }
   return id;
 }
 
 export async function fetchSchools() {
   const uid = "UnZMmZop3EMFnW8Kb7caHdwNBAL2";
-  const res = await axios.get(API+`/schools/${uid}`,uid);
+  const res = await axios.get(API + `/schools/${uid}`, uid);
 
   const response = JSON.parse(res.request._response);
 
@@ -170,7 +165,7 @@ export async function fetchSchools() {
 
   for (const key in response.data) {
     const school = {
-    id:  response.data[key]._id,
+      id: response.data[key]._id,
       school: response.data[key].school,
       description: response.data[key].description,
       address: response.data[key].address,
@@ -189,26 +184,24 @@ export function updateSchools(id, schoolData) {
 }
 
 export function deleteSchools(id) {
-  return axios.delete(API + `/schools/${id}`,id);
+  return axios.delete(API + `/schools/${id}`, id);
 }
 
-/////////////////////////////////////////////////////////////////////////////////
-
 export async function storePreSchool(schoolData) {
-  console.log("//////////////////////////////preSchoolData", schoolData)
-  let id =""
+  let id = "";
+
   try {
-    const response = await axios.post(API + '/preSchools', schoolData);
+    const response = await axios.post(API + "/preSchools", schoolData);
     id = response.data.id;
-  }catch (err){
-    console.log("Here is error",err)
+  } catch (err) {
+    console.error(err);
   }
   return id;
 }
 
 export async function fetchPreSchools() {
   const uid = "UnZMmZop3EMFnW8Kb7caHdwNBAL2";
-  const res = await axios.get(API+`/preSchools/${uid}`,uid);
+  const res = await axios.get(API + `/preSchools/${uid}`, uid);
   const response = JSON.parse(res.request._response);
 
   const preSchools = [];
@@ -230,35 +223,31 @@ export async function fetchPreSchools() {
 }
 
 export function updatePreschool(id, preschoolData) {
-  console.log("/////////////////////////Here is preschoolData",preschoolData)
   return axios.put(API + `/preSchools/${id}`, preschoolData);
 }
 
 export function deletePreSchool(id) {
-  return axios.delete(API + `/preSchools/${id}`,id);
+  return axios.delete(API + `/preSchools/${id}`, id);
 }
 
-/////////////////////////////////////////////////////////////////////////////////
-
 export async function storeInstitute(instituteData) {
-  console.log("//////////////////////Here is instituteData",instituteData)
-  let id =""
+  let id = "";
   try {
-    const response = await axios.post(API + '/institutes', instituteData);
+    const response = await axios.post(API + "/institutes", instituteData);
     id = response.data.id;
-  }catch (err){
-    console.log("Here is error",err)
+  } catch (err) {
+    console.error(err);
   }
   return id;
 }
 
 export async function fetchInstitute() {
   const uid = "UnZMmZop3EMFnW8Kb7caHdwNBAL2";
-  let res =null;
-  try{
-    res = await axios.get(API+`/institutes/${uid}`,uid);
-  }catch(err){
-    console.log("Error occur",err)
+  let res = null;
+  try {
+    res = await axios.get(API + `/institutes/${uid}`, uid);
+  } catch (err) {
+    console.error(err);
   }
 
   const response = res.data;
@@ -274,6 +263,8 @@ export async function fetchInstitute() {
       description: response.data[key].description,
       address: response.data[key].address,
       contactNo: response.data[key].contactNo,
+      type: response.data[key].type,
+      subType: response.data[key].subType,
     };
     institutes.push(institute);
   }
@@ -284,35 +275,30 @@ export function updateInstitut(id, instituteData) {
   return axios.put(API + `/institutes/${id}`, instituteData);
 }
 
-// export function deleteInstitute(id) {
-//   return axios.delete(BACKEND_URL + `/schools/${id}.json`,id);
-// }
-
-/////////////////////////////////////////////////////////////////////////////////
+export function deleteInstitute(id) {
+  return axios.delete(API + `/institutes/${id}`, id);
+}
 
 export async function storeCourses(courseData) {
-  console.log("///////////////////////// courseData in http",courseData)
-  let id =""
+  let id = "";
   try {
-    const response = await axios.post(API+'/courses', courseData);
+    const response = await axios.post(API + "/courses", courseData);
     id = response.data.id;
-  }catch (err){
-    console.log("Storing error",err)
+  } catch (err) {
+    console.error(err);
   }
   return id;
 }
 
 export async function fetchCourses(instituteId) {
   // const instituteId = "UnZMmZop3EMFnW8Kb7caHdwNBAL2";
-  console.log("///////////////////////// institute id",instituteId)
-  let res= null;
-  try{
-    res = await axios.get(API+`/courses/${instituteId}`,instituteId);
-  }catch(err){
-    console.log("Fetching err", err)
+  let res = null;
+  try {
+    res = await axios.get(API + `/courses/${instituteId}`, instituteId);
+  } catch (err) {
+    console.error(err);
   }
   const response = res.data;
-
 
   const courses = [];
 
@@ -321,8 +307,7 @@ export async function fetchCourses(instituteId) {
       id: response.data[key]._id,
       name: response.data[key].name,
       type: response.data[key].type,
-      maxNVQ: response.data[key].maxNVQ,
-      description:response.data[key].description
+      description: response.data[key].description,
     };
     courses.push(courseObj);
   }
@@ -331,11 +316,9 @@ export async function fetchCourses(instituteId) {
 }
 
 export function updateCourses(id, courseData) {
-  console.log("///////////////////////// courseData in http",courseData)
-  return axios.put(API+`/courses/${id}`, courseData);
+  return axios.put(API + `/courses/${id}`, courseData);
 }
 
 export function deleteCourses(id) {
-  console.log("///////////////////////// courseData in http",id)
-  return axios.delete(API+`/courses/${id}`,id);
+  return axios.delete(API + `/courses/${id}`, id);
 }

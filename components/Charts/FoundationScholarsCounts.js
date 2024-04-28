@@ -40,7 +40,6 @@ export function FoundationScholarsCounts(){
     }, [dispatch]); // Added dispatch as a dependency
 
     const preSchoolCasesCount = useSelector((state) => state.preSchoolCasesCount.preSchoolCasesCount);
-    console.log("////////////////////////////////// preSchoolCasesCount",preSchoolCasesCount);
     const jaEla = preSchoolCasesCount.find(item => item.division.label === "Ja-Ela").scholarsCounts?
     preSchoolCasesCount.find(item => item.division.label === "Ja-Ela").scholarsCounts:0;
     const negombo = preSchoolCasesCount.find(item => item.division.label === "Negombo").scholarsCounts?
@@ -48,14 +47,14 @@ export function FoundationScholarsCounts(){
     const katana = preSchoolCasesCount.find(item => item.division.label === "Katana").scholarsCounts?
     preSchoolCasesCount.find(item => item.division.label === "Katana").scholarsCounts:0;
     const pieChartData = [
-        { name: 'Ja-Ela', population: jaEla, color: '#CDBDFA', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-        { name: 'Negombo', population: negombo, color: '#4B3886', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-        { name: 'Katana', population: katana, color: 'rgba(99, 81, 159, 1)', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+        { name: 'Ja-Ela', population: jaEla, color: '#4AB2D9', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+        { name: 'Negombo', population: negombo, color: '#537CBC', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+        { name: 'Katana', population: katana, color: '#3A3E99', legendFontColor: '#7F7F7F', legendFontSize: 15 },
     ]
     return (
         <>
             <View style={styles.chartHeader}>
-                <Text style={styles.headerTxt}>Foundation scholars counts</Text>
+                <Text style={styles.headerTxt}>Scholars Counts</Text>
                 <Button mode="outlined" >
                     Load more
                 </Button>
@@ -68,8 +67,6 @@ export function FoundationScholarsCounts(){
                     chartConfig={chartConfig}
                     accessor={"population"}
                     backgroundColor={"transparent"}
-                    // paddingLeft={"15"}
-                    // center={[5, 0]}
                     absolute
                 />
             </View>

@@ -1,55 +1,75 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { Searchbar } from 'react-native-paper';
-import { useSelector } from 'react-redux';
-import { GlobalStyles } from '../../constants/styles';
+import React, { useState, useEffect } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { Searchbar } from "react-native-paper";
+import { useSelector } from "react-redux";
+import { GlobalStyles } from "../../constants/styles";
 import DropdownComponent from "../DropdownComponent";
-import {selectSchool} from "../../slices/SchoolSlice";
+import { selectSchool } from "../../slices/SchoolSlice";
 import SchoolList from "./SchoolList";
-import { division } from '../../constants/Constants';
+import { division } from "../../constants/Constants";
 
 function SchoolOutput({ totalCases, fallbackText }) {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredSchools, setFilteredSchools] = useState([]);
+  const [selectedDivision, setSelectedDivision] = useState("");
 
-  const [searchQuery, setSearchQuery] = useState('');
   const schools = useSelector(selectSchool); // Accessing expenses state from Redux store
 
-  const filterSchool = schools? (schools.filter(
-      (item) =>
-          item.school?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          (item.address && item.address.toLowerCase().includes(searchQuery.toLowerCase()))
-  )):[];
+  useEffect(() => {
+    // Function to filter preSchool based on searchQuery and selectedDivision
+    const filterSchools = () => {
+      setFilteredSchools(
+        schools.filter(
+          (item) =>
+            item.schools?.toLowerCase().includes(searchQuery.toLowerCase()) &&
+            (selectedDivision === "" ||
+              item.division.value === selectedDivision)
+        )
+      );
+    };
+
+    filterSchools(); // Initial filter
+
+    // Add event listener for changes in searchQuery and selectedDivision
+    const unsubscribe = () => {
+      filterSchools();
+    };
+
+    return unsubscribe;
+  }, [schools, selectedDivision, searchQuery]);
+
   let content = "";
-  if (filterSchool.length > 0) {
-    content = <SchoolList preSchoolDetails={filterSchool} />;
-  }else{
+  if (filteredSchools.length > 0) {
+    content = <SchoolList preSchoolDetails={filteredSchools} />;
+  } else {
     content = <Text style={styles.infoText}>{fallbackText}</Text>;
   }
-  function dropdownChangedHandler(inputIdentifier, enteredValue) {
-    // setInputs((curInputs) => {
-    // });
-  }
-  return (
-      <View style={styles.container}>
 
-        <View style={styles.searchbar}>
-          <Searchbar
-              placeholder="Search"
-              onChangeText={(text) => setSearchQuery(text)}
-              value={searchQuery}
+  function dropdownChangedHandler(inputIdentifier, enteredValue) {
+    setSelectedDivision(enteredValue.value);
+  }
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.searchbar}>
+        <Searchbar
+          placeholder="Search"
+          onChangeText={(text) => setSearchQuery(text)}
+          value={searchQuery}
+        />
+        <View style={styles.inputsRow}>
+          <DropdownComponent
+            label={"Division"}
+            data={division}
+            textInputConfig={{
+              onChange: dropdownChangedHandler.bind(this, "division"),
+              value: selectedDivision,
+            }}
           />
-          <View style={styles.inputsRow}>
-            <DropdownComponent
-                label={"Division"}
-                data={division}
-                // textInputConfig={{
-                //   onChange: dropdownChangedHandler.bind(this, 'division'),
-                //   // value: inputs.division.value,
-                // }}
-            />
-          </View>
         </View>
-        {content}
       </View>
+      {content}
+    </View>
   );
 }
 
@@ -63,18 +83,18 @@ const styles = StyleSheet.create({
     paddingBottom: 0,
     backgroundColor: GlobalStyles.colors.primary700,
   },
-  searchbar:{
+  searchbar: {
     marginVertical: 8,
   },
   infoText: {
-    color: 'black',
+    color: "black",
     fontSize: 16,
-    textAlign: 'center',
+    textAlign: "center",
     marginTop: 32,
   },
   inputsRow: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
+    flexDirection: "row",
+    justifyContent: "flex-end",
     marginVertical: 8,
   },
   maintext: {
@@ -84,5 +104,5 @@ const styles = StyleSheet.create({
   },
   textwrap: {
     marginBottom: 6,
-  }
+  },
 });

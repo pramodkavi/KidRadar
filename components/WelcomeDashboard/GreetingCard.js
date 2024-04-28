@@ -36,10 +36,19 @@ function GreetingCard() {
         <Button
           mode="text"
           onPress={() => {
-            navigation.navigate("Institutes");
+            navigation.navigate("Pathway Hub");
           }}
         >
           Trainning Centers
+        </Button>
+
+        <Button
+          mode="text"
+          onPress={() => {
+            navigation.navigate("Emergency Contact");
+          }}
+        >
+          Emergency Contact
         </Button>
       </View>
     </Card>

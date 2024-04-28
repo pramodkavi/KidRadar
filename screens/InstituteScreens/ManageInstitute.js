@@ -1,23 +1,21 @@
-import {useContext, useLayoutEffect, useState} from 'react';
-import { StyleSheet, View } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux'; // Importing Redux hooks
-import {
-  deletePreSchool, storeInstitute,
-  storePreSchool,
-  updateCase, updateInstitut
-} from '../../util/http';
-import LoadingOverlay from "../../components/UI/LoadingOverlay";
-import ErrorOverlay from "../../components/UI/ErrorOverlay";
-import IconButton from '../../components/UI/IconButton';
-import {AuthContext} from "../../store/auth-context";
+import { useContext, useLayoutEffect, useState } from "react";
+import { StyleSheet, View } from "react-native";
+import { useDispatch, useSelector } from "react-redux"; // Importing Redux hooks
 import InstituteForm from "../../components/ManageInstituteDetails/InstituteForm";
+import ErrorOverlay from "../../components/UI/ErrorOverlay";
+import LoadingOverlay from "../../components/UI/LoadingOverlay";
 import {
   addInstitute,
   deleteInstitute,
   selectInstitute,
-  setInstitute,
-  updateInstitute
+  updateInstitute,
 } from "../../slices/InstituteSlice"; // Importing Redux actions
+import { AuthContext } from "../../store/auth-context";
+import {
+  deletePreSchool,
+  storeInstitute,
+  updateInstitut,
+} from "../../util/http";
 
 function ManageInstitute({ route, navigation }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -28,24 +26,25 @@ function ManageInstitute({ route, navigation }) {
   const dispatch = useDispatch(); // Redux hook to dispatch actions
   const editedInstituteId = route.params?.instituteId;
   const isEditing = !!editedInstituteId;
-console.log("editedInstituteId",editedInstituteId)
+  
   const selectedInstitute = institutes.find(
-      (institute) => institute.id === editedInstituteId
+    (institute) => institute.id === editedInstituteId
   );
   useLayoutEffect(() => {
     navigation.setOptions({
-      title: isEditing ? 'Edit Institute Details' : 'Add Institute Details',
+      title: isEditing ? "Edit Pathway Hub Details" : "Add Pathway Hub Details",
     });
   }, [navigation, isEditing]);
 
-  async function deleteDetailsHandler(){
-    navigation.navigate('InstituteOverview');
-    setIsSubmitting(true);
+  async function deleteDetailsHandler() {
     try {
-      await deletePreSchool(editedInstituteId);
+      await deleteInstitute(editedInstituteId);
       dispatch(deleteInstitute(editedInstituteId)); // Dispatching deleteCase action
+
+      navigation.navigate("Pathway Hub Overview");
+      setIsSubmitting(true);
     } catch (error) {
-      setError('Could not delete Institute - please try again later!');
+      setError("Could not delete Pathway Hub - please try again later!");
       setIsSubmitting(false);
     }
   }
@@ -55,22 +54,24 @@ console.log("editedInstituteId",editedInstituteId)
   }
 
   async function confirmHandler(instituteData) {
-    instituteData.uid=authCtx.uId;
+    instituteData.uid = authCtx.uId;
     setIsSubmitting(true);
+
     try {
       if (isEditing) {
-        dispatch(updateInstitute({ id: editedInstituteId, data: instituteData })); // Dispatching updateCase action
-        console.log("////////editedInstitute");
-        await updateInstitut(editedInstituteId, instituteData)
+        dispatch(
+          updateInstitute({ id: editedInstituteId, data: instituteData })
+        ); // Dispatching updateCase action
+        await updateInstitut(editedInstituteId, instituteData);
       } else {
         const id = await storeInstitute(instituteData);
         dispatch(addInstitute({ ...instituteData, id: id }));
       }
       navigation.goBack();
     } catch (error) {
-        console.log("error",error);
-        setError('Could not save data - please try again later!');
-        setIsSubmitting(false);
+      console.error(error);
+      setError("Could not save data - please try again later!");
+      setIsSubmitting(false);
     }
   }
 
@@ -83,24 +84,15 @@ console.log("editedInstituteId",editedInstituteId)
   }
 
   return (
-      <View style={styles.container}>
-        <InstituteForm
-            submitButtonLabel={isEditing ? 'Update' : 'Add'}
-            onSubmit={confirmHandler}
-            onCancel={cancelHandler}
-            defaultValues={selectedInstitute}
-        />
-        {isEditing && (
-            <View style={styles.deleteContainer}>
-              <IconButton
-                  icon="trash"
-                  color="red" // Adjust color here as needed
-                  size={36}
-                  onPress={deleteDetailsHandler}
-              />
-            </View>
-        )}
-      </View>
+    <View style={styles.container}>
+      <InstituteForm
+        submitButtonLabel={isEditing ? "Update" : "Add"}
+        onSubmit={confirmHandler}
+        onCancel={cancelHandler}
+        defaultValues={selectedInstitute}
+        deleteDetailsHandler={deleteDetailsHandler}
+      />
+    </View>
   );
 }
 
@@ -110,13 +102,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 24,
-    backgroundColor: '#fff', // Adjust background color here as needed
+    backgroundColor: "#fff", // Adjust background color here as needed
   },
   deleteContainer: {
     marginTop: 16,
     paddingTop: 8,
     borderTopWidth: 2,
-    borderTopColor: '#ccc', // Adjust border color here as needed
-    alignItems: 'center',
+    borderTopColor: "#ccc", // Adjust border color here as needed
+    alignItems: "center",
   },
 });

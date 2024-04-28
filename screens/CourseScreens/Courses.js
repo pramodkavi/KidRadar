@@ -12,7 +12,6 @@ import { selectGeneralId } from '../../slices/GeneralIdSlice';
 
 
 function Courses() {
-    console.log("I am in Course")
     const navigation = useNavigation();
     const dispatch = useDispatch(); // Redux hook to dispatch actions
     const courses = useSelector(selectCourse); // Accessing cases state from Redux store

@@ -1,18 +1,21 @@
-import {useContext, useLayoutEffect, useState} from 'react';
-import { StyleSheet, View } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux'; // Importing Redux hooks
+import { useContext, useLayoutEffect, useState } from "react";
+import { StyleSheet, View } from "react-native";
+import { useDispatch, useSelector } from "react-redux"; // Importing Redux hooks
+import PreSchoolForm from "../../components/ManagePreSchoolDetails/PreSchoolForm";
+import ErrorOverlay from "../../components/UI/ErrorOverlay";
+import LoadingOverlay from "../../components/UI/LoadingOverlay";
+import {
+  addPreSchool,
+  deletepreSchool,
+  selectPreSchool,
+  updatePreSchool,
+} from "../../slices/PreSchoolSlice";
+import { AuthContext } from "../../store/auth-context"; // Importing Redux actions
 import {
   deletePreSchool,
   storePreSchool,
-  updateCase,
-  updatePreschool
-} from '../../util/http';
-import LoadingOverlay from "../../components/UI/LoadingOverlay";
-import ErrorOverlay from "../../components/UI/ErrorOverlay";
-import IconButton from '../../components/UI/IconButton';
-import PreSchoolForm from "../../components/ManagePreSchoolDetails/PreSchoolForm";
-import {addPreSchool, selectPreSchool,deletepreSchool,updatePreSchool} from "../../slices/PreSchoolSlice";
-import {AuthContext} from "../../store/auth-context"; // Importing Redux actions
+  updatePreschool,
+} from "../../util/http";
 
 function ManagePreSchoolDetails({ route, navigation }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -24,24 +27,22 @@ function ManagePreSchoolDetails({ route, navigation }) {
   const editedCaseId = route.params?.dataId;
   const isEditing = !!editedCaseId;
 
-  const selectedCase = preSchool.find(
-      (expense) => expense.id === editedCaseId
-  );
+  const selectedCase = preSchool.find((expense) => expense.id === editedCaseId);
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      title: isEditing ? 'Edit PreSchool Details' : 'Add PreSchool Details',
+      title: isEditing ? "Edit PreSchool Details" : "Add PreSchool Details",
     });
   }, [navigation, isEditing]);
 
-  async function deleteDetailsHandler(){
+  async function deleteDetailsHandler() {
     setIsSubmitting(true);
-    navigation.navigate('School PreSchoool Overview');
+    navigation.navigate("School PreSchoool Overview");
     try {
       await deletePreSchool(editedCaseId);
       dispatch(deletepreSchool(editedCaseId)); // Dispatching deleteCase action
     } catch (error) {
-      setError('Could not delete expense - please try again later!');
+      setError("Could not delete expense - please try again later!");
       setIsSubmitting(false);
     }
   }
@@ -51,10 +52,10 @@ function ManagePreSchoolDetails({ route, navigation }) {
   }
 
   async function confirmHandler(preSchoolData) {
-    preSchoolData.uid=authCtx.uId;
+    preSchoolData.uid = authCtx.uId;
     setIsSubmitting(true);
     try {
-      console.log("/////////////////////////preSchoolData in EDIT",preSchoolData)
+
       if (isEditing) {
         dispatch(updatePreSchool({ id: editedCaseId, data: preSchoolData })); // Dispatching updateCase action
         await updatePreschool(editedCaseId, preSchoolData);
@@ -64,7 +65,7 @@ function ManagePreSchoolDetails({ route, navigation }) {
       }
       navigation.goBack();
     } catch (error) {
-      setError('Could not save data - please try again later!');
+      setError("Could not save data - please try again later!");
       setIsSubmitting(false);
     }
   }
@@ -78,24 +79,15 @@ function ManagePreSchoolDetails({ route, navigation }) {
   }
 
   return (
-      <View style={styles.container}>
-        <PreSchoolForm
-            submitButtonLabel={isEditing ? 'Update' : 'Add'}
-            onSubmit={confirmHandler}
-            onCancel={cancelHandler}
-            defaultValues={selectedCase}
-        />
-        {isEditing && (
-            <View style={styles.deleteContainer}>
-              <IconButton
-                  icon="trash"
-                  color="red" // Adjust color here as needed
-                  size={36}
-                  onPress={deleteDetailsHandler}
-              />
-            </View>
-        )}
-      </View>
+    <View style={styles.container}>
+      <PreSchoolForm
+        submitButtonLabel={isEditing ? "Update" : "Add"}
+        onSubmit={confirmHandler}
+        onCancel={cancelHandler}
+        defaultValues={selectedCase}
+        deleteDetailsHandler={deleteDetailsHandler}
+      />
+    </View>
   );
 }
 
@@ -105,13 +97,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 24,
-    backgroundColor: '#fff', // Adjust background color here as needed
+    backgroundColor: "#fff", // Adjust background color here as needed
   },
   deleteContainer: {
     marginTop: 16,
     paddingTop: 8,
     borderTopWidth: 2,
-    borderTopColor: '#ccc', // Adjust border color here as needed
-    alignItems: 'center',
+    borderTopColor: "#ccc", // Adjust border color here as needed
+    alignItems: "center",
   },
 });

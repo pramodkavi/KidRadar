@@ -47,8 +47,6 @@ function ManageSchoolDetails({ route, navigation }) {
 
   async function confirmHandler(schoolData) {
     schoolData.uid=authCtx.uId;
-    console.log("////////////////authCtx.uId");
-    console.log("////////////////schhuttaoolData in Manage",schoolData);
     setIsSubmitting(true);
     try {
       if (isEditing) {

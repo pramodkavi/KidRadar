@@ -16,7 +16,6 @@ function PreSchoolCasesView({ route, navigation }) {
       (data) => data.id === id
   );
 
-  console.log("//////////////////////selected case",selectedCase)
   useLayoutEffect(() => {
     navigation.setOptions({
       title:  'Pre-School Child Case Details',

@@ -32,7 +32,7 @@ function ManageChildCases({ route, navigation }) {
   async function deleteCaseHandler() {
     setIsSubmitting(true);
     try {
-      navigation.navigate('ChildCases')
+      navigation.navigate('Child Cases')
       await deleteCase(editedCaseId);
       dispatch(deleteCaseAction(editedCaseId)); // Dispatching deleteCase action
     } catch (error) {
@@ -46,7 +46,6 @@ function ManageChildCases({ route, navigation }) {
   }
 
   async function confirmHandler(caseData) {
-    console.log("////////////////////////// caseData",caseData)
     caseData.uid=authCtx.uId;
     setIsSubmitting(true);
     try {
@@ -81,17 +80,8 @@ function ManageChildCases({ route, navigation }) {
               onSubmit={confirmHandler}
               onCancel={cancelHandler}
               defaultValues={selectedCase}
+              deleteDetailsHandler={deleteCaseHandler}
           />
-          {isEditing && (
-              <View style={styles.deleteContainer}>
-                <IconButton
-                    icon="trash"
-                    color="red" // Adjust color here as needed
-                    size={36}
-                    onPress={deleteCaseHandler}
-                />
-              </View>
-          )}
         </ScrollView>
       </View>
       

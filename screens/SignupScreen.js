@@ -13,7 +13,6 @@ function SignupScreen() {
     setIsAuthenticating(true);
     try {
       const res = await createUser(email, password);
-      console.log("/////////////res",res)
       authCtx.authenticate(res.token);
       authCtx.setUID(res.localId?res.localId:"pIvQlCCo0kWrIxYIouvx38romT63");
     }  catch (error) {

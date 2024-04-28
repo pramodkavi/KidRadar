@@ -62,7 +62,7 @@ export default function TrainingParticipationStatistics() {
     return (
         <>
             <View style={styles.chartHeader}>
-                <Text style={styles.headerTxt}>Training Participation Statistics</Text>
+                <Text style={styles.headerTxt}>Training Statistics</Text>
                 <Button mode="outlined" >
                     Load more
                 </Button>
@@ -83,6 +83,7 @@ export default function TrainingParticipationStatistics() {
 const styles = StyleSheet.create({
     chartHeader: {
         marginTop:8,
+        marginBottom: 15,
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',

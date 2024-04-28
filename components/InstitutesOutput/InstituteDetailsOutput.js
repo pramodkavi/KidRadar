@@ -1,53 +1,82 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { GlobalStyles } from '../../constants/styles';
-import InstituteList from './InstituteList';
-import { Searchbar } from 'react-native-paper';
-import { useSelector } from 'react-redux';
+import React, { useState, useEffect } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { GlobalStyles } from "../../constants/styles";
+import InstituteList from "./InstituteList";
+import { Searchbar } from "react-native-paper";
+import { useSelector } from "react-redux";
 import DropdownComponent from "../DropdownComponent";
-import {selectInstitute} from "../../slices/InstituteSlice";
-import { division } from '../../constants/Constants';
+import { selectInstitute } from "../../slices/InstituteSlice";
 
 function InstituteDetailsOutput({ totalCases, fallbackText }) {
+  const [selectedDivision, setSelectedDivision] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredInstitutes, setFilteredInstitutes] = useState([]);
 
-  const [searchQuery, setSearchQuery] = useState('');
+  const instituteTypes = [
+    { label: "Institute", value: "1" },
+    { label: "Academic Center", value: "2" },
+    { label: "Carrier Guidance Opportunity", value: "3" },
+  ];
+
   const institutes = useSelector(selectInstitute);
-  const filteredCases = institutes.filter(
-      (item) =>
-          item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          (item.address && item.address.toLowerCase().includes(searchQuery.toLowerCase()))
-  );
+
+  useEffect(() => {
+    // Function to filter preSchool based on searchQuery and selectedDivision
+    const filterInstitutes = () => {
+      setFilteredInstitutes(
+        institutes.filter(
+          (item) =>
+            item.name?.toLowerCase().includes(searchQuery.toLowerCase()) &&
+            (selectedDivision === "" ||
+              item.type?.value === selectedDivision)
+        )
+      );
+    };
+
+    filterInstitutes(); // Initial filter
+
+    // Add event listener for changes in searchQuery and selectedDivision
+    const unsubscribe = () => {
+      filterInstitutes();
+    };
+
+    return unsubscribe;
+  }, [institutes, selectedDivision, searchQuery]);
+
   let content = <Text style={styles.infoText}>{fallbackText}</Text>;
-  if (filteredCases.length > 0) {
-    content = <InstituteList institutes={filteredCases} />;
+  if (filteredInstitutes.length > 0) {
+    content = <InstituteList institutes={filteredInstitutes} />;
   }
   function dropdownChangedHandler(inputIdentifier, enteredValue) {
-    setInputs((curInputs) => {
-    });
+    setInputs((curInputs) => {});
+  }
+
+  function dropdownDivisionChangedHandler(inputIdentifier, enteredValue) {
+    setSelectedDivision(enteredValue.value);
   }
 
   return (
-      <View style={styles.container}>
-        <View style={styles.searchbar}>
-          <Searchbar
-              placeholder="Search"
-              onChangeText={(text) => setSearchQuery(text)}
-              value={searchQuery}
+    <View style={styles.container}>
+      <View style={styles.searchbar}>
+        <Searchbar
+          placeholder="Search"
+          onChangeText={(text) => setSearchQuery(text)}
+          value={searchQuery}
+        />
+        <View style={styles.inputsRow}>
+          <DropdownComponent
+            label={"Institute Type"}
+            data={instituteTypes}
+            textInputConfig={{
+              onChange: dropdownDivisionChangedHandler.bind(this, "division"),
+              value: selectedDivision,
+            }}
           />
-          <View style={styles.inputsRow}>
-            <DropdownComponent
-                label={"Division"}
-                data={division}
-                // textInputConfig={{
-                //   onChange: dropdownChangedHandler.bind(this, 'division'),
-                //   // value: inputs.division.value,
-                // }}
-            />
-            {/*<SelectCountryScreen/>*/}
-          </View>
+          {/*<SelectCountryScreen/>*/}
         </View>
-        {content}
       </View>
+      {content}
+    </View>
   );
 }
 
@@ -61,18 +90,18 @@ const styles = StyleSheet.create({
     paddingBottom: 0,
     backgroundColor: GlobalStyles.colors.primary700,
   },
-  searchbar:{
+  searchbar: {
     marginVertical: 8,
   },
   infoText: {
-    color: 'white',
+    color: "white",
     fontSize: 16,
-    textAlign: 'center',
+    textAlign: "center",
     marginTop: 32,
   },
   inputsRow: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
+    flexDirection: "row",
+    justifyContent: "flex-end",
     marginVertical: 8,
   },
   maintext: {
@@ -82,5 +111,5 @@ const styles = StyleSheet.create({
   },
   textwrap: {
     marginBottom: 6,
-  }
+  },
 });

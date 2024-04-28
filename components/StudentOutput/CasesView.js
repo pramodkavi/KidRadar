@@ -16,7 +16,6 @@ function CasesView({ route, navigation }) {
       (data) => data.id === id
   );
 
-  console.log("//////////////////////selected case",selectedCase)
   useLayoutEffect(() => {
     navigation.setOptions({
       title:  'Child Case Details',

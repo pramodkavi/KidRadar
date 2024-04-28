@@ -18,7 +18,6 @@ function SchoolView({ route, navigation }) {
       (data) => data.id === id
   );
 
-  console.log("//////////////////////selected case",selectedData)
   useLayoutEffect(() => {
     navigation.setOptions({
       title:  'School Details',

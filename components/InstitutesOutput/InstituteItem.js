@@ -12,7 +12,7 @@ function InstituteItem({ id,name, detailedName }) {
   // const label = caseType.label;
   function casePressHandler() {
     dispatch(setGeneralId(id))
-    navigation.navigate('Institute Overview', {
+    navigation.navigate('Pathway Hub Overview', {
       instituteId: id
     });
   }
@@ -25,9 +25,9 @@ function InstituteItem({ id,name, detailedName }) {
       <View style={styles.caseItem}>
         <View>
           <Text style={[styles.textBase, styles.description]}>
-            {name}
+            {name ?? "-"}
           </Text>
-          <Text style={styles.textBase}>{detailedName}</Text>
+          <Text style={styles.textBase}>{detailedName ?? "-"}</Text>
         </View>
         {/*<View style={styles.amountContainer}>*/}
         {/*  <Text style={styles.amount}>{caseType.label}</Text>*/}

@@ -35,14 +35,14 @@ function CourseDetailsOutput({ totalCases, fallbackText }) {
               value={searchQuery}
           />
           <View style={styles.inputsRow}>
-            <DropdownComponent
+            {/* <DropdownComponent
                 label={"Division"}
                 data={division}
                 // textInputConfig={{
                 //   onChange: dropdownChangedHandler.bind(this, 'division'),
                 //   // value: inputs.division.value,
                 // }}
-            />
+            /> */}
             {/*<SelectCountryScreen/>*/}
           </View>
         </View>

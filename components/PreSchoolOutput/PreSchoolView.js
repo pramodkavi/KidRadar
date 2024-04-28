@@ -17,7 +17,6 @@ function PreSchoolView({ route, navigation }) {
       (data) => data.id === id
   );
 
-  console.log("//////////////////////selected case",selectedData)
   useLayoutEffect(() => {
     navigation.setOptions({
       title:  'Pre-School Details',
