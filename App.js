@@ -20,7 +20,6 @@ import PreSchoolCases from "./screens/PreSchoolStudentScreens/PreSchoolCases";
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import PreSchoolDetails from './screens/SchoolPreSchoolScreens/PreSchoolDetails';
 import ManageInstitute from './screens/InstituteScreens/ManageInstitute';
-import SchoolDetails from './screens/SchoolPreSchoolScreens/SchoolDetails';
 import ManageSchoolDetails from './screens/SchoolPreSchoolScreens/ManageSchoolDetails';
 import AuthContextProvider, {AuthContext} from "./store/auth-context";
 import {useContext} from "react";
@@ -42,6 +41,8 @@ import MapScreen from './screens/ChildCasesScreen/MapScreen';
 import WelcomeDashboard from './screens/WelcomeDashboard';
 import UserView from './components/ManageUsers/UserView';
 import ManageUserDetails from './components/ManageUsers/ManageUserDetails';
+import StudentDetails from './screens/StudentAssignment/StudentDetails';
+import SchoolDetails from "./screens/SchoolPreSchoolScreens/SchoolDetails";
 
 function ChildCasesOverview() {
     return (
@@ -108,6 +109,7 @@ function InstituteOverview() {
             })}
         >
             <Tab.Screen name="Course" component={Courses} />
+            <Tab.Screen name="Student Details" component={StudentDetails} />
             <Tab.Screen name="Institute Details" component={InstituteView} />
         </Tab.Navigator>
     );

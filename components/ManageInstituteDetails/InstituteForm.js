@@ -112,7 +112,7 @@ function InstituteForm({ submitButtonLabel, onCancel, onSubmit, defaultValues })
   return (
     <ScrollView>
       <View>
-        <Text style={styles.title}>Add School Details</Text>
+        <Text style={styles.title}>Add Institute Details</Text>
         <Input
             label="Name"
             invalid={!inputs.name.isValid}

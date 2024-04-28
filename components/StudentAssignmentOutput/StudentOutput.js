@@ -1,47 +1,52 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { GlobalStyles } from '../../constants/styles';
-import CourseList from './CourseList';
 import { Searchbar } from 'react-native-paper';
 import { useSelector } from 'react-redux';
-import DropdownComponent from "../DropdownComponent";
-import { selectCourse } from '../../slices/CourseSlice';
-import { division } from '../../constants/Constants';
+import { GlobalStyles } from '../../constants/styles';
+import {selectCase} from "../../slices/CaseSlice";
+import { selectInstitute } from '../../slices/InstituteSlice';
+import {selectGeneralId} from "../../slices/GeneralIdSlice";
+import StudentList from "./StudentList";
 
-function CourseDetailsOutput({ totalCases, fallbackText }) {
+function StudentOutput({ totalCases, fallbackText }) {
 
   const [searchQuery, setSearchQuery] = useState('');
-  const courses = useSelector(selectCourse);
-  const filteredCourses = courses.filter(
-      (item) =>
-          item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          (item.address && item.address.toLowerCase().includes(searchQuery.toLowerCase()))
-  );
-  let content = <Text style={styles.infoText}>{fallbackText}</Text>;
-  if (filteredCourses.length > 0) {
-    content = <CourseList institutes={filteredCourses} />;
-  }
-  function dropdownChangedHandler(inputIdentifier, enteredValue) {
-    setInputs((curInputs) => {
-    });
+  const generalId = useSelector(selectGeneralId)
+  const institute = useSelector(selectInstitute); // Accessing expenses state from Redux store
+  const filterinstitute = institute? (institute.filter(
+    (item) =>
+        item.id ===generalId
+  )):[];
+
+  const cases = useSelector(selectCase); // Students
+  console.log("//////////////////////////// cases",cases)
+
+  const filtercases = cases.filter(caseObj => caseObj.institute && caseObj.institute.label === filterinstitute[0].name);
+  console.log("//////////////////////////// filtercases",filtercases)
+
+  let content = "";
+  if (filtercases.length > 0) {
+    content = <StudentList studentDetails={filtercases} />;
+  }else{
+    content = <Text style={styles.infoText}>{fallbackText}</Text>;
   }
 
   return (
       <View style={styles.container}>
+
         <View style={styles.searchbar}>
           <Searchbar
               placeholder="Search"
               onChangeText={(text) => setSearchQuery(text)}
               value={searchQuery}
           />
-          
         </View>
         {content}
       </View>
   );
 }
 
-export default CourseDetailsOutput;
+export default StudentOutput;
 
 const styles = StyleSheet.create({
   container: {

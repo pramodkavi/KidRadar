@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import {useContext, useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux'; // Importing Redux hooks
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import IconButton from '../../components/UI/IconButton';
@@ -8,13 +8,27 @@ import {selectCase, setCase as setCaseAction} from '../../slices/CaseSlice'; // 
 import { GlobalStyles } from '../../constants/styles';
 import InstituteDetailsOutput from "../../components/InstitutesOutput/InstituteDetailsOutput";
 import {selectInstitute, setInstitute} from "../../slices/InstituteSlice";
+import {AuthContext} from "../../store/auth-context";
 
 
 function Institutes() {
+    const authCtx = useContext(AuthContext);
     const dispatch = useDispatch(); // Redux hook to dispatch actions
     const navigation = useNavigation();
     const institutes = useSelector(selectInstitute); // Accessing cases state from Redux store
-    
+    useEffect(() => {
+        async function getCases() {
+            try {
+                const uId = authCtx.uId;
+                const casesFetch = await fetchCases(uId);
+                dispatch(setCaseAction(casesFetch)); // Dispatching setCase action
+            } catch (error) {
+                console.error('Could not fetch expenses:', error);
+            }
+        }
+
+        getCases();
+    }, [dispatch]); 
 
     return (
         <>

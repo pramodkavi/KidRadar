@@ -7,22 +7,27 @@ import { DataTable } from 'react-native-paper';
 import { getFormattedDate } from '../../util/date';
 import {selectPreSchool} from "../../slices/PreSchoolSlice";
 import {selectSchool} from "../../slices/SchoolSlice";
-import { selectInstitute } from '../../slices/InstituteSlice';
-import { selectGeneralId } from '../../slices/GeneralIdSlice';
 
-function InstituteView({ route, navigation }) {
+function SchoolView({ route, navigation }) {
   const dispatch = useDispatch(); // Redux hook to dispatch actions
-  const cases = useSelector(selectInstitute); // Accessing expenses state from Redux store
+  const cases = useSelector(selectSchool); // Accessing expenses state from Redux store
 
-  const id = useSelector(selectGeneralId); // Accessing expenses state from Redux store
+  const id = route.params?.dataId;
+
   const selectedData = cases.find(
       (data) => data.id === id
   );
 
+  console.log("//////////////////////selected case",selectedData)
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      title:  'School Details',
+    });
+  }, [navigation]);
 
   function casePressHandler() {
-    navigation.navigate('ManageInstitute', {
-      instituteId: id
+    navigation.navigate('ManageSchoolDetails', {
+      dataId: id
     });
 
   }
@@ -33,30 +38,47 @@ function InstituteView({ route, navigation }) {
         <Text style={styles.maintext}>School Details</Text>
       </View>
       <View style={{ paddingTop: 20}}>
-        <DataTable.Row>
-            <DataTable.Cell>Name</DataTable.Cell>
-            <DataTable.Cell>{selectedData.name}</DataTable.Cell>
+      <DataTable.Row>
+          <DataTable.Cell>School</DataTable.Cell>
+          <DataTable.Cell>{selectedData.school}</DataTable.Cell>
+      </DataTable.Row>
+      <DataTable.Row>
+        <DataTable.Cell>Contact Number</DataTable.Cell>
+        <DataTable.Cell>{selectedData.contactNo}</DataTable.Cell>
+      </DataTable.Row>
+      <DataTable.Row>
+          <DataTable.Cell>Date</DataTable.Cell>
+          <DataTable.Cell>{getFormattedDate(selectedData.date)}</DataTable.Cell>
+      </DataTable.Row>
+      <DataTable.Row>
+          <DataTable.Cell>Description</DataTable.Cell>
+          <DataTable.Cell>{selectedData.description}</DataTable.Cell>
+      </DataTable.Row>
+      <DataTable.Row>
+          <DataTable.Cell>Division</DataTable.Cell>
+          <DataTable.Cell>{selectedData.division.label}</DataTable.Cell>
+      </DataTable.Row>
+      
+        {/* <DataTable.Row>
+            <DataTable.Cell>Pre School</DataTable.Cell>
+            <DataTable.Cell>{selectedData.preSchool}</DataTable.Cell>
         </DataTable.Row>
           <DataTable.Row>
             <DataTable.Cell>Contact Number</DataTable.Cell>
             <DataTable.Cell>{selectedData.contactNo}</DataTable.Cell>
         </DataTable.Row>
         <DataTable.Row>
+            <DataTable.Cell>Date</DataTable.Cell>
+            <DataTable.Cell>{getFormattedDate(selectedData.date)}</DataTable.Cell>
+        </DataTable.Row>
+        <DataTable.Row>
             <DataTable.Cell>Description</DataTable.Cell>
             <DataTable.Cell>{selectedData.description}</DataTable.Cell>
         </DataTable.Row>
         <DataTable.Row>
-            <DataTable.Cell>Detailed Name</DataTable.Cell>
-            <DataTable.Cell>{selectedData.detailedName}</DataTable.Cell>
-        </DataTable.Row>
-        <DataTable.Row>
-            <DataTable.Cell>Email</DataTable.Cell>
-            <DataTable.Cell>{selectedData.email}</DataTable.Cell>
-        </DataTable.Row>
-        <DataTable.Row>
-            <DataTable.Cell>Max NVQ</DataTable.Cell>
-            <DataTable.Cell>{selectedData.maxNVQ}</DataTable.Cell>
-        </DataTable.Row>
+            <DataTable.Cell>Division</DataTable.Cell>
+            <DataTable.Cell>{selectedData.division.label}</DataTable.Cell>
+        </DataTable.Row> */}
       </View>
       <TouchableOpacity style={styles.addBtn}>
           <IconButton
@@ -71,7 +93,7 @@ function InstituteView({ route, navigation }) {
   );
 }
 
-export default InstituteView;
+export default SchoolView;
 
 const styles = StyleSheet.create({
   container: {

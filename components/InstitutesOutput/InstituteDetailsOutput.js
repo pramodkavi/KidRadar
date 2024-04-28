@@ -34,17 +34,6 @@ function InstituteDetailsOutput({ totalCases, fallbackText }) {
               onChangeText={(text) => setSearchQuery(text)}
               value={searchQuery}
           />
-          <View style={styles.inputsRow}>
-            <DropdownComponent
-                label={"Division"}
-                data={division}
-                // textInputConfig={{
-                //   onChange: dropdownChangedHandler.bind(this, 'division'),
-                //   // value: inputs.division.value,
-                // }}
-            />
-            {/*<SelectCountryScreen/>*/}
-          </View>
         </View>
         {content}
       </View>

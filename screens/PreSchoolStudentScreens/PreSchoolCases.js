@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect ,useContext} from 'react';
 import { useDispatch, useSelector } from 'react-redux'; // Importing Redux hooks
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import IconButton from '../../components/UI/IconButton';
@@ -8,18 +8,21 @@ import {selectPreSchoolCase, setPreSchoolCase} from '../../slices/PreSchoolCases
 import { GlobalStyles } from '../../constants/styles';
 import PreSchoolCasesOutput from "../../components/PreSchoolCasesOutput/PreSchoolCasesOutput";
 import {setPreSchoolCasesCount} from "../../slices/PreSchoolCasesCountSlice";
+import {AuthContext} from "../../store/auth-context";
 
 function PreSchoolCases() {
     const dispatch = useDispatch(); // Redux hook to dispatch actions
     const navigation = useNavigation();
+    const authCtx = useContext(AuthContext);
     const preSchoolCasesCount = useSelector((state) => state.preSchoolCasesCount.preSchoolCasesCount);
 
     useEffect(() => {
         async function getCases() {
             try {
-                const preCasesFetch = await fetchPreSchoolCases();
+                const uId = authCtx.uId;
+                const preCasesFetch = await fetchPreSchoolCases(uId);
                 dispatch(setPreSchoolCase(preCasesFetch)); // Dispatching setCase action
-                 const preCasesCountFetch=await fetchPreSchoolCasesCount();
+                 const preCasesCountFetch=await fetchPreSchoolCasesCount(uId);
                  dispatch(setPreSchoolCasesCount(preCasesCountFetch)); // Dispatching setCase action
             } catch (error) {
                 console.error('Could not fetch Pre School Cases:', error);

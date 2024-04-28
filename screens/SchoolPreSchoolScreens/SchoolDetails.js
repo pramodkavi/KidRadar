@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import {useContext, useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux'; // Importing Redux hooks
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import IconButton from '../../components/UI/IconButton';
@@ -11,16 +11,19 @@ import {setPreSchoolCasesCount} from "../../slices/PreSchoolCasesCountSlice";
 import {setPreSchool} from "../../slices/PreSchoolSlice";
 import SchoolOutput from "../../components/SchoolOutput/SchoolOutput";
 import {setSchools} from "../../slices/SchoolSlice";
+import {AuthContext} from "../../store/auth-context";
 
 function SchoolDetails() {
     const dispatch = useDispatch(); // Redux hook to dispatch actions
     const navigation = useNavigation();
+    const authCtx = useContext(AuthContext);
     const preSchoolCasesCount = useSelector((state) => state.preSchoolCasesCount.preSchoolCasesCount);
 
     useEffect(() => {
         async function getPreSchool() {
             try {
-                const fetchPreSchoolDetails = await fetchSchools();
+                const uId = authCtx.uId;
+                const fetchPreSchoolDetails = await fetchSchools(uId);
                 dispatch(setSchools(fetchPreSchoolDetails));
             } catch (error) {
                 console.error('Could not fetch preschool details:', error);

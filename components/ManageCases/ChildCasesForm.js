@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {KeyboardAvoidingView, ScrollView, StyleSheet, Text, View} from 'react-native';
 import Input from './Input';
 import Button from '../UI/Button';
@@ -9,16 +9,18 @@ import {useNavigation} from "@react-navigation/native";
 import { useDispatch, useSelector } from 'react-redux';
 import { selectInstitute, setInstitute } from '../../slices/InstituteSlice';
 import { fetchInstitute } from '../../util/http';
+import {AuthContext} from "../../store/auth-context";
 
 function ChildCasesForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }) {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [selected, setSelected] = React.useState("");
-
+  const authCtx = useContext(AuthContext);
   useEffect(() => {
     async function getCases() {
         try {
-            const institutesFetch = await fetchInstitute();
+          const uId = authCtx.uId;
+            const institutesFetch = await fetchInstitute(uId);
             dispatch(setInstitute(institutesFetch)); // Dispatching setCase action
         } catch (error) {
             console.error('Could not fetch Institute:', error);

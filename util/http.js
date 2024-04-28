@@ -3,7 +3,7 @@ import {StackActions as cases} from "@react-navigation/routers/src";
 import { useContext } from 'react';
 import { AuthContext } from '../store/auth-context';
 
-const API = "http://192.168.8.101:8080";
+const API = "http://192.168.8.102:8080";
 
 function getUid(){
   const authCtx = useContext(AuthContext);
@@ -71,7 +71,7 @@ export async function storeCases(casesData) {
 }
 
 export async function fetchCases(uId) {
-  const uid = "UnZMmZop3EMFnW8Kb7caHdwNBAL2";
+  const uid = uId;
   const res = await axios.get(API+`/childcases/${uid}`,uid);
 
   const response = JSON.parse(res.request._response);
@@ -125,8 +125,8 @@ export async function storePreSchoolCasesCount(casesCountData) {
   return id;
 }
 
-export async function fetchPreSchoolCasesCount() {
-  const uid = "UnZMmZop3EMFnW8Kb7caHdwNBAL2";
+export async function fetchPreSchoolCasesCount(uId) {
+  const uid =uId;
   const res = await axios.get(API+`/preSchoolCasesCount/${uid}`,uid);
   const response = JSON.parse(res.request._response);
 
@@ -160,8 +160,8 @@ export async function storePreSchoolCases(casesData) {
   return id;
 }
 
-export async function fetchPreSchoolCases() {
-  const uid = "UnZMmZop3EMFnW8Kb7caHdwNBAL2";
+export async function fetchPreSchoolCases(uId) {
+  const uid = uId;
   const res = await axios.get(API+`/preSchoolCases/${uid}`,uid);
 
   const response = JSON.parse(res.request._response);
@@ -207,8 +207,8 @@ export async function storeSchool(schoolData) {
   return id;
 }
 
-export async function fetchSchools() {
-  const uid = "UnZMmZop3EMFnW8Kb7caHdwNBAL2";
+export async function fetchSchools(uId) {
+  const uid = uId;
   const res = await axios.get(API+`/schools/${uid}`,uid);
 
   const response = JSON.parse(res.request._response);
@@ -253,8 +253,8 @@ export async function storePreSchool(schoolData) {
   return id;
 }
 
-export async function fetchPreSchools() {
-  const uid = "UnZMmZop3EMFnW8Kb7caHdwNBAL2";
+export async function fetchPreSchools(uId) {
+  const uid = uId;
   const res = await axios.get(API+`/preSchools/${uid}`,uid);
   const response = JSON.parse(res.request._response);
 
@@ -299,8 +299,8 @@ export async function storeInstitute(instituteData) {
   return id;
 }
 
-export async function fetchInstitute() {
-  const uid = "UnZMmZop3EMFnW8Kb7caHdwNBAL2";
+export async function fetchInstitute(uId) {
+  const uid = uId;
   let res =null;
   try{
     res = await axios.get(API+`/institutes/${uid}`,uid);
@@ -350,7 +350,6 @@ export async function storeCourses(courseData) {
 }
 
 export async function fetchCourses(instituteId) {
-  // const instituteId = "UnZMmZop3EMFnW8Kb7caHdwNBAL2";
   console.log("///////////////////////// institute id",instituteId)
   let res= null;
   try{

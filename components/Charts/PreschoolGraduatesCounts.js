@@ -31,20 +31,22 @@ export function PreschoolGraduatesCounts(){
     const width = Dimensions.get('window').width
     const height = 220
     const preSchoolCasesCount = useSelector((state) => state.preSchoolCasesCount.preSchoolCasesCount);
-    if (preSchoolCasesCount==undefined){
-        preSchoolCasesCount = null;
-    }
+
     console.log("///////////////////////////// preSchoolCasesCount",preSchoolCasesCount)
-    const jaEla = preSchoolCasesCount.find(item => item.division.label === "Ja-Ela").graduatesCounts != undefined?
-    preSchoolCasesCount.find(item => item.division.label === "Ja-Ela").graduatesCounts: 0
-    ;
-    const negombo = preSchoolCasesCount.find(item => item.division.label === "Negombo").graduatesCounts!= undefined?
-    preSchoolCasesCount.find(item => item.division.label === "Negombo").graduatesCounts: 0
-    ;
-    const katana = preSchoolCasesCount.find(item => item.division.label === "Katana").graduatesCounts!= undefined?
-    preSchoolCasesCount.find(item => item.division.label === "Katana").graduatesCounts: 0
-    ;
-    console.log("///////////////////////// count divitions",jaEla,negombo,katana)
+    let jaEla = 0;let negombo = 0;let katana = 0; 
+
+    if(preSchoolCasesCount != []){
+         jaEla = preSchoolCasesCount.find(item => item.division.label === "Ja-Ela")?.graduatesCounts != undefined?
+        preSchoolCasesCount.find(item => item.division.label === "Ja-Ela")?.graduatesCounts: 0
+        ;
+         negombo = preSchoolCasesCount.find(item => item.division.label === "Negombo")?.graduatesCounts!= undefined?
+        preSchoolCasesCount.find(item => item.division.label === "Negombo")?.graduatesCounts: 0
+        ;
+         katana = preSchoolCasesCount.find(item => item.division.label === "Katana")?.graduatesCounts!= undefined?
+        preSchoolCasesCount.find(item => item.division.label === "Katana")?.graduatesCounts: 0
+        ;
+        console.log("///////////////////////// count divitions",jaEla,negombo,katana)
+    }
     const pieChartData = [
         { name: 'Ja-Ela', population: jaEla, color: '#CDBDFA', legendFontColor: '#7F7F7F', legendFontSize: 15 },
         { name: 'Negombo', population: negombo, color: '#4B3886', legendFontColor: '#7F7F7F', legendFontSize: 15 },
