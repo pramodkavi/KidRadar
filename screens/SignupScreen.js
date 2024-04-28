@@ -6,22 +6,26 @@ import {Alert} from "react-native";
 import {AuthContext} from "../store/auth-context";
 import { storeUser } from '../util/http';
 import { userRole } from '../constants/Constants';
+import { useSelector } from 'react-redux';
+import {useNavigation} from "@react-navigation/native";
 
 function SignupScreen() {
   const [isAuthenticating, setIsAuthenticating] = useState(false);
   const authCtx = useContext(AuthContext);
-
+  const navigation = useNavigation();
+  const user = useSelector(state => state.users.users);
   async function signupHandler({ email, password,name,phoneNumber,designation}) {
     setIsAuthenticating(true);
 
     try {
-      // const res = await createUser(email, password);
+      const res = await createUser(email, password);
       // console.log("/////////////res",res)
 
       let userData = { email, password,name,phoneNumber,designation}
-      // userData.uId = res.localId;
-      userData.uId = "pIvQlCCo0kWrIxYIouvx38romT63";
-      if(userRole.Tenant==5000){
+      userData.uId = res.localId;
+      // userData.uId = "pIvQlCCo0kWrIxYIouvx38romT63";
+
+      if(user[0].role === 5000){
         userData.role = 6000;
       }else{
         userData.role = 7000;
@@ -41,6 +45,8 @@ function SignupScreen() {
       );
     setIsAuthenticating(false);
     }
+    navigation.goBack();
+    
   }
 
   if (isAuthenticating) {

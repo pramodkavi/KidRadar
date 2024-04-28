@@ -52,6 +52,10 @@ export async function fetchUser(uId) {
 
   return user;
 }
+export async function updateUsers(id, caseData) {
+  return axios.put(API+`/user/${id}`, caseData);
+}
+
 
 export async function storeCases(casesData) {
   console.log("/////////////////////////cases data",casesData)

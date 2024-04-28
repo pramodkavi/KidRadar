@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 import ManageChildCases from './screens/ManageChildCases';
 import ChildCases from './screens/ChildCases';
@@ -39,6 +40,8 @@ import InstituteView from './components/InstitutesOutput/InstituteView';
 import { LogBox } from 'react-native';
 import MapScreen from './screens/ChildCasesScreen/MapScreen';
 import WelcomeDashboard from './screens/WelcomeDashboard';
+import UserView from './components/ManageUsers/UserView';
+import ManageUserDetails from './components/ManageUsers/ManageUserDetails';
 
 function ChildCasesOverview() {
     return (
@@ -119,7 +122,6 @@ function AuthStack() {
         >
             <Stack.Screen name="KidRadar" component={WelcomeScreen} />
             <Stack.Screen name="Login" component={LoginScreen} />
-            <Stack.Screen name="Signup" component={SignupScreen} />
         </Stack.Navigator>
     );
 }
@@ -245,6 +247,13 @@ function AuthenticatedStack() {
                     presentation: 'modal',
                 }}
             />
+             <Stack.Screen
+                name="Manage User Details"
+                component={ManageUserDetails}
+                options={{
+                    presentation: 'modal',
+                }}
+            />
             <Stack.Screen
                 name="Institute Overview"
                 component={InstituteOverview}
@@ -295,10 +304,25 @@ function AuthenticatedStack() {
                 }}
             />
             <Stack.Screen
+                name="User View"
+                component={UserView}
+                options={{
+                    presentation: 'modal',
+                }}
+            />
+            <Stack.Screen
                 name="MapScreen"
                 component={MapScreen}
                 options={{presentation: "fullScreenModal"}}
             />
+            <Stack.Screen 
+                name="Register" 
+                component={SignupScreen}
+                options={{
+                    presentation: 'modal',
+                }} 
+            />
+
         </Stack.Navigator>
     );
 }

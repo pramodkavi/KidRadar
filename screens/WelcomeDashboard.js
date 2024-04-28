@@ -1,13 +1,16 @@
 import React, { useEffect } from "react";
-import { View } from "react-native";
+import { Text, View } from "react-native";
 import GreetingCard from "../components/WelcomeDashboard/GreetingCard";
 import { fetchInstitute, fetchPreSchoolCasesCount } from "../util/http";
 import { setPreSchoolCasesCount } from "../slices/PreSchoolCasesCountSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { setInstitute } from "../slices/InstituteSlice";
+import { Drawer } from "react-native-drawer-layout";
+import { Button } from "react-native-paper";
+import DrawerContent from "../components/Drawer/DrawerContent";
 
 function WelcomeDashboard() {
-
+  const [open, setOpen] = React.useState(false);
   const user = useSelector(state => state.users.users);
   console.log("///////////////////// user in ",user)
   console.log("///////////////////// name ",user[0].name)
@@ -57,9 +60,22 @@ function WelcomeDashboard() {
         getCases();
     }, [dispatch]); // Added dispatch as a dependency
   return (
-    <View>
-      <GreetingCard />
-    </View>
+    <Drawer
+      open={open}
+      onOpen={() => setOpen(true)}
+      onClose={() => setOpen(false)}
+      renderDrawerContent={() => {
+        return <DrawerContent/>;
+      }}
+    >
+      <View>
+        <GreetingCard />
+        <Button
+          onPress={() => setOpen((prevOpen) => !prevOpen)}
+          title={`${open ? 'Close' : 'Open'} drawer`}
+        />
+      </View>
+    </Drawer>
   );
 }
 
