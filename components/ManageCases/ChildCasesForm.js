@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { default as React, default as React, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Alert, Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import { TrashIcon } from "react-native-heroicons/solid";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,7 +23,7 @@ function ChildCasesForm({
   const navigation = useNavigation();
   const authCtx = useContext(AuthContext);
 
-  const [selected, setSelected] = React.useState("");
+  const [selected, setSelected] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
@@ -129,6 +129,8 @@ function ChildCasesForm({
     });
   }
   function submitHandler() {
+
+    console.log(inputs);
     const caseData = {
       name: inputs.name.value,
       age: +inputs.age.value,
@@ -466,7 +468,6 @@ const styles = StyleSheet.create({
   },
   modalView: {
     margin: 20,
-    backgroundColor: "white",
     borderRadius: 10,
     padding: 35,
     alignItems: "center",
@@ -501,74 +502,5 @@ const styles = StyleSheet.create({
     borderTopWidth: 2,
     borderTopColor: "#ccc", // Adjust border color here as needed
     alignItems: "center",
-  },
-  button: {
-    minWidth: 80,
-    marginHorizontal: 8,
-  },
-  justofyButtons: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingLeft: 10,
-  },
-  trashIcon: { marginTop: 20 },
-  cancelButton: {
-    minWidth: 80,
-    justifyContent: "center",
-    alignItems: "center",
-    textAlign: "center",
-    paddingTop: 5,
-    paddingBottom: 5,
-    borderRadius: 5,
-    backgroundColor: "white",
-  },
-  deleteButton: {
-    minWidth: 80,
-    justifyContent: "center",
-    alignItems: "center",
-    textAlign: "center",
-    paddingTop: 5,
-    paddingBottom: 5,
-    borderRadius: 5,
-    backgroundColor: "#f00",
-    color: "#fff",
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22,
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: "white",
-    borderRadius: 10,
-    padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-    backgroundColor: "#ddd",
-    boxShadow: "rgba(0, 0, 0, 0.56) 0px 22px 70px 4px",
-  },
-  modalButtons: { display: "flex", flexDirection: "row", gap: 5 },
-  buttonOpen: {
-    backgroundColor: "#F194FF",
-  },
-  textStyle: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: "center",
   },
 });

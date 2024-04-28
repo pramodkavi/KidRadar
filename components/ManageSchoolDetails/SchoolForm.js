@@ -340,7 +340,6 @@ const styles = StyleSheet.create({
   },
   modalView: {
     margin: 20,
-    backgroundColor: "white",
     borderRadius: 10,
     paddingLeft: 15,
     paddingBottom: 30,

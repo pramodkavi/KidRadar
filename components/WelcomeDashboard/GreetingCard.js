@@ -2,56 +2,50 @@ import React from "react";
 import { Button, Card, Text } from "react-native-paper";
 import styles from "./styles";
 import { View } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation } from '@react-navigation/native';
+import { useSelector } from "react-redux";
 
 function GreetingCard() {
   const navigation = useNavigation();
-
+  const user = useSelector(state => state.users.users);
   return (
     <Card style={styles.card}>
       <Text style={styles.cardTitle}>Welcome to EduConnect</Text>
       <Text style={styles.cardBodyMessage}>
-        EduConnect is your centralized platform for managing educational
+      EduConnect is your centralized platform for managing educational
         initiatives seamlessly. Explore the menu options to streamline your
         tasks, collaborate effectively.
       </Text>
-      <View style={styles.cardFooter}>
-        <Button
-          mode="text"
-          onPress={() => {
-            navigation.navigate("Overview");
-          }}
-        >
-          Children Section
-        </Button>
+      {user[0].role === 7000 &&
+        <View style={styles.cardFooter}>
+          <Button
+            mode="text"
+            onPress={() => {
+              navigation.navigate("Overview");
+            }}
+          >
+            Children Section
+          </Button>
 
-        <Button
-          mode="text"
-          onPress={() => {
-            navigation.navigate("School PreSchoool Overview");
-          }}
-        >
-          Schools
-        </Button>
+          <Button
+            mode="text"
+            onPress={() => {
+              navigation.navigate("School PreSchoool Overview");
+            }}
+          >
+            Schools
+          </Button>
 
-        <Button
-          mode="text"
-          onPress={() => {
-            navigation.navigate("Pathway Hub");
-          }}
-        >
-          Trainning Centers
-        </Button>
-
-        <Button
-          mode="text"
-          onPress={() => {
-            navigation.navigate("Emergency Contact");
-          }}
-        >
-          Emergency Contact
-        </Button>
-      </View>
+          <Button
+            mode="text"
+            onPress={() => {
+              navigation.navigate("Institutes");
+            }}
+          >
+            Trainning Centers
+          </Button>
+        </View>
+      }
     </Card>
   );
 }

@@ -16,9 +16,7 @@ const styles = StyleSheet.create({
     marginBottom: 25,
     textAlign: "center",
   },
-  cardBodyMessage: {
-    textAlign: "justify",
-  },
+  cardBodyMessage: {},
   cardFooter: {
     marginTop: 15,
     display: "flex",
