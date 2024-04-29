@@ -70,11 +70,11 @@ export function PreschoolGraduatesCounts() {
     return (
         <>
             <View style={styles.chartHeader}>
-                <Text style={styles.headerTxt}>Preschool Graduates counts</Text>
+                <Text style={styles.headerTxt}>Preschool Graduates</Text>
                 <Button
                     mode="outlined"
                     onPress={() => {
-                        navigation.navigate('PreSchoolCases');
+                        navigation.navigate('Preschool Cases');
                     }}
                 >
                     Load more

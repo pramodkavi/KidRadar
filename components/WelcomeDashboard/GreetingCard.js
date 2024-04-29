@@ -39,7 +39,7 @@ function GreetingCard() {
           <Button
             mode="text"
             onPress={() => {
-              navigation.navigate("Institutes");
+              navigation.navigate("Pathway Hub");
             }}
           >
             Trainning Centers

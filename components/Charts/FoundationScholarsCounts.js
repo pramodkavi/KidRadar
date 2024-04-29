@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import { Dimensions, StyleSheet, Text, View } from "react-native";
 import { PieChart } from "react-native-chart-kit";
 import { Button } from "react-native-paper";
@@ -19,6 +20,7 @@ const graphStyle = {
   ...chartConfig.style,
 };
 export function FoundationScholarsCounts() {
+  const navigation = useNavigation();
   const width = Dimensions.get("window").width;
   const height = 220;
 
@@ -78,7 +80,14 @@ export function FoundationScholarsCounts() {
     <>
       <View style={styles.chartHeader}>
         <Text style={styles.headerTxt}>Scholars Counts</Text>
-        <Button mode="outlined">Load more</Button>
+        <Button
+          mode="outlined"
+          onPress={() => {
+            navigation.navigate("Preschool Cases");
+          }}
+        >
+          Load more
+        </Button>
       </View>
       <View class={"pt-20"}>
         <PieChart

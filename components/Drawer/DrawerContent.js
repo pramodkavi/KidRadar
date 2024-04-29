@@ -83,7 +83,7 @@ export default function DrawerContent() {
             <TouchableOpacity
               className={"mt-2 py-2 "}
               style={{ backgroundColor: GlobalStyles.colors.primary400 }}
-              onPress={() => navigation.navigate("Register")}
+              onPress={() => navigation.navigate("Emergency Contact")}
             >
               <View className={"flex-row px-2 space-x-3 jus"}>
                 <PhoneIcon className="h-8 w-8" color={"white"} />
