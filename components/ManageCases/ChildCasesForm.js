@@ -7,10 +7,11 @@ import { GlobalStyles } from "../../constants/styles";
 import { selectInstitute, setInstitute } from "../../slices/InstituteSlice";
 import { AuthContext } from "../../store/auth-context";
 import { getFormattedDate } from "../../util/date";
-import { fetchInstitute } from "../../util/http";
+import {fetchInstitute, fetchSchools} from "../../util/http";
 import DropdownComponent from "../DropdownComponent";
 import Button from "../UI/Button";
 import Input from "./Input";
+import {selectSchool, setSchools} from "../../slices/SchoolSlice";
 
 function ChildCasesForm({
   submitButtonLabel,
@@ -39,7 +40,24 @@ function ChildCasesForm({
 
     getCases();
   }, [dispatch]);
+
+  useEffect(() => {
+    async function getSchool() {
+        try {
+            const uId = authCtx.uId;
+            const fetchPreSchoolDetails = await fetchSchools(uId);
+            dispatch(setSchools(fetchPreSchoolDetails));
+        } catch (error) {
+            console.error('Could not fetch school details:', error);
+        }
+    }
+
+    getSchool();
+}, [dispatch]); // Added dispatch as a dependency
+
   const institutes = useSelector(selectInstitute);
+  const schools = useSelector(selectSchool);
+
   const initialRegion = {
     latitude: 7.0873,
     longitude: 79.9998,
@@ -65,6 +83,12 @@ function ChildCasesForm({
     label: institute.name,
     value: (index + 1).toString(),
   }));
+
+  const schoolData = schools.map((school, index) => ({
+    label: school.school,
+    value: (index + 1).toString(),
+  }));
+
   const [inputs, setInputs] = useState({
     name: {
       value: defaultValues ? defaultValues.name : "",
@@ -238,7 +262,7 @@ function ChildCasesForm({
         <DropdownComponent
           invalid={!inputs.school.isValid}
           label={"School"}
-          data={school}
+          data={schoolData}
           textInputConfig={{
             onChange: dropdownChangedHandler.bind(this, "school"),
             value: inputs.school.value,

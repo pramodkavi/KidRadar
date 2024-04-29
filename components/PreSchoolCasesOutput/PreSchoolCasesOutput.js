@@ -1,22 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { GlobalStyles } from "../../constants/styles";
 import PreSchoolCasesList from "./PreSchoolCasesList";
 import Summary from "./PreSchoolCaseSummary";
 import { Searchbar } from "react-native-paper";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import DropdownComponent from "../DropdownComponent";
 import PreSchoolCaseSummary from "./PreSchoolCaseSummary";
 import Button from "../UI/Button";
 import { useNavigation } from "@react-navigation/native";
 import { division } from "../../constants/Constants";
+import { AuthContext } from "../../store/auth-context";
+import { selectPreSchool } from "../../slices/PreSchoolSlice";
 
 function PreSchoolCasesOutput({ totalCases, fallbackText }) {
   const navigation = useNavigation();
   const [selectedDivision, setSelectedDivision] = useState("");
   const [selectedPreschool, setSelectedPreschool] = useState("");
   const [filteredPreSchoolCases, setFilteredPreSchoolCases] = useState([]);
-
+  const preSchools = useSelector(selectPreSchool); // Accessing expenses state from Redux store
+  const dispatch = useDispatch();
   const school = [{ label: "St Joseph's College", value: "1" }];
 
   const [searchQuery, setSearchQuery] = useState("");
@@ -27,7 +30,29 @@ function PreSchoolCasesOutput({ totalCases, fallbackText }) {
   const preSchoolCasesCount = useSelector(
     (state) => state.preSchoolCasesCount.preSchoolCasesCount
   );
+  
+  const authCtx = useContext(AuthContext);
+  useEffect(() => {
+    async function getPreSchool() {
+      try {
+        const uId = authCtx.uId;
+        const fetchPreSchoolDetails = await fetchPreSchools(uId);
+        dispatch(setPreSchool(fetchPreSchoolDetails));
+      } catch (error) {
+        console.error("Could not fetch preschool details:", error);
+      }
+    }
 
+    getPreSchool();
+  }, [dispatch]); // Added dispatch as a dependency
+
+  const preschoolData = preSchools.map((preschool, index) => ({
+    label: preschool.preSchool,
+    value: (index + 1).toString(),
+  }));
+console.log("//////////////////////////////////////////// preschoolData ",preschoolData);
+
+console.log("//////////////////////////////////////////// preschoolData [0]",preSchools[0].preSchool);
   useEffect(() => {
     // Function to filter preSchool based on searchQuery and selectedDivision
     const filterCases = () => {
@@ -98,8 +123,8 @@ function PreSchoolCasesOutput({ totalCases, fallbackText }) {
             }}
           />
           <DropdownComponent
-            label={"School"}
-            data={school}
+            label={"Pre School"}
+            data={preschoolData}
             textInputConfig={{
               onChange: dropdownSchoolChangedHandler.bind(this, "preSchool"),
               value: selectedPreschool,

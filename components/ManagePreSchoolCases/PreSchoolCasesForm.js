@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Alert, Modal, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { TrashIcon } from "react-native-heroicons/solid";
 import { GlobalStyles } from "../../constants/styles";
@@ -6,6 +6,11 @@ import { getFormattedDate } from "../../util/date";
 import DropdownComponent from "../DropdownComponent";
 import Button from "../UI/Button";
 import Input from "./Input";
+import { fetchPreSchoolCases, fetchPreSchools } from "../../util/http";
+import {selectPreSchoolCase, setPreSchoolCase} from '../../slices/PreSchoolCasesSlice'; // Importing Redux actions
+import { useDispatch, useSelector } from "react-redux";
+import { AuthContext } from "../../store/auth-context";
+import { selectPreSchool, setPreSchool } from "../../slices/PreSchoolSlice";
 
 function PreSchoolCasesForm({
   submitButtonLabel,
@@ -16,14 +21,34 @@ function PreSchoolCasesForm({
 }) {
   const [selected, setSelected] = React.useState("");
   const [modalVisible, setModalVisible] = useState(false);
+  const dispatch= useDispatch()  
+  const preSchools = useSelector(selectPreSchool); // Accessing expenses state from Redux store
 
   const division = [
     { label: "Katana", value: "1" },
     { label: "Ja-Ela", value: "2" },
     { label: "Negombo", value: "3" },
   ];
+  const authCtx = useContext(AuthContext);
+  useEffect(() => {
+    async function getPreSchool() {
+      try {
+        const uId = authCtx.uId;
+        const fetchPreSchoolDetails = await fetchPreSchools(uId);
+        dispatch(setPreSchool(fetchPreSchoolDetails));
+      } catch (error) {
+        console.error("Could not fetch preschool details:", error);
+      }
+    }
 
-  const school = [{ label: "St Joseph's College", value: "1" }];
+    getPreSchool();
+  }, [dispatch]); // Added dispatch as a dependency
+
+  const preschoolData = preSchools.map((preschool, index) => ({
+    label: preschool.preSchool,
+    value: (index + 1).toString(),
+  }));
+
 
   const caseType = [
     { label: "School Dropout", value: "1" },
@@ -164,7 +189,7 @@ function PreSchoolCasesForm({
           <DropdownComponent
             invalid={!inputs.preSchool.isValid}
             label={"Pre-School"}
-            data={school}
+            data={preschoolData}
             textInputConfig={{
               onChange: dropdownChangedHandler.bind(this, "preSchool"),
               value: inputs.preSchool.value,
