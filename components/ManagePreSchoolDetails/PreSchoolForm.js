@@ -175,10 +175,10 @@ function PreSchoolForm({
         </View>
         <Input
           label="PreSchool"
-          invalid={!inputs.preSchool.isValid}
+          invalid={!inputs.preSchool?.isValid}
           textInputConfig={{
             onChangeText: inputChangedHandler.bind(this, "preSchool"),
-            value: inputs.preSchool.value,
+            value: inputs.preSchool? inputs.preSchool.value : "",
           }}
         />
         <Input
@@ -217,7 +217,6 @@ function PreSchoolForm({
             value: inputs.date.value,
           }}
         />
-        {/*</View>*/}
 
         {formIsInvalid && (
           <Text style={styles.errorText}>

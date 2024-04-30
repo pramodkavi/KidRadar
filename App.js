@@ -109,7 +109,7 @@ function AuthStack() {
         headerTintColor: "black",
       }}
     >
-      <Stack.Screen name="KidRadar" component={WelcomeScreen} />
+      <Stack.Screen name="EduConnect" component={WelcomeScreen} />
       <Stack.Screen name="Login" component={LoginScreen} />
     </Stack.Navigator>
   );

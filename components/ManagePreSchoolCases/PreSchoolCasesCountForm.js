@@ -69,7 +69,7 @@ function PreSchoolCasesCountForm({ submitButtonLabel, onCancel, onSubmit, defaul
       graduatesCounts: +inputs.graduatesCounts.value,
       scholarsCounts: +inputs.scholarsCounts.value,
       division: inputs.division.value,
-      preSchool: inputs.preSchool.value,
+      preSchool: inputs.preSchool?.value,
 
     };
 
