@@ -18,6 +18,7 @@ import Input from "./Input";
 function SchoolForm({ submitButtonLabel, onCancel, onSubmit, defaultValues, deleteDetailsHandler }) {
   const [selected, setSelected] = React.useState("");
   const [modalVisible, setModalVisible] = useState(false);
+  const [updateModalVisible, setUpdateModalVisible] = useState(false);
 
   const division = [
     { label: "Katana", value: "1" },
@@ -214,12 +215,21 @@ function SchoolForm({ submitButtonLabel, onCancel, onSubmit, defaultValues, dele
           <Button style={styles.button} mode="flat" onPress={onCancel}>
             Cancel
           </Button>
-          <Button style={styles.button} onPress={submitHandler}>
+          
+          {defaultValues && (
+          <Button style={styles.button}  onPress={() => setUpdateModalVisible(true)}>
             {submitButtonLabel}
           </Button>
+          )}
+          {!defaultValues && (
+          <Button style={styles.button}  onPress={submitHandler}>
+            {submitButtonLabel}
+          </Button>
+          )}
+
         </View>
       </View>
-      {submitButtonLabel === "Update" && (
+      {defaultValues && (
         <View>
           <View style={styles.centeredView}>
             <Modal
@@ -254,6 +264,41 @@ function SchoolForm({ submitButtonLabel, onCancel, onSubmit, defaultValues, dele
               </View>
             </Modal>
           </View>
+
+          <View style={styles.centeredView}>
+            <Modal
+              animationType="slide"
+              transparent={true}
+              visible={updateModalVisible}
+              onRequestClose={() => {
+                Alert.alert("Modal has been closed.");
+                setUpdateModalVisible(!updateModalVisible);
+              }}
+            >
+              <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+                  <Text style={styles.modalText}>
+                    Are you sure to update school?
+                  </Text>
+                  <View style={styles.modalButtons}>
+                    <Pressable
+                      style={[styles.button, styles.buttonClose]}
+                      onPress={() => setUpdateModalVisible(!updateModalVisible)}
+                    >
+                      <Text style={styles.cancelButton}>Cancel</Text>
+                    </Pressable>
+                    <Pressable
+                      style={[styles.button, styles.buttonClose]}
+                      onPress={submitHandler}
+                    >
+                      <Text style={styles.deleteButton}>Yes</Text>
+                    </Pressable>
+                  </View>
+                </View>
+              </View>
+            </Modal>
+          </View>
+
           <View style={styles.deleteContainer}>
             <Pressable
               onPress={() => setModalVisible(true)}

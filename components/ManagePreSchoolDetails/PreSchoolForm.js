@@ -149,6 +149,7 @@ function PreSchoolForm({
     !inputs.division.isValid;
 
   const [modalVisible, setModalVisible] = useState(false);
+  const [updateModalVisible, setUpdateModalVisible] = useState(false);
 
   return (
     <ScrollView>
@@ -200,7 +201,7 @@ function PreSchoolForm({
           label="Contact No"
           invalid={!inputs.contactNo.isValid}
           textInputConfig={{
-            // keyboardType: 'decimal-pad',
+            keyboardType: 'decimal-pad',
             onChangeText: inputChangedHandler.bind(this, "contactNo"),
             value: inputs.contactNo.value,
           }}
@@ -228,13 +229,20 @@ function PreSchoolForm({
           <Button style={styles.button} mode="flat" onPress={onCancel}>
             Cancel
           </Button>
-          <Button style={styles.button} onPress={submitHandler}>
+          {defaultValues && (
+          <Button style={styles.button}  onPress={() => setUpdateModalVisible(true)}>
             {submitButtonLabel}
           </Button>
+          )}
+          {!defaultValues && (
+          <Button style={styles.button}  onPress={submitHandler}>
+            {submitButtonLabel}
+          </Button>
+          )}
         </View>
       </View>
 
-      {submitButtonLabel === "Update" && (
+      {defaultValues && (
         <View>
           <View style={styles.centeredView}>
             <Modal
@@ -269,6 +277,41 @@ function PreSchoolForm({
               </View>
             </Modal>
           </View>
+
+          <View style={styles.centeredView}>
+            <Modal
+              animationType="slide"
+              transparent={true}
+              visible={updateModalVisible}
+              onRequestClose={() => {
+                Alert.alert("Modal has been closed.");
+                setUpdateModalVisible(!updateModalVisible);
+              }}
+            >
+              <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+                  <Text style={styles.modalText}>
+                    Are you sure to update preschool?
+                  </Text>
+                  <View style={styles.modalButtons}>
+                    <Pressable
+                      style={[styles.button, styles.buttonClose]}
+                      onPress={() => setUpdateModalVisible(!modalVisible)}
+                    >
+                      <Text style={styles.cancelButton}>Cancel</Text>
+                    </Pressable>
+                    <Pressable
+                      style={[styles.button, styles.buttonClose]}
+                      onPress={submitHandler}
+                    >
+                      <Text style={styles.deleteButton}>Yes</Text>
+                    </Pressable>
+                  </View>
+                </View>
+              </View>
+            </Modal>
+          </View>
+
           <View style={styles.deleteContainer}>
             <Pressable
               onPress={() => setModalVisible(true)}
@@ -277,8 +320,10 @@ function PreSchoolForm({
               <TrashIcon size={30} color={"red"} />
             </Pressable>
           </View>
+
         </View>
       )}
+
     </ScrollView>
   );
 }
