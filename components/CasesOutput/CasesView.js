@@ -83,12 +83,6 @@ function CasesView({ route, navigation }) {
           <DataTable.Cell>School</DataTable.Cell>
           <DataTable.Cell>{selectedCase.school.label}</DataTable.Cell>
         </DataTable.Row>
-        {selectedCase.institute != undefined && (
-          <DataTable.Row style={{ border: "2px solid green" }}>
-            <DataTable.Cell>Career Opportunity</DataTable.Cell>
-            {/* <DataTable.Cell>{selectedCase.institute?selectedCase.institute.label:"N/A"}</DataTable.Cell> */}
-          </DataTable.Row>
-        )}
       </View>
       {selectedCase.caseType.label == "Street Child" && (
         <Button style={styles.button} onPress={mapHandler}>
