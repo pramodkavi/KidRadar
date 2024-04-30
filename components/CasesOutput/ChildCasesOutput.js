@@ -4,18 +4,38 @@ import { GlobalStyles } from "../../constants/styles";
 import CasesList from "./CasesList";
 import Summary from "./ChildCaseSummary";
 import { Searchbar } from "react-native-paper";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import DropdownComponent from "../DropdownComponent";
 import { division } from "../../constants/Constants";
+import { selectSchool } from "../../slices/SchoolSlice";
 
 function ChildCasesOutput({ totalCases, fallbackText }) {
+  const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedDivision, setSelectedDivision] = useState("");
   const [selectedSchool, setSelectedSchool] = useState("");
   const [selectedCaseType, setSelectedCaseType] = useState("");
   const [filteredCases, setFilteredCases] = useState([]);
+  const schools = useSelector(selectSchool);
+  useEffect(() => {
+    async function getSchool() {
+        try {
+            const uId = authCtx.uId;
+            const fetchPreSchoolDetails = await fetchSchools(uId);
+            dispatch(setSchools(fetchPreSchoolDetails));
+        } catch (error) {
+            console.error('Could not fetch school details:', error);
+        }
+    }
 
-  const school = [{ label: "St Joseph's College", value: "1" }];
+    getSchool();
+}, [dispatch]); // Added dispatch as a dependency
+
+const schoolData = schools.map((school, index) => ({
+  label: school.school,
+  value: (index + 1).toString(),
+}));
+
 
   const caseType = [
     { label: "School Dropout", value: "1" },
@@ -88,7 +108,7 @@ function ChildCasesOutput({ totalCases, fallbackText }) {
           />
           <DropdownComponent
             label={"School"}
-            data={school}
+            data={schoolData}
             textInputConfig={{
               onChange: dropdownSchoolChangedHandler.bind(this, "division"),
               value: selectedSchool,
