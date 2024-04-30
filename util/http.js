@@ -298,7 +298,6 @@ export async function fetchInstitute(uId) {
       name: response.data[key].name,
       detailedName: response.data[key].detailedName,
       email: response.data[key].email,
-      maxNVQ: response.data[key].maxNVQ,
       description: response.data[key].description,
       address: response.data[key].address,
       contactNo: response.data[key].contactNo,

@@ -33,7 +33,7 @@ function PreSchoolForm({
     { label: "Negombo", value: "3" },
   ];
 
-  const school = [{ label: "St Joseph's College", value: "1" }];
+  const school = [{ label: "None", value: "1" },{ label: "St Joseph's College", value: "2" }];
 
   const caseType = [
     { label: "School Dropout", value: "1" },

@@ -17,7 +17,7 @@ function PreSchoolCasesOutput({ totalCases, fallbackText }) {
   const [selectedPreschool, setSelectedPreschool] = useState("");
   const [filteredPreSchoolCases, setFilteredPreSchoolCases] = useState([]);
 
-  const school = [{ label: "St Joseph's College", value: "1" }];
+  const school = [{ label: "None", value: "1" },{ label: "St Joseph's College", value: "2" }];
 
   const [searchQuery, setSearchQuery] = useState("");
   const preSchoolCases = useSelector(

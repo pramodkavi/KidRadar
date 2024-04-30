@@ -1,13 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Searchbar } from "react-native-paper";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { GlobalStyles } from "../../constants/styles";
-import { selectInstitute } from "../../slices/InstituteSlice";
+import { selectInstitute, setInstitute } from "../../slices/InstituteSlice";
 import DropdownComponent from "../DropdownComponent";
 import InstituteList from "./InstituteList";
+import { AuthContext } from "../../store/auth-context";
+import { fetchInstitute } from "../../util/http";
 
 function InstituteDetailsOutput({ totalCases, fallbackText }) {
+  const authCtx = useContext(AuthContext);
+  const dispatch = useDispatch();
+  
   const [selectedDivision, setSelectedDivision] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredInstitutes, setFilteredInstitutes] = useState([]);
@@ -19,6 +24,20 @@ function InstituteDetailsOutput({ totalCases, fallbackText }) {
   ];
 
   const institutes = useSelector(selectInstitute);
+
+  useEffect(() => {
+    async function getCases() {
+      try {
+        const uId = authCtx.uId;
+        const institutesFetch = await fetchInstitute(uId);
+        dispatch(setInstitute(institutesFetch)); // Dispatching setCase action
+      } catch (error) {
+        console.error("Could not fetch Institutes:", error);
+      }
+    }
+
+    getCases();
+  }, [dispatch]); // Added dispatch as a dependency
 
   useEffect(() => {
     // Function to filter preSchool based on searchQuery and selectedDivision

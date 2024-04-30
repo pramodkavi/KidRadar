@@ -11,7 +11,7 @@ function CourseDetailsOutput({ totalCases, fallbackText }) {
   const courses = useSelector(selectCourse);
   const filteredCourses = courses.filter(
     (item) =>
-      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item?.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       (item.address &&
         item.address.toLowerCase().includes(searchQuery.toLowerCase()))
   );

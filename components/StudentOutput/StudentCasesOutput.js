@@ -26,7 +26,7 @@ function StudentCasesOutput({ totalCases, fallbackText }) {
       <ChildrenCasesChart />
       <PreschoolGraduatesCounts />
       <FoundationScholarsCounts />
-      <TrainingParticipationStatistics />
+      {/* <TrainingParticipationStatistics /> */}
       {content}
     </ScrollView>
   );

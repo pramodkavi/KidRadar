@@ -23,6 +23,7 @@ function InstituteForm({
 }) {
   const [selected, setSelected] = React.useState("");
   const [modalVisible, setModalVisible] = useState(false);
+  const [isUpdate, setIsUpdate] = useState(false);
 
   const division = [
     { label: "Katana", value: "1" },
@@ -36,7 +37,7 @@ function InstituteForm({
     { label: "Carrier Guidance Opportunity", value: "3" },
   ];
 
-  const school = [{ label: "St Joseph's College", value: "1" }];
+  const school = [{ label: "None", value: "1" },{ label: "St Joseph's College", value: "2" }];
 
   const caseType = [
     { label: "School Dropout", value: "1" },
@@ -45,7 +46,7 @@ function InstituteForm({
   ];
   const [inputs, setInputs] = useState({
     name: {
-      value: defaultValues ? defaultValues.name : "",
+      value: defaultValues ? defaultValues?.name : "",
       isValid: true,
     },
     detailedName: {
@@ -64,10 +65,7 @@ function InstituteForm({
       value: defaultValues ? defaultValues.contactNo.toString() : "",
       isValid: true,
     },
-    maxNVQ: {
-      value: defaultValues ? defaultValues.maxNVQ.toString() : "",
-      isValid: true,
-    },
+
     description: {
       value: defaultValues ? defaultValues.description.toString() : "",
       isValid: true,
@@ -97,7 +95,6 @@ function InstituteForm({
       address: inputs.address.value,
       email: inputs.email.value,
       contactNo: +inputs.contactNo.value,
-      maxNVQ: +inputs.maxNVQ.value,
       description: inputs.description.value,
       type: inputs.type.value,
       subType: inputs.subType.value,
@@ -108,7 +105,6 @@ function InstituteForm({
     const descriptionIsValid = instituteData.description.trim().length > 0;
     const addressIsValid = instituteData.address.trim().length > 0;
     const emailIsValid = instituteData.email.includes("@");
-    const maxNVQIsValid = !isNaN(instituteData.maxNVQ);
     const contactNoIsValid =
       !isNaN(instituteData.contactNo) &&
       String(instituteData.contactNo).length == 9;
@@ -120,7 +116,6 @@ function InstituteForm({
       !descriptionIsValid ||
       !addressIsValid ||
       !emailIsValid ||
-      !maxNVQIsValid ||
       !contactNoIsValid ||
       !typeIsValid
     ) {
@@ -136,7 +131,6 @@ function InstituteForm({
             value: curInputs.contactNo.value,
             isValid: contactNoIsValid,
           },
-          maxNVQ: { value: curInputs.maxNVQ.value, isValid: maxNVQIsValid },
           name: { value: curInputs.name.value, isValid: nameIsValid },
           detailedName: {
             value: curInputs.detailedName.value,
@@ -157,7 +151,6 @@ function InstituteForm({
     !inputs.address.isValid ||
     !inputs.email.isValid ||
     !inputs.contactNo.isValid ||
-    !inputs.maxNVQ.isValid ||
     !inputs.name.isValid ||
     !inputs.detailedName.isValid ||
     !inputs.type.isValid;
@@ -237,15 +230,6 @@ function InstituteForm({
             keyboardType: "decimal-pad",
             onChangeText: inputChangedHandler.bind(this, "contactNo"),
             value: inputs.contactNo.value,
-          }}
-        />
-        <Input
-          label="Max NVQ"
-          invalid={!inputs.maxNVQ.isValid}
-          textInputConfig={{
-            keyboardType: "decimal-pad",
-            onChangeText: inputChangedHandler.bind(this, "maxNVQ"),
-            value: inputs.maxNVQ.value,
           }}
         />
         <Input

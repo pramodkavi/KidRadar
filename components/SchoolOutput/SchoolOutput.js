@@ -16,27 +16,28 @@ function SchoolOutput({ totalCases, fallbackText }) {
   const schools = useSelector(selectSchool); // Accessing expenses state from Redux store
 
   useEffect(() => {
-    // Function to filter preSchool based on searchQuery and selectedDivision
+    // Function to filter schools based on searchQuery and selectedDivision
     const filterSchools = () => {
       setFilteredSchools(
         schools.filter(
           (item) =>
-            item.schools?.toLowerCase().includes(searchQuery.toLowerCase()) &&
+            item.school.toLowerCase().includes(searchQuery.toLowerCase()) &&
             (selectedDivision === "" ||
               item.division.value === selectedDivision)
         )
       );
     };
-
+  
     filterSchools(); // Initial filter
-
+  
     // Add event listener for changes in searchQuery and selectedDivision
     const unsubscribe = () => {
       filterSchools();
     };
-
+  
     return unsubscribe;
   }, [schools, selectedDivision, searchQuery]);
+  
 
   let content = "";
   if (filteredSchools.length > 0) {

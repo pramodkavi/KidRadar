@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Image } from "react-native";
 import { Drawer } from "react-native-drawer-layout";
 import { Button } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
@@ -78,6 +78,12 @@ function WelcomeDashboard() {
           onPress={() => setOpen((prevOpen) => !prevOpen)}
           title={`${open ? "Close" : "Open"} drawer`}
         />
+        <View>
+          <Image
+            source={require("../assets/IMG/welcomeImg.png")} // Change the path to your image file
+            style={styles.image}
+          />
+        </View>
       </View>
     </Drawer>
   );

@@ -33,7 +33,7 @@ function GreetingCard() {
               navigation.navigate("School PreSchoool Overview");
             }}
           >
-            Schools
+            School
           </Button>
 
           <Button
@@ -42,7 +42,7 @@ function GreetingCard() {
               navigation.navigate("Pathway Hub");
             }}
           >
-            Trainning Centers
+            Pathway Hub
           </Button>
         </View>
       }

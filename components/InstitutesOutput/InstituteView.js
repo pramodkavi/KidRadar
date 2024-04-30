@@ -44,10 +44,7 @@ function InstituteView({ route, navigation }) {
           <DataTable.Cell>Email</DataTable.Cell>
           <DataTable.Cell>{selectedData.email}</DataTable.Cell>
         </DataTable.Row>
-        <DataTable.Row>
-          <DataTable.Cell>Max NVQ</DataTable.Cell>
-          <DataTable.Cell>{selectedData.maxNVQ}</DataTable.Cell>
-        </DataTable.Row>
+
         <DataTable.Row>
           <DataTable.Cell>Institute Type</DataTable.Cell>
           <DataTable.Cell>{selectedData.type.label ?? "-"}</DataTable.Cell>

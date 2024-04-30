@@ -6,13 +6,13 @@ import ErrorOverlay from "../../components/UI/ErrorOverlay";
 import LoadingOverlay from "../../components/UI/LoadingOverlay";
 import {
   addInstitute,
-  deleteInstitute,
+  deleteInstitute as deleteIstituteFromStore,
   selectInstitute,
   updateInstitute,
 } from "../../slices/InstituteSlice"; // Importing Redux actions
 import { AuthContext } from "../../store/auth-context";
 import {
-  deletePreSchool,
+  deleteInstitute,
   storeInstitute,
   updateInstitut,
 } from "../../util/http";
@@ -26,10 +26,11 @@ function ManageInstitute({ route, navigation }) {
   const dispatch = useDispatch(); // Redux hook to dispatch actions
   const editedInstituteId = route.params?.instituteId;
   const isEditing = !!editedInstituteId;
-  
-  const selectedInstitute = institutes.find(
-    (institute) => institute.id === editedInstituteId
-  );
+
+  const selectedInstitute = editedInstituteId 
+  ? institutes.find(institute => institute.id === editedInstituteId) 
+  : null;
+
   useLayoutEffect(() => {
     navigation.setOptions({
       title: isEditing ? "Edit Pathway Hub Details" : "Add Pathway Hub Details",
@@ -39,13 +40,11 @@ function ManageInstitute({ route, navigation }) {
   async function deleteDetailsHandler() {
     try {
       await deleteInstitute(editedInstituteId);
-      dispatch(deleteInstitute(editedInstituteId)); // Dispatching deleteCase action
-
-      navigation.navigate("Pathway Hub Overview");
-      setIsSubmitting(true);
+      // dispatch(deleteIstituteFromStore(editedInstituteId));
+      navigation.navigate("Pathway Hub");
     } catch (error) {
+      console.error("Could not delete Pathway Hub:", error);
       setError("Could not delete Pathway Hub - please try again later!");
-      setIsSubmitting(false);
     }
   }
 

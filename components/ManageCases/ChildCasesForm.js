@@ -54,8 +54,7 @@ function ChildCasesForm({
     { label: "Negombo", value: "3" },
   ];
 
-  const school = [{ label: "St Joseph's College", value: "1" }];
-
+  const school = [{ label: "None", value: "1" },{ label: "St Joseph's College", value: "2" }];
   const caseType = [
     { label: "School Dropout", value: "1" },
     { label: "Street Child", value: "2" },
@@ -256,7 +255,7 @@ function ChildCasesForm({
       </View>
       {defaultValues && (
         <>
-          <Text>Career Opportunity</Text>
+          <Text>Pathway Hub</Text>
           <View style={styles.inputsRow}>
             <DropdownComponent
               label={"Pathway Hub"}
