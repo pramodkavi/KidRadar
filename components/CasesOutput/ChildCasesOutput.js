@@ -36,7 +36,7 @@ const schoolData = schools.map((school, index) => ({
   value: (index + 1).toString(),
 }));
 
-
+const SchoolData = [ { label: "None", value: 10 },...schoolData];
   const caseType = [
     { label: "School Dropout", value: "1" },
     { label: "Street Child", value: "2" },
@@ -108,7 +108,7 @@ const schoolData = schools.map((school, index) => ({
           />
           <DropdownComponent
             label={"School"}
-            data={schoolData}
+            data={SchoolData}
             textInputConfig={{
               onChange: dropdownSchoolChangedHandler.bind(this, "division"),
               value: selectedSchool,

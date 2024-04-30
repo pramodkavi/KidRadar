@@ -14,7 +14,7 @@ function PreSchoolOutput({ totalCases, fallbackText }) {
   const [filteredPreSchools, setFilteredPreSchools] = useState([]);
 
   const preSchool = useSelector(selectPreSchool); // Accessing expenses state from Redux store
-
+console.log("/////////////////////////////////////// preSchool",preSchool);
   useEffect(() => {
     // Function to filter preSchool based on searchQuery and selectedDivision
     const filterPreSchools = () => {
@@ -43,7 +43,7 @@ function PreSchoolOutput({ totalCases, fallbackText }) {
 
   let content = "";
   if (filteredPreSchools.length > 0) {
-    content = <PreSchoolList preSchoolDetails={filteredPreSchools} />;
+    content = <PreSchoolList preSchoolDetails={preSchool} />;
   } else {
     content = <Text style={styles.infoText}>{fallbackText}</Text>;
   }
