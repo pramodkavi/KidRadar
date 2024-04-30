@@ -41,6 +41,10 @@ function CourseForm({
       value: defaultValues ? defaultValues.name : "",
       isValid: true,
     },
+    maxNVQ: {
+      value: defaultValues ? defaultValues.maxNVQ.toString() : '',
+      isValid: true,
+    },
     type: {
       value: defaultValues ? defaultValues.type.toString() : "",
       isValid: true,
@@ -63,14 +67,16 @@ function CourseForm({
     const courseData = {
       name: inputs.name.value,
       type: inputs.type.value,
+      maxNVQ: +inputs.maxNVQ.value,
       description: inputs.description.value,
     };
 
     const nameIsValid = courseData.name.trim().length > 0;
     const typeIsValid = courseData.type.trim().length > 0;
     const descriptionIsValid = courseData.description.trim().length > 0;
+    const maxNVQIsValid = !isNaN(courseData.maxNVQ);
 
-    if (!nameIsValid || !typeIsValid || !descriptionIsValid) {
+    if (!nameIsValid || !typeIsValid || !descriptionIsValid || ! maxNVQIsValid) {
       setInputs((curInputs) => {
         return {
           description: {
@@ -78,16 +84,18 @@ function CourseForm({
             isValid: descriptionIsValid,
           },
           type: { value: curInputs.type.value, isValid: typeIsValid },
+          maxNVQ: { value: curInputs.maxNVQ.value, isValid: maxNVQIsValid },
           name: { value: curInputs.name.value, isValid: nameIsValid },
         };
       });
       return;
     }
+    console.log("/////////////////////////////////////////////////////// CourseData",courseData);
     onSubmit(courseData);
   }
 
   const formIsInvalid =
-    !inputs.description.isValid || !inputs.name.isValid || !inputs.type.isValid;
+    !inputs.maxNVQ.isValid ||!inputs.description.isValid || !inputs.name.isValid || !inputs.type.isValid;
   return (
     <ScrollView>
       <View>
@@ -104,6 +112,15 @@ function CourseForm({
             value: inputs.name.value,
           }}
         />
+         <Input
+          label="Max NVQ"
+          invalid={!inputs.maxNVQ.isValid}
+          textInputConfig={{
+              keyboardType: 'decimal-pad',
+              onChangeText: inputChangedHandler.bind(this, 'maxNVQ'),
+              value: inputs.maxNVQ.value,
+          }}
+      />
         <Input
           label="Type"
           invalid={!inputs.type.isValid}

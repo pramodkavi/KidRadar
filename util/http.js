@@ -344,6 +344,7 @@ export async function fetchCourses(instituteId) {
       id: response.data[key]._id,
       name: response.data[key].name,
       type: response.data[key].type,
+      maxNVQ: response.data[key].maxNVQ,
       description: response.data[key].description,
     };
     courses.push(courseObj);
