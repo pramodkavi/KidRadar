@@ -48,6 +48,7 @@ function PreSchoolCasesForm({
     label: preschool.preSchool,
     value: (index + 1).toString(),
   }));
+  const PreschoolData = [ { label: "None", value: 10 },...preschoolData];
 
   const caseType = [
     { label: "School Dropout", value: "1" },
@@ -188,7 +189,7 @@ function PreSchoolCasesForm({
           <DropdownComponent
             invalid={!inputs.preSchool.isValid}
             label={"Pre-School"}
-            data={preschoolData}
+            data={PreschoolData}
             textInputConfig={{
               onChange: dropdownChangedHandler.bind(this, "preSchool"),
               value: inputs.preSchool.value,

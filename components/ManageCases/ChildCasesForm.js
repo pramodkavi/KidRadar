@@ -87,7 +87,7 @@ function ChildCasesForm({
     label: school.school,
     value: (index + 1).toString(),
   }));
-
+  const SchoolData = [ { label: "None", value: 10 },...schoolData];
   const [inputs, setInputs] = useState({
     name: {
       value: defaultValues ? defaultValues.name : "",
@@ -261,7 +261,7 @@ function ChildCasesForm({
         <DropdownComponent
           invalid={!inputs.school.isValid}
           label={"School"}
-          data={schoolData}
+          data={SchoolData}
           textInputConfig={{
             onChange: dropdownChangedHandler.bind(this, "school"),
             value: inputs.school.value,

@@ -51,7 +51,7 @@ function PreSchoolCasesOutput({ totalCases, fallbackText }) {
     label: preschool.preSchool ? preschool.preSchool : 'Undefined Preschool',
     value: (index + 1).toString(),
   }));
-
+  const PreschoolData = [ { label: "None", value: 10 },...preschoolData];
   useEffect(() => {
     // Function to filter preSchool based on searchQuery and selectedDivision
     const filterCases = () => {
@@ -123,7 +123,7 @@ function PreSchoolCasesOutput({ totalCases, fallbackText }) {
           />
           <DropdownComponent
             label={"Pre School"}
-            data={preschoolData}
+            data={PreschoolData}
             textInputConfig={{
               onChange: dropdownSchoolChangedHandler.bind(this, "preSchool"),
               value: selectedPreschool,
