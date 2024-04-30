@@ -2,16 +2,16 @@ import React, { useState, useEffect, useContext } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { GlobalStyles } from "../../constants/styles";
 import PreSchoolCasesList from "./PreSchoolCasesList";
-import PreSchoolCaseSummary from "./PreSchoolCaseSummary";
+import Summary from "./PreSchoolCaseSummary";
 import { Searchbar } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import DropdownComponent from "../DropdownComponent";
+import PreSchoolCaseSummary from "./PreSchoolCaseSummary";
 import Button from "../UI/Button";
 import { useNavigation } from "@react-navigation/native";
 import { division } from "../../constants/Constants";
 import { AuthContext } from "../../store/auth-context";
 import { selectPreSchool } from "../../slices/PreSchoolSlice";
-import { setPreSchool } from "../../slices/PreSchoolSlice"; // Assuming this is the correct import for setPreSchool
 
 function PreSchoolCasesOutput({ totalCases, fallbackText }) {
   const navigation = useNavigation();
@@ -48,10 +48,12 @@ function PreSchoolCasesOutput({ totalCases, fallbackText }) {
   }, [dispatch]); // Added dispatch as a dependency
 
   const preschoolData = preSchools.map((preschool, index) => ({
-    label: preschool.preSchool ? preschool.preSchool : 'Undefined Preschool',
+    label: preschool.preSchool,
     value: (index + 1).toString(),
   }));
+console.log("//////////////////////////////////////////// preschoolData ",preschoolData);
 
+console.log("//////////////////////////////////////////// preschoolData [0]",preSchools[0].preSchool);
   useEffect(() => {
     // Function to filter preSchool based on searchQuery and selectedDivision
     const filterCases = () => {

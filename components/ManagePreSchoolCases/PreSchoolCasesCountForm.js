@@ -1,48 +1,44 @@
-import React, { useState } from 'react';
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
-import Input from './Input';
-import Button from '../UI/Button';
-import { getFormattedDate } from '../../util/date';
-import { GlobalStyles } from '../../constants/styles';
+import React, { useState } from "react";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
+import Input from "./Input";
+import Button from "../UI/Button";
+import { getFormattedDate } from "../../util/date";
+import { GlobalStyles } from "../../constants/styles";
 import DropdownComponent from "../DropdownComponent";
 
-function PreSchoolCasesCountForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }) {
+function PreSchoolCasesCountForm({
+  submitButtonLabel,
+  onCancel,
+  onSubmit,
+  defaultValues,
+}) {
   const [selected, setSelected] = React.useState("");
   const division = [
-    { label: 'Katana', value: '1' },
-    { label: 'Ja-Ela',value: '2'},
-    { label: 'Negombo',value: '3'},
-  ];
-
-  const school = [
-    { label: 'St Joseph\'s College',value: '1'},
+    { label: "Katana", value: "1" },
+    { label: "Ja-Ela", value: "2" },
+    { label: "Negombo", value: "3" },
   ];
 
   const caseType = [
-    { label: 'School Dropout',value: '1'},
-    { label: 'Street Child',value: '2'},
-    { label: 'long absentees',value: '3'},
-
+    { label: "School Dropout", value: "1" },
+    { label: "Street Child", value: "2" },
+    { label: "long absentees", value: "3" },
   ];
   const [inputs, setInputs] = useState({
     description: {
-      value: defaultValues ? defaultValues.name: '',
+      value: defaultValues ? defaultValues.name : "",
       isValid: true,
     },
     graduatesCounts: {
-      value: defaultValues ? defaultValues.graduatesCounts.toString() : '',
+      value: defaultValues ? defaultValues.graduatesCounts.toString() : "",
       isValid: true,
     },
     scholarsCounts: {
-      value: defaultValues ? defaultValues.scholarsCounts.toString() : '',
+      value: defaultValues ? defaultValues.scholarsCounts.toString() : "",
       isValid: true,
     },
     division: {
-      value: defaultValues ? defaultValues.division : '',
-      isValid: true,
-    },
-    preSchool: {
-      value: defaultValues ? defaultValues.preSchool : '',
+      value: defaultValues ? defaultValues.division : "",
       isValid: true,
     },
   });
@@ -69,25 +65,43 @@ function PreSchoolCasesCountForm({ submitButtonLabel, onCancel, onSubmit, defaul
       graduatesCounts: +inputs.graduatesCounts.value,
       scholarsCounts: +inputs.scholarsCounts.value,
       division: inputs.division.value,
-      preSchool: inputs.preSchool?.value,
-
     };
 
     // const amountIsValid = !isNaN(caseData.name) && caseData.name > 0;
     const descriptionIsValid = caseData.description.trim().length > 0;
-    const graduatesCountsIsValid = !isNaN(caseData.graduatesCounts) && (caseData.graduatesCounts > 0 && caseData.graduatesCounts < 5000);
-    const scholarsCountsIsValid = !isNaN(caseData.scholarsCounts) && (caseData.scholarsCounts > 0 && caseData.scholarsCounts < 5000);
-    const divisionIsValid = caseData.division!="";
-    const preSchoolIsValid = caseData.preSchool!="";
+    const graduatesCountsIsValid =
+      !isNaN(caseData.graduatesCounts) &&
+      caseData.graduatesCounts > 0 &&
+      caseData.graduatesCounts < 5000;
+    const scholarsCountsIsValid =
+      !isNaN(caseData.scholarsCounts) &&
+      caseData.scholarsCounts > 0 &&
+      caseData.scholarsCounts < 5000;
+    const divisionIsValid = caseData.division != "";
 
-    if (!descriptionIsValid || !graduatesCountsIsValid || !scholarsCountsIsValid) {
+    if (
+      !descriptionIsValid ||
+      !graduatesCountsIsValid ||
+      !scholarsCountsIsValid
+    ) {
       setInputs((curInputs) => {
         return {
-          description: { value: curInputs.description.value, isValid: descriptionIsValid },
-          graduatesCounts: { value: curInputs.graduatesCounts.value, isValid: graduatesCountsIsValid },
-          scholarsCounts: { value: curInputs.scholarsCounts.value, isValid: scholarsCountsIsValid },
-          division: { value: curInputs.division.value, isValid: divisionIsValid },
-          preSchool: { value: curInputs.preSchool.value, isValid: preSchoolIsValid },
+          description: {
+            value: curInputs.description.value,
+            isValid: descriptionIsValid,
+          },
+          graduatesCounts: {
+            value: curInputs.graduatesCounts.value,
+            isValid: graduatesCountsIsValid,
+          },
+          scholarsCounts: {
+            value: curInputs.scholarsCounts.value,
+            isValid: scholarsCountsIsValid,
+          },
+          division: {
+            value: curInputs.division.value,
+            isValid: divisionIsValid,
+          },
         };
       });
       return;
@@ -99,74 +113,64 @@ function PreSchoolCasesCountForm({ submitButtonLabel, onCancel, onSubmit, defaul
   const formIsInvalid =
     !inputs.description.isValid ||
     !inputs.graduatesCounts.isValid ||
-    !inputs.scholarsCounts.isValid||
-    !inputs.division.isValid||
-    !inputs.preSchool.isValid;
+    !inputs.scholarsCounts.isValid ||
+    !inputs.division.isValid;
 
   return (
-      <ScrollView>
-        <View>
-          <Text style={styles.title}>Create New Preschooler Case</Text>
-          {/*<View style={styles.container}>*/}
-            <View style={styles.inputsRow}>
-              <DropdownComponent
-                  invalid={!inputs.division.isValid}
-                  label={"Division"}
-                  data={division}
-                  textInputConfig={{
-                    onChange: dropdownChangedHandler.bind(this, 'division'),
-                    value: inputs.division.value,
-                  }}
-              />
-              <DropdownComponent
-                  invalid={!inputs.preSchool.isValid}
-                  label={"Pre-School"}
-                  data={school}
-                  textInputConfig={{
-                    onChange: dropdownChangedHandler.bind(this, 'preSchool'),
-                    value: inputs.preSchool.value,
-                  }}
-              />
-            </View>
-            <Input
-              label="Description"
-              invalid={!inputs.description.isValid}
-              textInputConfig={{
-                onChangeText: inputChangedHandler.bind(this, 'description'),
-                value: inputs.description.value,
-              }}
-            />
-            <Input
-                label="Preschool Graduates counts"
-                invalid={!inputs.graduatesCounts.isValid}
-                textInputConfig={{
-                  keyboardType: 'decimal-pad',
-                  onChangeText: inputChangedHandler.bind(this, 'graduatesCounts'),
-                  value: inputs.graduatesCounts.value,
-                }}
-            />
-          <Input
-              label="Foundation scholars counts"
-              invalid={!inputs.scholarsCounts.isValid}
-              textInputConfig={{
-                keyboardType: 'decimal-pad',
-                onChangeText: inputChangedHandler.bind(this, 'scholarsCounts'),
-                value: inputs.scholarsCounts.value,
-              }}
+    <ScrollView>
+      <View>
+        <Text style={styles.title}>Create New Preschooler Case</Text>
+        {/*<View style={styles.container}>*/}
+        <View style={styles.inputsRow}>
+          <DropdownComponent
+            invalid={!inputs.division.isValid}
+            label={"Division"}
+            data={division}
+            textInputConfig={{
+              onChange: dropdownChangedHandler.bind(this, "division"),
+              value: inputs.division.value,
+            }}
           />
-          {formIsInvalid && (
-            <Text style={styles.errorText}>
-              Invalid input values - please check your entered data!
-            </Text>
-          )}
-          <View style={styles.buttons}>
-            <Button style={styles.button} mode="flat" onPress={onCancel}>
-              Cancel
-            </Button>
-            <Button style={styles.button} onPress={submitHandler}>
-              {submitButtonLabel}
-            </Button>
-          </View>
+        </View>
+        <Input
+          label="Description"
+          invalid={!inputs.description.isValid}
+          textInputConfig={{
+            onChangeText: inputChangedHandler.bind(this, "description"),
+            value: inputs.description.value,
+          }}
+        />
+        <Input
+          label="Preschool Graduates counts"
+          invalid={!inputs.graduatesCounts.isValid}
+          textInputConfig={{
+            keyboardType: "decimal-pad",
+            onChangeText: inputChangedHandler.bind(this, "graduatesCounts"),
+            value: inputs.graduatesCounts.value,
+          }}
+        />
+        <Input
+          label="Foundation scholars counts"
+          invalid={!inputs.scholarsCounts.isValid}
+          textInputConfig={{
+            keyboardType: "decimal-pad",
+            onChangeText: inputChangedHandler.bind(this, "scholarsCounts"),
+            value: inputs.scholarsCounts.value,
+          }}
+        />
+        {formIsInvalid && (
+          <Text style={styles.errorText}>
+            Invalid input values - please check your entered data!
+          </Text>
+        )}
+        <View style={styles.buttons}>
+          <Button style={styles.button} mode="flat" onPress={onCancel}>
+            Cancel
+          </Button>
+          <Button style={styles.button} onPress={submitHandler}>
+            {submitButtonLabel}
+          </Button>
+        </View>
       </View>
     </ScrollView>
   );
@@ -180,28 +184,28 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 14,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: GlobalStyles.colors.primary200,
     marginVertical: 1,
-    textAlign: 'left',
+    textAlign: "left",
   },
   inputsRow: {
-    flexDirection: 'row',
-    justifyContent:'space-evenly',
+    flexDirection: "row",
+    justifyContent: "space-evenly",
   },
   rowInput: {
     flex: 1,
   },
   errorText: {
-    textAlign: 'center',
+    textAlign: "center",
     color: GlobalStyles.colors.error500,
     margin: 8,
   },
   buttons: {
-    marginTop:8,
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
+    marginTop: 8,
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "center",
   },
   button: {
     minWidth: 120,
