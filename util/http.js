@@ -2,7 +2,7 @@ import axios from "axios";
 import { useContext } from "react";
 import { AuthContext } from "../store/auth-context";
 
-const API = "http://192.168.8.104:8080";
+const API = "http://192.168.8.100:8080";
 
 function getUid() {
   const authCtx = useContext(AuthContext);

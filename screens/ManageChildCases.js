@@ -56,7 +56,7 @@ function ManageChildCases({ route, navigation }) {
         const id = await storeCases(caseData);
         dispatch(addCaseAction({ ...caseData, id: id })); // Dispatching addCase action
       }
-      navigation.goBack();
+      navigation.navigate('Child Cases')
     } catch (error) {
       setError('Could not save data - please try again later!');
       setIsSubmitting(false);
