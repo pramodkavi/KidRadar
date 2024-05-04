@@ -12,12 +12,13 @@ import { fetchInstitute } from "../../util/http";
 function InstituteDetailsOutput({ totalCases, fallbackText }) {
   const authCtx = useContext(AuthContext);
   const dispatch = useDispatch();
-  
+
   const [selectedDivision, setSelectedDivision] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredInstitutes, setFilteredInstitutes] = useState([]);
 
   const instituteTypes = [
+    { label: "All", value: "" },
     { label: "Institute", value: "1" },
     { label: "Academic Center", value: "2" },
     { label: "Carrier Guidance Opportunity", value: "3" },
@@ -43,11 +44,22 @@ function InstituteDetailsOutput({ totalCases, fallbackText }) {
     // Function to filter preSchool based on searchQuery and selectedDivision
     const filterInstitutes = () => {
       setFilteredInstitutes(
-        institutes.filter(
-          (item) =>
-            item.name?.toLowerCase().includes(searchQuery.toLowerCase()) &&
-            (selectedDivision === "" || item.type?.value === selectedDivision)
-        )
+        institutes.filter((item) => {
+          console.log(
+            "................................................................"
+          );
+
+          console.log(item);
+          console.log(
+            "................................................................"
+          );
+          return (
+            (selectedDivision === "" ||
+              item.type?.value === selectedDivision) &&
+            (searchQuery === "" ||
+              item.name?.toLowerCase().includes(searchQuery.toLowerCase()))
+          );
+        })
       );
     };
 

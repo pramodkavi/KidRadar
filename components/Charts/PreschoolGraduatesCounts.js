@@ -27,7 +27,6 @@ export function PreschoolGraduatesCounts() {
     const height = 220
     const preSchoolCasesCount = useSelector((state) => state.preSchoolCasesCount.preSchoolCasesCount);
 
-    console.log("///////////////////////////// preSchoolCasesCount",preSchoolCasesCount)
     let jaEla = 0;let negombo = 0;let katana = 0; 
 
     if(preSchoolCasesCount != []){
@@ -40,7 +39,6 @@ export function PreschoolGraduatesCounts() {
          katana = preSchoolCasesCount.find(item => item.division.label === "Katana")?.graduatesCounts!= undefined?
         preSchoolCasesCount.find(item => item.division.label === "Katana")?.graduatesCounts: 0
         ;
-        console.log("///////////////////////// count divitions",jaEla,negombo,katana)
     }
     
     const pieChartData = [

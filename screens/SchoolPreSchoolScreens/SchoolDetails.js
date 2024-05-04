@@ -37,7 +37,7 @@ function SchoolDetails() {
         <>
             <SchoolOutput
                 totalCases="Total"
-                fallbackText="No registered PreSchool found!"
+                fallbackText="No registered schools found!"
             />
             <TouchableOpacity style={styles.addBtn}>
                 <IconButton

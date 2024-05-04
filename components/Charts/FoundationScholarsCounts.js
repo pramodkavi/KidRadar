@@ -27,10 +27,7 @@ export function FoundationScholarsCounts() {
   const preSchoolCasesCount = useSelector(
     (state) => state.preSchoolCasesCount.preSchoolCasesCount
   );
-  console.log(
-    "////////////////////////////////// preSchoolCasesCount",
-    preSchoolCasesCount
-  );
+
   let jaEla = 0;
   let negombo = 0;
   let katana = 0;

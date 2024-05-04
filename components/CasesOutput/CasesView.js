@@ -81,7 +81,9 @@ function CasesView({ route, navigation }) {
         </DataTable.Row>
         <DataTable.Row>
           <DataTable.Cell>School</DataTable.Cell>
-          <DataTable.Cell>{selectedCase.school.label}</DataTable.Cell>
+          <DataTable.Cell>
+            {selectedCase.school ? selectedCase.school.label : "-"}
+          </DataTable.Cell>
         </DataTable.Row>
       </View>
       {selectedCase.caseType.label == "Street Child" && (

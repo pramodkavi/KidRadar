@@ -7,11 +7,11 @@ import { GlobalStyles } from "../../constants/styles";
 import { selectInstitute, setInstitute } from "../../slices/InstituteSlice";
 import { AuthContext } from "../../store/auth-context";
 import { getFormattedDate } from "../../util/date";
-import {fetchInstitute, fetchSchools} from "../../util/http";
+import { fetchInstitute, fetchSchools } from "../../util/http";
 import DropdownComponent from "../DropdownComponent";
 import Button from "../UI/Button";
 import Input from "./Input";
-import {selectSchool, setSchools} from "../../slices/SchoolSlice";
+import { selectSchool, setSchools } from "../../slices/SchoolSlice";
 
 function ChildCasesForm({
   submitButtonLabel,
@@ -43,17 +43,17 @@ function ChildCasesForm({
 
   useEffect(() => {
     async function getSchool() {
-        try {
-            const uId = authCtx.uId;
-            const fetchPreSchoolDetails = await fetchSchools(uId);
-            dispatch(setSchools(fetchPreSchoolDetails));
-        } catch (error) {
-            console.error('Could not fetch school details:', error);
-        }
+      try {
+        const uId = authCtx.uId;
+        const fetchPreSchoolDetails = await fetchSchools(uId);
+        dispatch(setSchools(fetchPreSchoolDetails));
+      } catch (error) {
+        console.error("Could not fetch school details:", error);
+      }
     }
 
     getSchool();
-}, [dispatch]); // Added dispatch as a dependency
+  }, [dispatch]); // Added dispatch as a dependency
 
   const institutes = useSelector(selectInstitute);
   const schools = useSelector(selectSchool);
@@ -72,11 +72,14 @@ function ChildCasesForm({
     { label: "Negombo", value: "3" },
   ];
 
-  const school = [{ label: "None", value: "1" },{ label: "St Joseph's College", value: "2" }];
+  const school = [
+    { label: "None", value: "1" },
+    { label: "St Joseph's College", value: "2" },
+  ];
   const caseType = [
     { label: "School Dropout", value: "1" },
     { label: "Street Child", value: "2" },
-    { label: "long absentees", value: "3" },
+    { label: "Long Absentees", value: "3" },
   ];
   const instituteData = institutes.map((institute, index) => ({
     label: institute.name,
@@ -87,7 +90,7 @@ function ChildCasesForm({
     label: school.school,
     value: (index + 1).toString(),
   }));
-  const SchoolData = [ { label: "None", value: 10 },...schoolData];
+  const SchoolData = [{ label: "None", value: 10 }, ...schoolData];
   const [inputs, setInputs] = useState({
     name: {
       value: defaultValues ? defaultValues.name : "",
@@ -135,6 +138,14 @@ function ChildCasesForm({
     },
   });
 
+  console.log(
+    "----------------------------------------------------------------"
+  );
+  console.log(inputs);
+  console.log(
+    "----------------------------------------------------------------"
+  );
+
   function inputChangedHandler(inputIdentifier, enteredValue) {
     setInputs((curInputs) => {
       return {
@@ -151,36 +162,34 @@ function ChildCasesForm({
       };
     });
   }
-  function submitHandler() {
 
-    console.log(inputs);
+  function submitHandler() {
     const caseData = {
-      name: inputs.name.value,
-      age: +inputs.age.value,
-      address: inputs.address.value,
-      contactNo: +inputs.contactNo.value,
-      date: new Date(inputs.date.value),
-      reason: inputs.reason.value,
-      caseType: inputs.caseType.value,
-      division: inputs.division.value,
-      school: inputs.school.value,
-      institute: inputs.institute.value,
+      name: inputs?.name?.value,
+      age: +inputs?.age?.value,
+      address: inputs?.address?.value,
+      contactNo: +inputs?.contactNo?.value,
+      date: new Date(inputs?.date?.value),
+      reason: inputs?.reason?.value,
+      caseType: inputs?.caseType?.value,
+      division: inputs?.division?.value,
+      school: inputs?.school?.value,
+      institute: inputs?.institute?.value,
     };
 
     const currentDate = new Date();
-    const nameIsValid = caseData.name.trim().length > 0;
+    const nameIsValid = caseData?.name.trim().length > 0;
     const ageIsValid =
-      !isNaN(caseData.age) && caseData.age > 0 && caseData.age < 19;
-    const addressIsValid = caseData.name.trim().length > 0;
+      !isNaN(caseData?.age) && caseData?.age > 0 && caseData?.age < 19;
+    const addressIsValid = caseData?.name.trim().length > 0;
     const contactNoIsValid =
-      !isNaN(caseData.contactNo) && String(caseData.contactNo).length == 9;
+      !isNaN(caseData?.contactNo) && String(caseData?.contactNo).length === 9;
     const dateIsValid =
-      caseData.date.toString() !== "Invalid Date" &&
-      caseData.date <= currentDate;
-    const reasonIsValid = caseData.reason.trim().length > 0;
-    const divisionIsValid = caseData.division != "";
-    const schoolIsValid = caseData.school != "";
-    const caseTypeIsValid = caseData.caseType != "";
+      caseData?.date.toString() !== "Invalid Date" &&
+      caseData?.date <= currentDate;
+    const reasonIsValid = caseData?.reason.trim().length > 0;
+    const divisionIsValid = caseData?.division != "";
+    const caseTypeIsValid = caseData?.caseType && caseData?.caseType?.value != "";
 
     if (
       !nameIsValid ||
@@ -188,29 +197,30 @@ function ChildCasesForm({
       !addressIsValid ||
       !dateIsValid ||
       !reasonIsValid ||
-      !contactNoIsValid
+      !contactNoIsValid ||
+      !caseTypeIsValid
     ) {
       setInputs((curInputs) => {
         return {
-          name: { value: curInputs.name.value, isValid: nameIsValid },
-          age: { value: curInputs.age.value, isValid: ageIsValid },
-          address: { value: curInputs.address.value, isValid: addressIsValid },
+          name: { value: curInputs?.name?.value, isValid: nameIsValid },
+          age: { value: curInputs?.age?.value, isValid: ageIsValid },
+          address: { value: curInputs?.address?.value, isValid: addressIsValid },
           contactNo: {
-            value: curInputs.contactNo.value,
+            value: curInputs?.contactNo?.value,
             isValid: contactNoIsValid,
           },
-          date: { value: curInputs.date.value, isValid: dateIsValid },
+          date: { value: curInputs?.date?.value, isValid: dateIsValid },
           reason: {
-            value: curInputs.reason.value,
+            value: curInputs?.reason?.value,
             isValid: reasonIsValid,
           },
           division: {
-            value: curInputs.division.value,
+            value: curInputs?.division?.value,
             isValid: divisionIsValid,
           },
-          school: { value: curInputs.school.value, isValid: schoolIsValid },
+          school: { value: curInputs?.school?.value, isValid: true },
           caseType: {
-            value: curInputs.caseType.value,
+            value: curInputs?.caseType?.value,
             isValid: caseTypeIsValid,
           },
         };
@@ -229,15 +239,15 @@ function ChildCasesForm({
   }
 
   const formIsInvalid =
-    !inputs.name.isValid ||
-    !inputs.age.isValid ||
-    !inputs.address.isValid ||
-    !inputs.contactNo.isValid ||
-    !inputs.date.isValid ||
-    !inputs.reason.isValid ||
-    !inputs.division.isValid ||
-    !inputs.school.isValid ||
-    !inputs.caseType.isValid;
+    !inputs?.name?.isValid ||
+    !inputs?.age?.isValid ||
+    !inputs?.address?.isValid ||
+    !inputs?.contactNo?.isValid ||
+    !inputs?.date?.isValid ||
+    !inputs?.reason?.isValid ||
+    !inputs?.division?.isValid ||
+    !inputs?.school?.isValid ||
+    !inputs?.caseType?.isValid;
 
   return (
     // <ScrollView>
@@ -343,8 +353,6 @@ function ChildCasesForm({
         invalid={!inputs.reason.isValid}
         textInputConfig={{
           multiline: true,
-          // autoCapitalize: 'none'
-          // autoCorrect: false // default is true
           onChangeText: inputChangedHandler.bind(this, "reason"),
           value: inputs.reason.value,
         }}

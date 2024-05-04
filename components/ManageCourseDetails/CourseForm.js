@@ -34,7 +34,7 @@ function CourseForm({
   const caseType = [
     { label: "School Dropout", value: "1" },
     { label: "Street Child", value: "2" },
-    { label: "long absentees", value: "3" },
+    { label: "Long Absentees", value: "3" },
   ];
   const [inputs, setInputs] = useState({
     name: {

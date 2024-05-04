@@ -53,8 +53,8 @@ function ManageSchoolDetails({ route, navigation }) {
         dispatch(updateSchool({ id: editedCaseId, data: schoolData })); // Dispatching updateCase action
         await updateCase(editedCaseId, schoolData);
       } else {
-        // const id = await storeSchool(schoolData);
-        // dispatch(addSchool({ ...schoolData, id: id })); // Dispatching addCase action
+        const id = await storeSchool(schoolData);
+        dispatch(addSchool({ ...schoolData, id: id })); // Dispatching addCase action
       }
       navigation.goBack();
     } catch (error) {

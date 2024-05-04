@@ -19,7 +19,6 @@ function PreSchoolCasesOutput({ totalCases, fallbackText }) {
   const [selectedPreschool, setSelectedPreschool] = useState("");
   const [filteredPreSchoolCases, setFilteredPreSchoolCases] = useState([]);
 
-  const school = [{ label: "None", value: "1" },{ label: "St Joseph's College", value: "2" }];
   const preSchools = useSelector(selectPreSchool); // Accessing expenses state from Redux store
   const dispatch = useDispatch();
 
@@ -31,7 +30,7 @@ function PreSchoolCasesOutput({ totalCases, fallbackText }) {
   const preSchoolCasesCount = useSelector(
     (state) => state.preSchoolCasesCount.preSchoolCasesCount
   );
-  
+
   const authCtx = useContext(AuthContext);
   useEffect(() => {
     async function getPreSchool() {
@@ -51,8 +50,14 @@ function PreSchoolCasesOutput({ totalCases, fallbackText }) {
     label: preschool.preSchool,
     value: (index + 1).toString(),
   }));
-  
-  const PreschoolData = [ { label: "None", value: 10 },...preschoolData];
+
+  const PreschoolData = [{ label: "All", value: "" }, ...preschoolData];
+
+  console.log(
+    "--------------------------------------------------",
+    PreschoolData,
+    preschoolData
+  );
   useEffect(() => {
     // Function to filter preSchool based on searchQuery and selectedDivision
     const filterCases = () => {
@@ -62,7 +67,9 @@ function PreSchoolCasesOutput({ totalCases, fallbackText }) {
             (selectedDivision === "" ||
               item.division?.value === selectedDivision) &&
             (selectedPreschool === "" ||
-              item.preSchool?.value === selectedPreschool)
+              item.preSchool?.value === selectedPreschool) &&
+            (searchQuery === "" ||
+              item.name?.toLowerCase().includes(searchQuery.toLowerCase()))
         )
       );
     };

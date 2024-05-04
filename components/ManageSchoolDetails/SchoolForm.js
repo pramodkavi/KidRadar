@@ -15,7 +15,13 @@ import DropdownComponent from "../DropdownComponent";
 import Button from "../UI/Button";
 import Input from "./Input";
 
-function SchoolForm({ submitButtonLabel, onCancel, onSubmit, defaultValues, deleteDetailsHandler }) {
+function SchoolForm({
+  submitButtonLabel,
+  onCancel,
+  onSubmit,
+  defaultValues,
+  deleteDetailsHandler,
+}) {
   const [selected, setSelected] = React.useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [updateModalVisible, setUpdateModalVisible] = useState(false);
@@ -26,12 +32,15 @@ function SchoolForm({ submitButtonLabel, onCancel, onSubmit, defaultValues, dele
     { label: "Negombo", value: "3" },
   ];
 
-  const school = [{ label: "None", value: "1" },{ label: "St Joseph's College", value: "2" }];
+  const school = [
+    { label: "None", value: "1" },
+    { label: "St Joseph's College", value: "2" },
+  ];
 
   const caseType = [
     { label: "School Dropout", value: "1" },
     { label: "Street Child", value: "2" },
-    { label: "long absentees", value: "3" },
+    { label: "Long Absentees", value: "3" },
   ];
   const [inputs, setInputs] = useState({
     school: {
@@ -215,18 +224,20 @@ function SchoolForm({ submitButtonLabel, onCancel, onSubmit, defaultValues, dele
           <Button style={styles.button} mode="flat" onPress={onCancel}>
             Cancel
           </Button>
-          
+
           {defaultValues && (
-          <Button style={styles.button}  onPress={() => setUpdateModalVisible(true)}>
-            {submitButtonLabel}
-          </Button>
+            <Button
+              style={styles.button}
+              onPress={() => setUpdateModalVisible(true)}
+            >
+              {submitButtonLabel}
+            </Button>
           )}
           {!defaultValues && (
-          <Button style={styles.button}  onPress={submitHandler}>
-            {submitButtonLabel}
-          </Button>
+            <Button style={styles.button} onPress={submitHandler}>
+              {submitButtonLabel}
+            </Button>
           )}
-
         </View>
       </View>
       {defaultValues && (

@@ -2,7 +2,7 @@ import axios from "axios";
 import { useContext } from "react";
 import { AuthContext } from "../store/auth-context";
 
-const API = "http://192.168.8.100:8080";
+const API = "http://192.168.8.113:8090";
 
 function getUid() {
   const authCtx = useContext(AuthContext);
@@ -187,11 +187,11 @@ export async function storeSchool(schoolData) {
   let id = "";
   try {
     const response = await axios.post(API + "/schools", schoolData);
-    // id = response.data.name;
-    const id = response.data.name;
+    id = response.data.id;
   } catch (err) {
     console.error(err);
   }
+
   return id;
 }
 

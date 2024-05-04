@@ -19,28 +19,29 @@ function ChildCasesOutput({ totalCases, fallbackText }) {
   const schools = useSelector(selectSchool);
   useEffect(() => {
     async function getSchool() {
-        try {
-            const uId = authCtx.uId;
-            const fetchPreSchoolDetails = await fetchSchools(uId);
-            dispatch(setSchools(fetchPreSchoolDetails));
-        } catch (error) {
-            console.error('Could not fetch school details:', error);
-        }
+      try {
+        const uId = authCtx.uId;
+        const fetchPreSchoolDetails = await fetchSchools(uId);
+        dispatch(setSchools(fetchPreSchoolDetails));
+      } catch (error) {
+        console.error("Could not fetch school details:", error);
+      }
     }
 
     getSchool();
-}, [dispatch]); // Added dispatch as a dependency
+  }, [dispatch]); // Added dispatch as a dependency
 
-const schoolData = schools.map((school, index) => ({
-  label: school.school,
-  value: (index + 1).toString(),
-}));
+  const schoolData = schools.map((school, index) => ({
+    label: school.school,
+    value: (index + 1).toString(),
+  }));
 
-const SchoolData = [ { label: "None", value: 10 },...schoolData];
+  const SchoolData = [{ label: "All", value: "" }, ...schoolData];
   const caseType = [
+    { label: "All", value: "" },
     { label: "School Dropout", value: "1" },
     { label: "Street Child", value: "2" },
-    { label: "long absentees", value: "3" },
+    { label: "Long Absentees", value: "3" },
   ];
 
   const cases = useSelector((state) => state.cases.cases);
@@ -49,14 +50,21 @@ const SchoolData = [ { label: "None", value: 10 },...schoolData];
     // Function to filter preSchool based on searchQuery and selectedDivision
     const filterCases = () => {
       setFilteredCases(
-        cases.filter(
-          (item) =>
-            (selectedDivision === "" || item.division?.value === selectedDivision) &&
+        cases.filter((item) => {
+          return (
+            (selectedDivision === "" ||
+              item.division?.value === selectedDivision) &&
             (selectedSchool === "" || item.school?.value === selectedSchool) &&
-            (selectedCaseType === "" || item.caseType?.value === selectedCaseType)
-        )
+            (selectedCaseType === "" ||
+              item.caseType?.value === selectedCaseType) &&
+            (searchQuery === "" ||
+              item.name
+                ?.toLowerCase()
+                .includes(searchQuery.toLowerCase()))
+          );
+        })
       );
-    };    
+    };
 
     filterCases(); // Initial filter
 

@@ -1,5 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Alert, Modal, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  Alert,
+  Modal,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { TrashIcon } from "react-native-heroicons/solid";
 import { GlobalStyles } from "../../constants/styles";
 import { getFormattedDate } from "../../util/date";
@@ -7,7 +15,10 @@ import DropdownComponent from "../DropdownComponent";
 import Button from "../UI/Button";
 import Input from "./Input";
 import { fetchPreSchoolCases, fetchPreSchools } from "../../util/http";
-import {selectPreSchoolCase, setPreSchoolCase} from '../../slices/PreSchoolCasesSlice'; // Importing Redux actions
+import {
+  selectPreSchoolCase,
+  setPreSchoolCase,
+} from "../../slices/PreSchoolCasesSlice"; // Importing Redux actions
 import { useDispatch, useSelector } from "react-redux";
 import { AuthContext } from "../../store/auth-context";
 import { selectPreSchool, setPreSchool } from "../../slices/PreSchoolSlice";
@@ -21,7 +32,7 @@ function PreSchoolCasesForm({
 }) {
   const [selected, setSelected] = React.useState("");
   const [modalVisible, setModalVisible] = useState(false);
-  const dispatch= useDispatch()  
+  const dispatch = useDispatch();
   const preSchools = useSelector(selectPreSchool); // Accessing expenses state from Redux store
 
   const division = [
@@ -48,12 +59,12 @@ function PreSchoolCasesForm({
     label: preschool.preSchool,
     value: (index + 1).toString(),
   }));
-  const PreschoolData = [ { label: "None", value: 10 },...preschoolData];
+  const PreschoolData = [{ label: "None", value: 10 }, ...preschoolData];
 
   const caseType = [
     { label: "School Dropout", value: "1" },
     { label: "Street Child", value: "2" },
-    { label: "long absentees", value: "3" },
+    { label: "Long Absentees", value: "3" },
   ];
   const [inputs, setInputs] = useState({
     name: {

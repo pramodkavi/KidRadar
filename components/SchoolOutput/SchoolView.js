@@ -58,26 +58,6 @@ function SchoolView({ route, navigation }) {
           <DataTable.Cell>{selectedData.division.label}</DataTable.Cell>
       </DataTable.Row>
       
-        {/* <DataTable.Row>
-            <DataTable.Cell>Pre School</DataTable.Cell>
-            <DataTable.Cell>{selectedData.preSchool}</DataTable.Cell>
-        </DataTable.Row>
-          <DataTable.Row>
-            <DataTable.Cell>Contact Number</DataTable.Cell>
-            <DataTable.Cell>{selectedData.contactNo}</DataTable.Cell>
-        </DataTable.Row>
-        <DataTable.Row>
-            <DataTable.Cell>Date</DataTable.Cell>
-            <DataTable.Cell>{getFormattedDate(selectedData.date)}</DataTable.Cell>
-        </DataTable.Row>
-        <DataTable.Row>
-            <DataTable.Cell>Description</DataTable.Cell>
-            <DataTable.Cell>{selectedData.description}</DataTable.Cell>
-        </DataTable.Row>
-        <DataTable.Row>
-            <DataTable.Cell>Division</DataTable.Cell>
-            <DataTable.Cell>{selectedData.division.label}</DataTable.Cell>
-        </DataTable.Row> */}
       </View>
       <TouchableOpacity style={styles.addBtn}>
           <IconButton

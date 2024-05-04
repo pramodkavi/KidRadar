@@ -94,7 +94,7 @@ function UserForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }) {
         textInputConfig={{
           keyboardType: "decimal-pad",
           onChangeText: inputChangedHandler.bind(this, "phoneNumber"),
-          value: inputs.phoneNumber.value,
+          value: "0" + inputs.phoneNumber.value,
         }}
       />
       <Input

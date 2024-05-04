@@ -33,12 +33,15 @@ function PreSchoolForm({
     { label: "Negombo", value: "3" },
   ];
 
-  const school = [{ label: "None", value: "1" },{ label: "St Joseph's College", value: "2" }];
+  const school = [
+    { label: "None", value: "1" },
+    { label: "St Joseph's College", value: "2" },
+  ];
 
   const caseType = [
     { label: "School Dropout", value: "1" },
     { label: "Street Child", value: "2" },
-    { label: "long absentees", value: "3" },
+    { label: "Long Absentees", value: "3" },
   ];
   const [inputs, setInputs] = useState({
     preSchool: {
@@ -112,7 +115,6 @@ function PreSchoolForm({
       !contactNoIsValid ||
       !divisionIsValid
     ) {
-
       setInputs((curInputs) => {
         return {
           preSchool: {
@@ -178,7 +180,7 @@ function PreSchoolForm({
           invalid={!inputs.preSchool?.isValid}
           textInputConfig={{
             onChangeText: inputChangedHandler.bind(this, "preSchool"),
-            value: inputs.preSchool? inputs.preSchool.value : "",
+            value: inputs.preSchool ? inputs.preSchool.value : "",
           }}
         />
         <Input
@@ -201,7 +203,7 @@ function PreSchoolForm({
           label="Contact No"
           invalid={!inputs.contactNo.isValid}
           textInputConfig={{
-            keyboardType: 'decimal-pad',
+            keyboardType: "decimal-pad",
             onChangeText: inputChangedHandler.bind(this, "contactNo"),
             value: inputs.contactNo.value,
           }}
@@ -229,14 +231,17 @@ function PreSchoolForm({
             Cancel
           </Button>
           {defaultValues && (
-          <Button style={styles.button}  onPress={() => setUpdateModalVisible(true)}>
-            {submitButtonLabel}
-          </Button>
+            <Button
+              style={styles.button}
+              onPress={() => setUpdateModalVisible(true)}
+            >
+              {submitButtonLabel}
+            </Button>
           )}
           {!defaultValues && (
-          <Button style={styles.button}  onPress={submitHandler}>
-            {submitButtonLabel}
-          </Button>
+            <Button style={styles.button} onPress={submitHandler}>
+              {submitButtonLabel}
+            </Button>
           )}
         </View>
       </View>
@@ -319,10 +324,8 @@ function PreSchoolForm({
               <TrashIcon size={30} color={"red"} />
             </Pressable>
           </View>
-
         </View>
       )}
-
     </ScrollView>
   );
 }

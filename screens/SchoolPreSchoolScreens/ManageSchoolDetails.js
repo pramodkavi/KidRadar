@@ -26,13 +26,14 @@ function ManageSchoolDetails({ route, navigation }) {
   const cases = useSelector((state) => state.schools.schools); // Accessing expenses state from Redux store
 
   const editedCaseId = route.params?.dataId;
+  console.log("--------------------------------", editedCaseId);
   const isEditing = !!editedCaseId;
 
   const selectedCase = cases.find((expense) => expense.id === editedCaseId);
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      title: isEditing ? "Edit School Details" : "Create School Case",
+      title: isEditing ? "Edit School Details" : "Create School",
     });
   }, [navigation, isEditing]);
 
@@ -53,8 +54,9 @@ function ManageSchoolDetails({ route, navigation }) {
   }
 
   async function confirmHandler(schoolData) {
+    console.log(schoolData);
     schoolData.uid = authCtx.uId;
-    
+
     setIsSubmitting(true);
     try {
       if (isEditing) {
@@ -62,6 +64,16 @@ function ManageSchoolDetails({ route, navigation }) {
         await updateSchools(editedCaseId, schoolData);
       } else {
         const id = await storeSchool(schoolData);
+        console.log("----------------------------------------------------");
+        console.log("----------------------------------------------------");
+        console.log("----------------------------------------------------");
+        console.log("----------------------------------------------------");    
+        console.log(id);
+        console.log("----------------------------------------------------");
+        console.log("----------------------------------------------------");
+        console.log("----------------------------------------------------");
+        console.log("----------------------------------------------------");
+    
         dispatch(addSchool({ ...schoolData, id: id })); // Dispatching addCase action
       }
       navigation.goBack();

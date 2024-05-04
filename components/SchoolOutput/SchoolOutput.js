@@ -21,9 +21,10 @@ function SchoolOutput({ totalCases, fallbackText }) {
       setFilteredSchools(
         schools.filter(
           (item) =>
-            item.school.toLowerCase().includes(searchQuery.toLowerCase()) &&
             (selectedDivision === "" ||
-              item.division.value === selectedDivision)
+              item.division?.value === selectedDivision) &&
+            (searchQuery === "" ||
+              item.school?.toLowerCase().includes(searchQuery.toLowerCase()))
         )
       );
     };

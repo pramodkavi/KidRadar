@@ -7,7 +7,7 @@ function StudentDetails() {
         <>
             <StudentOutput
                 totalCases="Total"
-                fallbackText="No registered PreSchool found!"
+                fallbackText="No registered students found!"
             />
         </>
     );

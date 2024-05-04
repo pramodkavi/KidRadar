@@ -37,12 +37,15 @@ function InstituteForm({
     { label: "Carrier Guidance Opportunity", value: "3" },
   ];
 
-  const school = [{ label: "None", value: "1" },{ label: "St Joseph's College", value: "2" }];
+  const school = [
+    { label: "None", value: "1" },
+    { label: "St Joseph's College", value: "2" },
+  ];
 
   const caseType = [
     { label: "School Dropout", value: "1" },
     { label: "Street Child", value: "2" },
-    { label: "long absentees", value: "3" },
+    { label: "Long Absentees", value: "3" },
   ];
   const [inputs, setInputs] = useState({
     name: {

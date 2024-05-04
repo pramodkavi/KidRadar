@@ -29,7 +29,7 @@ function UserView({ route, navigation }) {
 
     <View style={styles.container}>
       <View style={styles.textwrap}>
-        <Text style={styles.maintext}>Case Details</Text>
+        <Text style={styles.maintext}>User Profile Details</Text>
       </View>
       <View style={{ paddingTop: 20}}>
         <DataTable.Row>
@@ -38,7 +38,7 @@ function UserView({ route, navigation }) {
         </DataTable.Row>
         <DataTable.Row>
             <DataTable.Cell>Phone Number</DataTable.Cell>
-            <DataTable.Cell>{selectedUser.phoneNumber}</DataTable.Cell>
+            <DataTable.Cell>{`0${selectedUser.phoneNumber}`}</DataTable.Cell>
         </DataTable.Row>
         <DataTable.Row>
             <DataTable.Cell>Designation</DataTable.Cell>

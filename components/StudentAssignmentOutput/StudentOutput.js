@@ -3,9 +3,9 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Searchbar } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import { GlobalStyles } from '../../constants/styles';
-import {selectCase} from "../../slices/CaseSlice";
+import { selectCase } from "../../slices/CaseSlice";
 import { selectInstitute } from '../../slices/InstituteSlice';
-import {selectGeneralId} from "../../slices/GeneralIdSlice";
+import { selectGeneralId } from "../../slices/GeneralIdSlice";
 import StudentList from "./StudentList";
 
 function StudentOutput({ totalCases, fallbackText }) {
@@ -13,36 +13,41 @@ function StudentOutput({ totalCases, fallbackText }) {
   const [searchQuery, setSearchQuery] = useState('');
   const generalId = useSelector(selectGeneralId)
   const institute = useSelector(selectInstitute); // Accessing expenses state from Redux store
-  const filterinstitute = institute? (institute.filter(
+  const filterinstitute = institute ? (institute.filter(
     (item) =>
-        item.id ===generalId
-  )):[];
+      item.id === generalId
+  )) : [];
 
   const cases = useSelector(selectCase); // Students
-  console.log("//////////////////////////// cases",cases)
+  console.log("//////////////////////////// cases", cases)
 
   const filtercases = cases.filter(caseObj => caseObj.institute && caseObj.institute.label === filterinstitute[0].name);
-  console.log("//////////////////////////// filtercases",filtercases)
+  console.log("//////////////////////////// filtercases", filtercases)
+
+  // Function to filter students based on search query
+  const filteredStudents = filtercases.filter(student =>
+    student.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   let content = "";
-  if (filtercases.length > 0) {
-    content = <StudentList studentDetails={filtercases} />;
-  }else{
+  if (filteredStudents.length > 0) {
+    content = <StudentList studentDetails={filteredStudents} />;
+  } else {
     content = <Text style={styles.infoText}>{fallbackText}</Text>;
   }
 
   return (
-      <View style={styles.container}>
+    <View style={styles.container}>
 
-        <View style={styles.searchbar}>
-          <Searchbar
-              placeholder="Search"
-              onChangeText={(text) => setSearchQuery(text)}
-              value={searchQuery}
-          />
-        </View>
-        {content}
+      <View style={styles.searchbar}>
+        <Searchbar
+          placeholder="Search"
+          onChangeText={(text) => setSearchQuery(text)}
+          value={searchQuery}
+        />
       </View>
+      {content}
+    </View>
   );
 }
 
@@ -56,7 +61,7 @@ const styles = StyleSheet.create({
     paddingBottom: 0,
     backgroundColor: GlobalStyles.colors.primary700,
   },
-  searchbar:{
+  searchbar: {
     marginVertical: 8,
   },
   infoText: {

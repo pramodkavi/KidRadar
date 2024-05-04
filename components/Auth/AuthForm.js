@@ -1,17 +1,17 @@
-import { useState } from 'react';
-import { StyleSheet, View, ScrollView } from 'react-native';
+import { useState } from "react";
+import { StyleSheet, View, ScrollView } from "react-native";
 
-import Button from '../UI/Button';
-import Input from './Input';
+import Button from "../UI/Button";
+import Input from "./Input";
 
 function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
-  const [enteredName, setEnteredName] = useState('');
-  const [enteredPhoneNumber, setEnteredPhoneNumber] = useState('');
-  const [enteredEmail, setEnteredEmail] = useState('');
-  const [enteredConfirmEmail, setEnteredConfirmEmail] = useState('');
-  const [enteredPassword, setEnteredPassword] = useState('');
-  const [enteredConfirmPassword, setEnteredConfirmPassword] = useState('');
-  const [enteredDesignation, setEnteredDesignation] = useState(''); // New state for Designation
+  const [enteredName, setEnteredName] = useState("");
+  const [enteredPhoneNumber, setEnteredPhoneNumber] = useState("");
+  const [enteredEmail, setEnteredEmail] = useState("");
+  const [enteredConfirmEmail, setEnteredConfirmEmail] = useState("");
+  const [enteredPassword, setEnteredPassword] = useState("");
+  const [enteredConfirmPassword, setEnteredConfirmPassword] = useState("");
+  const [enteredDesignation, setEnteredDesignation] = useState(""); // New state for Designation
 
   const {
     name: nameIsInvalid,
@@ -24,25 +24,25 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
 
   function updateInputValueHandler(inputType, enteredValue) {
     switch (inputType) {
-      case 'name':
+      case "name":
         setEnteredName(enteredValue);
         break;
-      case 'phoneNumber':
+      case "phoneNumber":
         setEnteredPhoneNumber(enteredValue);
         break;
-      case 'email':
+      case "email":
         setEnteredEmail(enteredValue);
         break;
-      case 'confirmEmail':
+      case "confirmEmail":
         setEnteredConfirmEmail(enteredValue);
         break;
-      case 'password':
+      case "password":
         setEnteredPassword(enteredValue);
         break;
-      case 'confirmPassword':
+      case "confirmPassword":
         setEnteredConfirmPassword(enteredValue);
         break;
-      case 'designation': // New case for Designation
+      case "designation": // New case for Designation
         setEnteredDesignation(enteredValue);
         break;
     }
@@ -66,15 +66,16 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
         {!isLogin && (
           <Input
             label="Name"
-            onUpdateValue={updateInputValueHandler.bind(this, 'name')}
+            onUpdateValue={updateInputValueHandler.bind(this, "name")}
             value={enteredName}
             isInvalid={nameIsInvalid}
+            keyboardType={"text"}
           />
         )}
         {!isLogin && (
           <Input
             label="Phone Number"
-            onUpdateValue={updateInputValueHandler.bind(this, 'phoneNumber')}
+            onUpdateValue={updateInputValueHandler.bind(this, "phoneNumber")}
             value={enteredPhoneNumber}
             keyboardType="phone-pad"
             isInvalid={phoneNumberIsInvalid}
@@ -82,7 +83,7 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
         )}
         <Input
           label="Email Address"
-          onUpdateValue={updateInputValueHandler.bind(this, 'email')}
+          onUpdateValue={updateInputValueHandler.bind(this, "email")}
           value={enteredEmail}
           keyboardType="email-address"
           isInvalid={emailIsInvalid}
@@ -90,7 +91,7 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
         {!isLogin && (
           <Input
             label="Confirm Email Address"
-            onUpdateValue={updateInputValueHandler.bind(this, 'confirmEmail')}
+            onUpdateValue={updateInputValueHandler.bind(this, "confirmEmail")}
             value={enteredConfirmEmail}
             keyboardType="email-address"
             isInvalid={emailsDontMatch}
@@ -98,7 +99,7 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
         )}
         <Input
           label="Password"
-          onUpdateValue={updateInputValueHandler.bind(this, 'password')}
+          onUpdateValue={updateInputValueHandler.bind(this, "password")}
           secure
           value={enteredPassword}
           isInvalid={passwordIsInvalid}
@@ -108,7 +109,7 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
             label="Confirm Password"
             onUpdateValue={updateInputValueHandler.bind(
               this,
-              'confirmPassword'
+              "confirmPassword"
             )}
             secure
             value={enteredConfirmPassword}
@@ -118,14 +119,14 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
         {!isLogin && (
           <Input
             label="Designation"
-            onUpdateValue={updateInputValueHandler.bind(this, 'designation')}
+            onUpdateValue={updateInputValueHandler.bind(this, "designation")}
             value={enteredDesignation}
             isInvalid={false} // You can add validation for Designation if needed
           />
         )}
         <View style={styles.buttons}>
           <Button onPress={submitHandler}>
-            {isLogin ? 'Log In' : 'Create User'}
+            {isLogin ? "Log In" : "Create User"}
           </Button>
         </View>
       </View>
